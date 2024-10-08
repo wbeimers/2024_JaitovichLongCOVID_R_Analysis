@@ -44,12 +44,12 @@ gene_ids <- mapIds(org.Hs.eg.db, keys = uniprot_ids, column = "SYMBOL", keytype 
 
 #check enrichment of a set of genes
 enriched <- enrichr(gene_ids, dbs)
-enriched[["GO_Cellular_Component_2023"]]
+enriched[["GO_Biological_Process_2023"]]
 
 #plot enrichment
-plotEnrich(enriched$GO_Biological_Process_2023, showTerms = 20, numChar = 40, y = "Count", orderBy = "P.value")
+plotEnrich(enriched$GO_Cellular_Component_2023, showTerms = 20, numChar = 40, y = "Count", orderBy = "P.value", title = "GOBP")
 
-ggsave("reports/figures/Plate_01-05_GOBP_GeneEnrichment_PASCvsAcute_UP.pdf", width = 24, height = 16, units = "cm")
+ggsave("reports/figures/AllPlates_GOCC_GeneEnrichment_PASCvsAcuteFU_UP.pdf", width = 24, height = 16, units = "cm")
 
 
 
@@ -88,15 +88,15 @@ head(fgsea[order(padj), ])
 sum(fgsea[, padj < 0.01])
 
 #plot one pathway
-plotEnrichment(pathways[["GOBP_CHOLESTEROL_EFFLUX"]],
-               gene_list) + labs(title="GOBP_CHOLESTEROL_EFFLUX")
+plotEnrichment(pathways[["GOBP_COMPLEMENT_ACTIVATION"]],
+               gene_list) + labs(title="GOBP_COMPLEMENT_ACTIVATION")
 
 
 #plot top pathways
 topPathwaysUp <- fgsea[ES > 0][head(order(pval), n=10), pathway]
 topPathwaysDown <- fgsea[ES < 0][head(order(pval), n=10), pathway]
 topPathways <- c(topPathwaysUp, rev(topPathwaysDown))
-plotGseaTable(pathways[topPathways], gene_list, fgsea, 
+plotGseaTable(pathways[topPathwaysUp], gene_list, fgsea, 
               gseaParam=0.5)
 
 #save fgsea

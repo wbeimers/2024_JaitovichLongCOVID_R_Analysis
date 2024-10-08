@@ -46,7 +46,7 @@ colnames(spec_PG_NPs) <- colnames
 
 ####DiffExp####
 #split samples into groups to compare
-pos_runs_list <- groups[groups$Set == "Acute", ]
+pos_runs_list <- groups[groups$Set == "Acute_fu", ]
 pos_runs_list <- pos_runs_list$Sample
 
 neg_runs_list <- groups[groups$Set == "PASC", ]
@@ -60,14 +60,17 @@ neg_df <- spec_PG_NPs[, colnames(spec_PG_NPs) %in% neg_runs_list]
 neg_df <- cbind(spec_PG_NPs["allgenes"], neg_df)
 
 #filter out NAs
-filter_na <- rowSums(is.na(pos_df[,-1])) >= 97
+filter_na <- rowSums(is.na(pos_df[,-1])) >= 14
 pos_df <- pos_df[!filter_na,]
 
 filter_na <- rowSums(is.na(neg_df[,-1])) >= 184
 neg_df <-neg_df[!filter_na,]
 
 all_df <- merge(pos_df, neg_df, by = "allgenes")
-write.csv(all_df, file = "data/processed/AllPlates_NoFilter_Samples_PASCvsHealthy_Matrix.csv")
+write.csv(all_df, file = "data/processed/AllPlates_NoFilter_Samples_PASCvsAcuteFU_Matrix.csv")
+
+all_df[,-1] <- log2(all_df[,-1])
+
 
 all_fc = NULL
 for (i in 1:nrow(all_df)) {
@@ -95,8 +98,8 @@ for (i in 1:nrow(all_df)) {
   p_pv <- NP_perm$p.value
   
   #gives the fold change between the two groups
-  #fc <- 2^(mean(as.numeric(all_df[i,na.omit(neg_runs_list)])) - mean(as.numeric(all_df[i,na.omit(pos_runs_list)])))
-  fc <- NP_ttest$estimate[2]/NP_ttest$estimate[1]
+  fc <- 2^(mean(na.omit(as.numeric(all_df[i,na.omit(neg_runs_list)]))) - mean(na.omit(as.numeric(all_df[i,na.omit(pos_runs_list)]))))
+  #fc <- NP_ttest$estimate[2]/NP_ttest$estimate[1]
   
   all_fc <- rbind(all_fc, c(gene, fc, t_pv, p_pv))
   
@@ -105,11 +108,12 @@ for (i in 1:nrow(all_df)) {
 
 all_fc <- as.data.frame(all_fc)
 all_fc$`mean of y` <- as.numeric(all_fc$`mean of y`)
+all_fc$V2 <- as.numeric(all_fc$V2)
 all_fc$V3 <- as.numeric(all_fc$V3)
 all_fc$V4 <- as.numeric(all_fc$V4)
 all_fc$t_padj <- p.adjust(all_fc$V3, method = "BH")
 all_fc$p_padj <- p.adjust(all_fc$V4, method = "BH")
-all_fc$log2fc <- log2(all_fc$`mean of y`)
+all_fc$log2fc <- log2(all_fc$V2)
 all_fc$log10_t_padj <- -log10(all_fc$t_padj)
 all_fc$log10_p_padj <- -log10(all_fc$p_padj)
 all_fc$diffexp <- "NO"
@@ -122,12 +126,12 @@ ggplot(all_fc, aes(`log2(fc)`, `-log10(t_padj)`, color = factor(diffexp), size =
   geom_point() +
   geom_vline(xintercept=c(-1, 1), col="black") +
   geom_hline(yintercept=-log10(0.05), col="black") +
-  scale_color_manual(values = c(col[1], col[8], col[5])) +
-  scale_size_manual(values = c(3,1,3)) +
+  scale_color_manual(values = c(col[8], col[5])) +
+  scale_size_manual(values = c(1,3)) +
   scale_x_continuous(limits = c(-max(abs(all_fc$`log2(fc)`)), max(abs(all_fc$`log2(fc)`))), breaks = seq(-7, 7, by = 1)) +
-  #geom_text_repel(data = subset(all_fc, diffexp == "DOWN"), aes(label = gene), size = 4) +
-  ggtitle("PASC vs Acute") +
-  xlab("Log2 Fold Change (PASC/Acute)") +
+  geom_text_repel(data = subset(all_fc, diffexp == "UP"), aes(label = gene), size = 4) +
+  ggtitle("PASC vs Acute_fu") +
+  xlab("Log2 Fold Change (PASC/Acute_fu)") +
   ylab("-Log10 Adjusted P-Value") +
   #xlim(-2, 2) +
   guides(fill = guide_legend(title = "Differetially Expressed")) +
@@ -140,7 +144,7 @@ ggplot(all_fc, aes(`log2(fc)`, `-log10(t_padj)`, color = factor(diffexp), size =
         axis.title = element_text(size = 24, face = 'bold'),
         legend.title = element_text(size = 20),
         legend.text = element_text(size = 16)) 
-ggsave("reports/figures/AllPlates_NoFilter_Samples_PASCvsAcute_Volcano.pdf", width = 24, height = 16, units = "cm")
+ggsave("reports/figures/AllPlates_NoFilter_Samples_PASCvsAcuteFU_Volcano.pdf", width = 24, height = 16, units = "cm")
 
-write.csv(all_fc, file = "data/processed/AllPlates_NoFilter_Samples_PASCvsAcute_DE_list.csv")
+write.csv(all_fc, file = "data/processed/AllPlates_NoFilter_Samples_PASCvsAcuteFU_DE_list.csv")
 
