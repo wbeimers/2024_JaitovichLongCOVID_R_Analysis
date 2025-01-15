@@ -25,7 +25,7 @@ pal <- c("#66C2A5",
          "#B2DF8A")
 
 #Make a Custom Gradient
-col1 <- colorRampPalette(col)(14)
+col1 <- colorRampPalette(col)(16)
 
 #plot colors
 pie(rep(1, length(col)), col = col , main="") 
@@ -100,6 +100,7 @@ t_pca_set <- tibble::rownames_to_column(t_pca_set, "Samples")
 #merge metadata
 t_pca_set <- merge(t_pca_set, groups, by.x = "Samples", by.y = "Sample", all.x = T)
 t_pca_set <- merge(t_pca_set, file_info, by = "Samples", all.x = T)
+t_pca_set$plate <- sapply(strsplit(t_pca_set$Runs, "_"), function(x) paste(x[3:4], collapse = "_"))
 
 pca_score <- prcomp(t_pca_set[,c(2:6088)],
                     scale. = T)
@@ -108,20 +109,20 @@ summary(pca_score)
 #autoplot
 pca_plot <- autoplot(pca_score,
                      data = t_pca_set,
-                     color = "Set",
-                     fill = "Set",
+                     color = "plate",
+                     fill = "plate",
                      loadings = F,
                      loadings.label = F,
                      scale = 0,
-                     frame = T,
+                     frame = F,
                      frame.type = "t",
-                     frame.color = "Set") +
-  geom_point(aes(fill = Set), shape = 21, size = 4, color = "black") +
+                     frame.color = "plate") +
+  geom_point(aes(fill = plate), shape = 21, size = 4, color = "black") +
   #stat_ellipse(aes(fill = Set), geom = "polygon", alpha = 0.1, show.legend = FALSE) +
-  scale_fill_manual(values = col) +
-  scale_color_manual(values = col) +
-  #scale_color_viridis(option = "plasma") +
-  #scale_fill_viridis(option = "plasma") +
+  #scale_fill_manual(values = col1) +
+  #scale_color_manual(values = col1) +
+  scale_color_viridis(option = "plasma", discrete = T) +
+  scale_fill_viridis(option = "plasma", discrete = T) +
   theme_classic() +
   theme(axis.text.x = element_text(size = 20, angle = 0, vjust = 0.5, hjust = 0.5),
         axis.text.y = element_text(size = 20),
@@ -130,7 +131,7 @@ pca_plot <- autoplot(pca_score,
         legend.text = element_text(size = 16)) 
 pca_plot
 dev.off()
-ggsave("reports/figures/AllPlates_Samples_50percentImputed_group_PCA.pdf", width = 32, height = 16, units = "cm")
+ggsave("reports/figures/AllPlates_Samples_50percentImputed_plate_PCA.pdf", width = 32, height = 16, units = "cm")
 
 ####scree plot####
 plot(pca_score$sdev^2)
