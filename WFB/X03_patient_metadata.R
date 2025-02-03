@@ -103,3 +103,38 @@ replaceValues <- function(row) {
 apply(df_fixed, 1, replaceValues)
 
 dbDisconnect(con)
+
+
+
+## Fix wrong F values in the Sex column ---- 
+
+# Establish a connection to the DB
+con <- dbConnect(RSQLite::SQLite(), dbname = "P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Database/Long Covid Study DB.sqlite")
+
+df <- dbGetQuery(con, "SELECT Sample, sample_id, Sex
+           FROM patient_metadata
+           ")
+
+unique(df$Sex)
+
+df <- df %>%
+  mutate(Sex = case_when(
+    Sex == "F " ~ "F",
+    T ~ Sex
+  ))
+
+unique(df$Sex)
+
+
+## R Function to replace values 
+replaceValues <- function(row) {
+  dbExecute(
+    con,
+    "UPDATE patient_metadata SET Sex = ? WHERE sample_id = ?",
+    params = list(row["Sex"], row["sample_id"])
+  )
+}
+
+apply(df, 1, replaceValues)
+
+dbDisconnect(con)

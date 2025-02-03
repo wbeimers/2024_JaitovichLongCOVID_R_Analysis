@@ -1,5 +1,5 @@
-####Libraries/Load Files/colors####
-#libraries#
+#### libraries/colors/files ####
+# libraries #
 library(devtools)
 library(tidyverse)
 library(RColorBrewer)
@@ -7,10 +7,12 @@ library(ggfortify)
 library(missForest)
 library(VIM)
 library(viridis)
+library(RSQLite)
+library(ggrepel)
 
 
-#Colors#
-#Make a classic palette
+# Colors #
+# Make a classic palette
 col <- brewer.pal(8, "Set2") 
 
 pal <- c("#66C2A5",
@@ -24,117 +26,188 @@ pal <- c("#66C2A5",
          "#B3B3B3",
          "#B2DF8A")
 
-#Make a Custom Gradient
+pal <- c('#EE6677', 
+         '#AA3377', 
+         '#CCBB44', 
+         '#228833', 
+         '#66CCEE', 
+         '#4477AA')
+
+# Make a Custom Gradient
 col1 <- colorRampPalette(col)(16)
 
-#plot colors
+# plot colors
 pie(rep(1, length(col)), col = col , main="") 
 
 
-#files#
-spec_PG_NPs <- read.csv("data/processed/PG_Matrix_AllPlates_Samples_NPs.csv")
-spec_PG_NPs_50 <- read.csv("data/processed/PG_Matrix_AllPlates_Samples_NPs_50%.csv")
-groups <- read.csv("data/metadata/sample_groups.csv")
-file_info <- read.csv("data/metadata/AllPlates_Samples_file_info.csv")
-spec_PG_NPs <- spec_PG_NPs[-1]
-spec_PG_NPs_50 <- spec_PG_NPs_50[-1]
+
+# files #
+con <- dbConnect(RSQLite::SQLite(), dbname = "P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Database/Long Covid Study DB.sqlite")
 
 
-####DataTransformation####
-#Look at distribution of protein quant values in the unfiltered and filtered for 50% missingness of PGs
-table(!is.na(spec_PG_NPs$X20240612_WFB_Plate_01_100))
-table(!is.na(spec_PG_NPs_50$X20240612_WFB_Plate_01_100))
+proteomics <- dbGetQuery(con, "SELECT standardized_name, rawfile_id, biomolecule_id, raw_abundance, normalized_abundance
+                         FROM proteomics_measurement")
+biomolecules <- dbGetQuery(con, "SELECT biomolecule_id, standardized_name, omics_id, keep 
+                           FROM biomolecules")
+rawfiles <- dbGetQuery(con, "SELECT rawfile_name, Sample, sample_id, ome_id, keep , rawfile_id, run_type
+                           FROM rawfiles_all")
+metadata <- dbGetQuery(con, "SELECT Sample, sample_id, Cohort, Age, Sex, BMI, `SF.36.QOL.Score`
+                           FROM patient_metadata")
 
-hist(spec_PG_NPs$X20240612_WFB_Plate_01_100,
-     breaks = 100)
-hist(log2(spec_PG_NPs$X20240612_WFB_Plate_01_100),
-     breaks = 100)
-hist(spec_PG_NPs_50$X20240612_WFB_Plate_01_100,
-     breaks = 100)
-hist(log2(spec_PG_NPs_50$X20240612_WFB_Plate_01_100),
-     breaks = 100)
-
-#Log2 transform the protein groups with at least 50% presence in the data
-spec_PG_NPs_50_tf <- log2(spec_PG_NPs_50[-1])
-spec_PG_NPs_50_tf <- data.frame(ID = spec_PG_NPs_50$PG.ProteinGroups, spec_PG_NPs_50_tf, stringsAsFactors = FALSE)
-
-#look at distributions of missing values
-matrixplot(spec_PG_NPs_50)
-histMiss(c(spec_PG_NPs_50_tf$X20240612_WFB_Plate_01_100, spec_PG_NPs_50_tf$X20240626_WFB_Plate_04_10),
-         only.miss = F)
-
-####Imputation####
-#write csv files to go impute in a different program
-write.csv(spec_PG_NPs_50_tf, file = "data/processed/PG_Matrix_AllPlates_Samples_NPs_50%_tf.csv")
-
-#read in imputed file from perseus
-spec_PG_NPs_50_tf_imp <- read.csv("data/processed/PG_Matrix_AllPlates_Samples_NPs_50%_tf_imp.csv")
-
-#check imputation
-hist(spec_PG_NPs_50_tf$X20240612_WFB_Plate_01_100,
-     breaks = 100)
-hist(spec_PG_NPs_50_tf_imp$N..X20240612_WFB_Plate_01_100,
-     breaks = 100)
+dbDisconnect(con)
 
 
-####PCA####
-pca_set <- spec_PG_NPs_50_tf_imp
+## Merge rawfiles and proteomics, Combine NPA and NPB measurements by completeness by protein group
+# subset rawfiles to only include sample and QC proteomics runs
+rawfiles <- rawfiles %>%
+  select(-keep) %>%
+  filter(ome_id == 1) %>%
+  filter(grepl("Sample|QC", run_type))
 
-pca_colnames <- colnames(pca_set)
-pca_colnames <- sapply(strsplit(pca_colnames, "_"), function(x) paste(x[5], collapse = "_"))
-pca_colnames[pca_colnames == "NA"] <- "allgenes"
-colnames(pca_set) <- pca_colnames
+metadata <- metadata %>%
+  select(-Sample) %>%
+  mutate(sample_id = as.integer(sample_id))
+
+df <- proteomics %>%
+  left_join(rawfiles, by = "rawfile_id") %>%
+  left_join(metadata, by = "sample_id")
+
+
+## LIMIT TO NPA FOR NOW, AFTER RE-SEARCHING COMBINE NPs BY COMPLETENESS
+# Also filter for completeness
+
+df <- df %>%
+  filter(grepl("NPA", rawfile_name)) #Select only sample runs
+
+# Show how many non-NA values there are for each protein group in each study group
+na_summary <- df %>%
+  group_by(Cohort, standardized_name) %>%
+  summarise(na_ratio = mean(!is.na(raw_abundance)), .groups = "drop")
+
+# Make a list of IDs to keep where there are at least 50% non-NA values in one of the cohorts
+ids_to_keep <- na_summary %>%
+  group_by(standardized_name) %>%
+  summarise(max_na_ratio = max(na_ratio)) %>%
+  filter(max_na_ratio >= 0.5) %>% 
+  pull(standardized_name)
+
+
+filtered_df <- df %>%
+  filter(standardized_name %in% ids_to_keep)
+  
+  
+
+
+#### PCA ####
+pca_set <- filtered_df %>%
+  select(standardized_name, normalized_abundance, sample_id) %>%
+  pivot_wider(names_from = sample_id, values_from = normalized_abundance)
 
 t_pca_set <- as.data.frame(t(pca_set))
 
-#get them into shape
-colnames(t_pca_set) <- as.character(t_pca_set[401, ])
+# turn row into colnames
+colnames(t_pca_set) <- as.character(t_pca_set[1, ])
 # Remove the row
-t_pca_set <- t_pca_set[-401, ]
-t_pca_set_n <- rownames(t_pca_set)
-t_pca_set_1 <- as.data.frame(lapply(t_pca_set, function(x) as.numeric(as.character(x))))
-rownames(t_pca_set_1) <- t_pca_set_n
-t_pca_set <- t_pca_set_1
-t_pca_set <- tibble::rownames_to_column(t_pca_set, "Samples")
+t_pca_set <- t_pca_set[-1, ]
+#change to numeric
+t_pca_set <- data.frame(lapply(t_pca_set, as.numeric), row.names = rownames(t_pca_set))
+# re-add sample_id
+t_pca_set <- tibble::rownames_to_column(t_pca_set, "sample_id")
+ncol(t_pca_set)
 
-#merge metadata
-t_pca_set <- merge(t_pca_set, groups, by.x = "Samples", by.y = "Sample", all.x = T)
-t_pca_set <- merge(t_pca_set, file_info, by = "Samples", all.x = T)
-t_pca_set$plate <- sapply(strsplit(t_pca_set$Runs, "_"), function(x) paste(x[3:4], collapse = "_"))
+t_pca_set <- t_pca_set %>%
+  mutate(sample_id = as.integer(sample_id)) 
 
-pca_score <- prcomp(t_pca_set[,c(2:6088)],
+pca_score <- prcomp(t_pca_set[,c(2:6490)],
                     scale. = T)
 summary(pca_score)
 
-#autoplot
-pca_plot <- autoplot(pca_score,
-                     data = t_pca_set,
-                     color = "plate",
-                     fill = "plate",
-                     loadings = F,
-                     loadings.label = F,
-                     scale = 0,
-                     frame = F,
-                     frame.type = "t",
-                     frame.color = "plate") +
-  geom_point(aes(fill = plate), shape = 21, size = 4, color = "black") +
-  #stat_ellipse(aes(fill = Set), geom = "polygon", alpha = 0.1, show.legend = FALSE) +
-  #scale_fill_manual(values = col1) +
-  #scale_color_manual(values = col1) +
-  scale_color_viridis(option = "plasma", discrete = T) +
-  scale_fill_viridis(option = "plasma", discrete = T) +
-  theme_classic() +
-  theme(axis.text.x = element_text(size = 20, angle = 0, vjust = 0.5, hjust = 0.5),
-        axis.text.y = element_text(size = 20),
-        axis.title = element_text(size = 24, face = 'bold'),
-        legend.title = element_text(size = 20),
-        legend.text = element_text(size = 16)) 
-pca_plot
-dev.off()
-ggsave("reports/figures/AllPlates_Samples_50percentImputed_plate_PCA.pdf", width = 32, height = 16, units = "cm")
+# make variables to plot
+# scree
+explained_variance <- pca_score$sdev^2 / sum(pca_score$sdev^2)
+variance <- data.frame(proportion = explained_variance,
+                       PC = 1:400)
 
-####scree plot####
-plot(pca_score$sdev^2)
+# pca scores
+scores <- as.data.frame(pca_score$x)
+scores <- scores %>%
+  mutate(sample_id = t_pca_set$sample_id) %>%
+  left_join(filtered_df %>% 
+              select(sample_id, rawfile_id, Sample, Cohort, Age, Sex, BMI, `SF.36.QOL.Score`) %>%
+              distinct(), 
+            by = "sample_id")
+
+
+ggplot(scores, aes(PC2, PC3, fill = Cohort)) + 
+  geom_point(shape = 21,
+           size = 1,
+           color = "black",
+           stroke = 0.1) +
+  stat_ellipse(aes(color = Cohort), 
+               geom = "path", 
+               show.legend = FALSE,
+               linewidth = 0.2) +
+  scale_fill_manual(values = pal) +
+  scale_color_manual(values = pal) +
+  xlab(paste("PC2", round(variance$proportion[2]*100, 2))) +
+  ylab(paste("PC3", round(variance$proportion[3]*100, 2))) +
+  theme_classic() +
+  theme(panel.border = element_rect(color = "black", fill = NA, size = 0.2), 
+        panel.grid.major = element_blank(),
+        panel.spacing = unit(0.5, "lines"), 
+        axis.text.x = element_text(size = 7),
+        axis.text.y = element_text(size = 7),
+        axis.title = element_text(size = 7),
+        axis.line = element_blank(),
+        axis.ticks = element_line(size = 0.2),
+        strip.text = element_blank(),
+        legend.position = c(0.95, 0.05), 
+        legend.justification = c("right", "bottom"),
+        legend.margin = margin(2, 2, 2, 2),
+        legend.title = element_text(size = 7),
+        legend.text = element_text(size = 7),
+        legend.spacing.y = unit(0.1, "cm"),
+        legend.key.size = unit(0.25, "cm")
+  )
+ggsave("reports/figures/AllPlates_Samples_cohort_PCA_PC2PC3.pdf", 
+       width = 8, height = 6, units = "cm")
+
+
+## loadings ----
+loadings <- pca_score$rotation %>%
+  as.data.frame() %>%
+  select(PC1, PC2) %>%
+  tibble::rownames_to_column(var = 'standardized_name')
+
+
+ggplot(loadings, aes(PC1, PC2)) + 
+  geom_point(shape = 21,
+             size = 1,
+             color = "black",
+             stroke = 0.1) +
+  geom_text_repel(aes(label = standardized_name), size = 2) +
+  xlab(paste("PC1 Loadings", round(variance$proportion[1]*100, 2))) +
+  ylab(paste("PC2 Loadings", round(variance$proportion[2]*100, 2))) +
+  theme_classic() +
+  theme(panel.border = element_rect(color = "black", fill = NA, size = 0.2), 
+        panel.grid.major = element_blank(),
+        panel.spacing = unit(0.5, "lines"), 
+        axis.text.x = element_text(size = 7),
+        axis.text.y = element_text(size = 7),
+        axis.title = element_text(size = 7),
+        axis.line = element_blank(),
+        axis.ticks = element_line(size = 0.2),
+        strip.text = element_blank(),
+        legend.position = c(0.95, 0.05), 
+        legend.justification = c("right", "bottom"),
+        legend.margin = margin(2, 2, 2, 2),
+        legend.title = element_text(size = 7),
+        legend.text = element_text(size = 7),
+        legend.spacing.y = unit(0.1, "cm"),
+        legend.key.size = unit(0.25, "cm")
+  )
+ggsave("reports/figures/AllPlates_Samples_cohort_PCAloadings.pdf", 
+       width = 8, height = 6, units = "cm")
 
 
 

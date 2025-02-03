@@ -9,7 +9,8 @@ library(VIM)
 library(viridis)
 library(RSQLite)
 library(ggrepel)
-library(pheatmap)
+library(limma)
+library(broom)
 
 
 # Colors #
@@ -97,57 +98,40 @@ filtered_df <- df %>%
   filter(standardized_name %in% ids_to_keep)
 
 
-####Heatmap####
-expression_matrix <- filtered_df %>%
-  select(standardized_name, sample_id, normalized_abundance) %>%
+
+#### Linear Model ####
+#LM results including study group, age, sex, and qol score
+results <- filtered_df %>%
+  group_by(standardized_name) %>%
+  nest() %>%
+  mutate(model = map(data, ~ lm(normalized_abundance ~ Cohort + Age + Sex + BMI + `SF.36.QOL.Score`, data = .)),
+         tidied = map(model, tidy)) %>%
+  unnest(tidied) %>%
+  mutate(adjusted_p_value = p.adjust(p.value, method = "fdr"))
+
+filtered_results <- results %>%
+  filter(adjusted_p_value < 0.05)
+  
+
+## limma
+abundance_df <- filtered_df %>%
+  select(sample_id, standardized_name, normalized_abundance) %>%
   pivot_wider(names_from = sample_id, values_from = normalized_abundance) %>%
-  tibble::column_to_rownames(var = "standardized_name")
+  column_to_rownames("standardized_name")
 
-#Make annotation dataframe for the sample groups
-sample_annot <- filtered_df %>%
-  select(sample_id, Cohort) %>%
-  distinct() %>%
-  tibble::column_to_rownames(var = "sample_id")
+metadata_df <- metadata %>%
+  mutate(`SF.36.QOL.Score` = case_when(
+    `SF.36.QOL.Score` == "N/A" ~ 0,
+    T ~ as.numeric(`SF.36.QOL.Score`))) %>%
+  mutate(Sex = factor(Sex, levels = c("M", "F"))) %>%
+  mutate(Cohort = factor(Cohort, levels = c("Acute", "Acute_fu", "Acute_NC", "Healthy", "PASC", "PASC_fu"))) %>%
+  mutate(Cohort = relevel(Cohort, ref = "Healthy"))
 
-#make annotation dataframe for the genes
-#heatmap_annot <- human_gene_list %>%
-#  dplyr::select(c("Entry", "Gene.Ontology..cellular.component."))
-#heatmap_annot <- semi_join(heatmap_annot, twentyfive_NPs_pgs_f_imputed_log2,
-#                           by = join_by("Entry" == "allgenes"))
-#rownames(heatmap_annot) <- heatmap_annot[,1]
-#heatmap_annot <- mutate(heatmap_annot, Intracellular = ifelse(grepl("cytosol|cytoplasm", Gene.Ontology..cellular.component.), "Yes", "No"))
-#heatmap_annot <- mutate(heatmap_annot, Membrane = ifelse(grepl("membrane", Gene.Ontology..cellular.component.), "Yes", "No"))
-#heatmap_annot <- mutate(heatmap_annot, Plasma = ifelse(grepl("plasma", Gene.Ontology..cellular.component.), "Yes", "No"))
-#heatmap_annot <- heatmap_annot[,-1]
-#heatmap_annot <- heatmap_annot[,-1]
+design <- model.matrix(~ Cohort + Age + Sex + BMI + `SF.36.QOL.Score`, data = metadata_df) 
 
-
-pheatmap(expression_matrix,
-         #color = viridis(24, direction = 1, option = "plasma"),
-         color = rev(colorRampPalette(brewer.pal(24, "RdYlBu"))(24)),
-         breaks = c(-11, -9, -7, -5, -4, -3, -2.5, -2, -1.5, -1, -0.5, 0, 0.5, 1, 1.5, 2, 2.5, 3, 4, 5, 7, 9, 11),
-         cluster_rows = T,
-         cluster_cols = T,
-         treeheight_row = 0,
-         treeheight_col = 10,
-         show_rownames = F,
-         show_colnames = F,
-         border_color = NA,
-         scale = "row",
-         #annotation_row = heatmap_annot,
-         annotation_col = sample_annot,
-         annotation_colors = list(Cohort = c(Acute = pal[1], Acute_fu = pal[2], Acute_NC = pal[3], Healthy = pal[4], PASC = pal[5], PASC_fu = pal[6])),
-         filename = "reports/figures/AllPlates_Samples_heatmap.png",
-         width = 8,
-         height = 8)
-
-
-
-#Get clustering Information for proteins
-hm <- pheatmap(expression_matrix)
-row_cluster <- data.frame(cluster = cutree(hm$tree_row, k = 5))
-row_cluster_3 <- filter(row_cluster, row_cluster$cluster == 3)
-row_cluster_3 <- rownames(row_cluster_3)
+fit <- lmFit(abundance_df, design)
+fit<- eBayes(fit)
+results <- topTable(fit, coef = "CohortAcute", number = Inf)
 
 
 
