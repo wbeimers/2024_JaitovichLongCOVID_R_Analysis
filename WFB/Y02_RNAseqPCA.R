@@ -42,77 +42,35 @@ pie(rep(1, length(col)), col = col , main="")
 
 
 # files #
-con <- dbConnect(RSQLite::SQLite(), dbname = 'P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Database/Long Covid Study DB.sqlite')
+con <- dbConnect(RSQLite::SQLite(), dbname = "P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Database/Long Covid Study DB.sqlite")
 
 
-proteomics <- dbGetQuery(con, 'SELECT standardized_name, rawfile_id, biomolecule_id, raw_abundance, normalized_abundance
-                         FROM proteomics_measurement')
-biomolecules <- dbGetQuery(con, 'SELECT biomolecule_id, standardized_name, omics_id, keep 
-                           FROM biomolecules')
-rawfiles <- dbGetQuery(con, 'SELECT rawfile_name, Sample, sample_id, ome_id, keep , rawfile_id, run_type
-                           FROM rawfiles_all')
-metadata <- dbGetQuery(con, 'SELECT Sample, sample_id, Cohort, Age, Sex, BMI, `SF.36.QOL.Score`, PASC_Cohort, Paired_samples
-                           FROM patient_metadata')
+rnaseq <- dbGetQuery(con, "SELECT standardized_name, SYMBOL, Sample, Counts, biomolecule_id, measurement_id
+                         FROM rnaseq_measurements")
+biomolecules <- dbGetQuery(con, "SELECT biomolecule_id, standardized_name, omics_id, keep 
+                           FROM biomolecules")
+metadata <- dbGetQuery(con, "SELECT Sample, sample_id, Cohort, Age, Sex, BMI, `SF.36.QOL.Score`
+                           FROM patient_metadata")
 
 dbDisconnect(con)
 
 
 ## Merge rawfiles and proteomics, Combine NPA and NPB measurements by completeness by protein group
 # subset rawfiles to only include sample and QC proteomics runs
-rawfiles <- rawfiles %>%
-  select(-keep) %>%
-  filter(ome_id == 1) %>%
-  filter(grepl("Sample|QC", run_type))
-
 metadata <- metadata %>%
-  select(-Sample) %>%
   mutate(sample_id = as.integer(sample_id))
 
-df <- proteomics %>%
-  left_join(rawfiles, by = "rawfile_id") %>%
-  left_join(metadata, by = "sample_id")
-
-
-# Combine by which NP has more completeness by protein group. One NP for each protein group
-df <- df %>%
-  mutate(NP = case_when(
-    grepl("NPA", rawfile_name) == T ~ "NPA",
-    grepl("NPB", rawfile_name) == T ~ "NPB"
-  )) %>%
-  group_by(standardized_name, NP) %>%
-  mutate(na_count = sum(is.na(raw_abundance))) %>%
-  ungroup() %>%
-  group_by(standardized_name) %>%
-  mutate(keep_group = NP[which.min(na_count)]) %>%  
-  filter(NP == keep_group) %>%  
-  select(-na_count, -keep_group, -NP)  
-
-length(unique(df$standardized_name))
-
-
-# Also filter for completeness
-# Show how many non-NA values there are for each protein group in each study group
-na_summary <- df %>%
-  group_by(Cohort, standardized_name) %>%
-  summarise(na_ratio = mean(!is.na(raw_abundance)), .groups = 'drop')
-
-# Make a list of IDs to keep where there are at least 50% non-NA values in one of the cohorts
-ids_to_keep <- na_summary %>%
-  group_by(standardized_name) %>%
-  summarise(max_na_ratio = max(na_ratio)) %>%
-  filter(max_na_ratio >= 0.5) %>% 
-  pull(standardized_name)
-
-filtered_df <- df %>%
-  filter(standardized_name %in% ids_to_keep) %>%
-  filter(!is.na(normalized_abundance))
+df <- rnaseq %>%
+  left_join(metadata, by = "Sample")
 
 
 
 #### PCA ####
-pca_set <- filtered_df %>%
-  select(standardized_name, normalized_abundance, sample_id) %>%
-  pivot_wider(names_from = sample_id, values_from = normalized_abundance)
+pca_set <- df %>%
+  dplyr::select(standardized_name, Counts, sample_id) %>%
+  group_by(standardized_name, sample_id) %>%
+  summarise(Counts = mean(Counts)) %>%
+  pivot_wider(names_from = sample_id, values_from = Counts)
 
 t_pca_set <- as.data.frame(t(pca_set))
 
@@ -129,7 +87,7 @@ ncol(t_pca_set)
 t_pca_set <- t_pca_set %>%
   mutate(sample_id = as.integer(sample_id)) 
 
-pca_score <- prcomp(t_pca_set[,c(2:6973)],
+pca_score <- prcomp(t_pca_set[,c(2:19772)],
                     scale. = T)
 summary(pca_score)
 
@@ -137,32 +95,31 @@ summary(pca_score)
 # scree
 explained_variance <- pca_score$sdev^2 / sum(pca_score$sdev^2)
 variance <- data.frame(proportion = explained_variance,
-                       PC = 1:400)
+                       PC = 1:270)
 
 # pca scores
 scores <- as.data.frame(pca_score$x)
 scores <- scores %>%
   mutate(sample_id = t_pca_set$sample_id) %>%
-  left_join(filtered_df %>% 
-              ungroup() %>%
-              select(sample_id, rawfile_id, Sample, Cohort, Age, Sex, BMI, `SF.36.QOL.Score`) %>%
-              distinct(), 
-            by = "sample_id") %>%
+  left_join(df %>% 
+            ungroup() %>%
+            dplyr::select(sample_id, Sample, Cohort, Age, Sex, BMI, `SF.36.QOL.Score`) %>%
+            distinct(), 
+          by = "sample_id") %>%
   mutate(SF.36.QOL.Score = as.numeric(SF.36.QOL.Score))
 
 
 ggplot(scores, aes(PC1, PC2, fill = Cohort)) + 
   geom_point(shape = 21,
-           size = 1,
-           color = "black",
-           stroke = 0.1) +
-  #stat_ellipse(aes(color = Cohort), 
-  #             geom = "path", 
-  #             show.legend = FALSE,
-  #             linewidth = 0.2) +
-  geom_text_repel(aes(label = Sample), size = 2) +
-  scale_fill_manual(values = pal) +
-  scale_color_manual(values = pal) +
+             size = 1,
+             color = "black",
+             stroke = 0.1) +
+  stat_ellipse(aes(color = Cohort), 
+               geom = "path", 
+               show.legend = FALSE,
+               linewidth = 0.2) +
+  scale_fill_manual(values = c(pal[2], pal[4], pal[5], pal[6])) +
+  scale_color_manual(values = c(pal[2], pal[4], pal[5], pal[6])) +
   #scale_fill_viridis_c(option = "plasma", direction = -1) +
   #scale_color_viridis_c(option = "plasma", direction = -1) +
   xlab(paste("PC1", round(variance$proportion[1]*100, 2))) +
@@ -185,8 +142,8 @@ ggplot(scores, aes(PC1, PC2, fill = Cohort)) +
         legend.spacing.y = unit(0.1, "cm"),
         legend.key.size = unit(0.25, "cm")
   )
-ggsave("reports/figures/Proteomics_AllPlates_Samples_cohort_PCA_PC1PC2_big.pdf", 
-       width = 32, height = 24, units = "cm")
+ggsave("reports/figures/RNAseq_Samples_cohort_PCA_PC1PC2.pdf", 
+       width = 8, height = 6, units = "cm")
 
 
 ## loadings ----
@@ -224,6 +181,3 @@ ggplot(loadings, aes(PC1, PC2)) +
   )
 ggsave("reports/figures/AllPlates_Samples_cohort_PCAloadings.pdf", 
        width = 8, height = 6, units = "cm")
-
-
-

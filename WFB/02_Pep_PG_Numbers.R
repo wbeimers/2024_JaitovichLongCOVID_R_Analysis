@@ -10,7 +10,7 @@ library(RSQLite)
 
 # colors
 # Make a classic palette
-col <- brewer.pal(6, 'Set2') 
+col <- brewer.pal(8, 'Set2') 
 
 # Make another palette
 pal <- c('#66C2A5',
@@ -24,12 +24,12 @@ pal <- c('#66C2A5',
          '#B3B3B3',
          '#B2DF8A')
 
-pal <- c('#EE6677', 
-         '#AA3377', 
-         '#CCBB44', 
-         '#228833', 
-         '#66CCEE', 
-         '#4477AA')
+pal <- c('#EE6677', # Acute
+         '#AA3377', # Acute_fu
+         '#CCBB44', # Acute_NC
+         '#228833', # Healthy
+         '#66CCEE', # PASC
+         '#4477AA') # PASC_fu
 
 # Make a Custom Gradient
 col1 <- c(rev(colorRampPalette(col)(100)),'white', colorRampPalette(col1)(100))
@@ -48,18 +48,18 @@ biomolecules <- dbGetQuery(con, 'SELECT biomolecule_id, standardized_name, omics
                            FROM biomolecules')
 rawfiles <- dbGetQuery(con, 'SELECT rawfile_name, Sample, sample_id, ome_id, keep , rawfile_id, run_type
                            FROM rawfiles_all')
-metadata <- dbGetQuery(con, 'SELECT Sample, sample_id, Cohort, Age, Sex, BMI, `SF.36.QOL.Score`
+metadata <- dbGetQuery(con, 'SELECT Sample, sample_id, Cohort, Age, Sex, BMI, `SF.36.QOL.Score`, PASC_Cohort, Paired_samples
                            FROM patient_metadata')
 
 dbDisconnect(con)
 
 
 ## Merge rawfiles and proteomics, Combine NPA and NPB measurements by completeness by protein group
-# subset rawfiles to only include sample and QC proteomics runs
+# subset rawfiles to only include sample proteomics runs
 rawfiles <- rawfiles %>%
   select(-keep) %>%
   filter(ome_id == 1) %>%
-  filter(grepl('Sample|QC', run_type))
+  filter(grepl('Sample', run_type))
 
 metadata <- metadata %>%
   select(-Sample) %>%
@@ -70,12 +70,23 @@ df <- proteomics %>%
   left_join(metadata, by = 'sample_id')
 
 
-## LIMIT TO NPA FOR NOW, AFTER RE-SEARCHING COMBINE NPs BY COMPLETENESS
-# Also filter for completeness
-
+# Combine by which NP has more completeness by protein group. One NP for each protein group
 df <- df %>%
-  filter(grepl('NPA', rawfile_name)) #Select only sample runs
+  mutate(NP = case_when(
+    grepl("NPA", rawfile_name) == T ~ "NPA",
+    grepl("NPB", rawfile_name) == T ~ "NPB"
+  )) %>%
+  group_by(standardized_name, NP) %>%
+  mutate(na_count = sum(is.na(raw_abundance))) %>%
+  ungroup() %>%
+  group_by(standardized_name) %>%
+  mutate(keep_group = NP[which.min(na_count)]) %>%  
+  filter(NP == keep_group) %>%  
+  select(-na_count, -keep_group, -NP)  
+  
+length(unique(df$standardized_name))
 
+# Also filter for completeness
 # Show how many non-NA values there are for each protein group in each study group
 na_summary <- df %>%
   group_by(Cohort, standardized_name) %>%
@@ -88,9 +99,9 @@ ids_to_keep <- na_summary %>%
   filter(max_na_ratio >= 0.5) %>% 
   pull(standardized_name)
 
-
 filtered_df <- df %>%
-  filter(standardized_name %in% ids_to_keep)
+  filter(standardized_name %in% ids_to_keep) %>%
+  filter(!is.na(normalized_abundance))
 
 
 
@@ -116,30 +127,23 @@ ggsave('reports/figures/AllPlates_Samples_MissingnessHeatmap_postfiltering.png',
 
 #### plot:proteinvsmissing ####
 #Calc percent of samples each protein was detected in
-percent_non_na <- rowMeans(!is.na(spec_PG_NPs)) * 100
-non_na_counts_ordered <- percent_non_na[order(-percent_non_na)]
+percent_non_na <- df %>%
+  group_by(standardized_name) %>%  
+  summarise(percent_non_na = mean(!is.na(raw_abundance)) * 100) %>%
+  arrange(desc(percent_non_na)) %>%
+  mutate(Order = seq(1,nrow(.)),
+         color = "Y")
 
-sum(percent_non_na == 100) #1215
-sum(percent_non_na >= 50) #6095
+sum(percent_non_na$percent_non_na == 100) #1288
+sum(percent_non_na$percent_non_na >= 50) #6166
 
-#find percent between 
-p <- rowSums(!is.na(spec_PG_NPs[, -c(1, 2)]))
-op <- p[order(-p)]
-fiftyp <- op[1:7608]
-divided <- 100*fiftyp/40
-p.mv <- mean(divided)
-print(p.mv)
-
-missing <- data.frame(Order = seq_along(non_na_counts_ordered), Value = non_na_counts_ordered)
-missing$color <- 'Y'
-
-ggplot(missing, aes(Order, Value)) + 
+ggplot(percent_non_na, aes(Order, percent_non_na)) + 
   #geom_point(size = 3) + 
-  geom_area(fill = col[8], alpha = 0.5) + # Shade the area under the line
-  geom_line(color = col[3], linewidth = 2) + # Add the line on top
-  geom_vline(xintercept = 1215, linetype = 'solid', color = 'black', linewidth = 1) +
-  geom_vline(xintercept = 6095, linetype = 'solid', color = col[2], linewidth = 1) + 
-  geom_hline(yintercept = 50, linetype = 'solid', color = col[2], linewidth = 1) +   
+  #geom_area(fill = col[8], alpha = 0.2) + # Shade the area under the line
+  geom_line(color = col[3], linewidth = 0.5) + # Add the line on top
+  geom_vline(xintercept = 1288, linetype = 'solid', color = 'black', linewidth = 0.2) +
+  geom_vline(xintercept = 6166, linetype = 'solid', color = col[2], linewidth = 0.2) + 
+  geom_hline(yintercept = 50, linetype = 'solid', color = col[2], linewidth = 0.2) +   
   #scale_fill_manual(values = col[5]) +
   ggtitle('Protein Group Counts') +
   xlab('Protein Groups') +
@@ -152,22 +156,27 @@ ggplot(missing, aes(Order, Value)) +
   theme_classic() +
   theme(panel.border = element_blank(), 
         panel.grid.major = element_blank(), 
-        axis.text.x = element_text(size = 20, angle = 0, vjust = 0.5, hjust = 0.5),
-        axis.text.y = element_text(size = 20),
-        plot.title = element_text(size = 20, face = 'bold', hjust = 0.5), 
-        axis.title = element_text(size = 24, face = 'bold'),
-        legend.title = element_text(size = 18),
-        legend.text = element_text(size = 12)) 
-ggsave('reports/figures/AllPlates_Samples_PGvsMissing.pdf', width = 24, height = 16, units = 'cm')
+        axis.text.x = element_text(size = 7),
+        axis.text.y = element_text(size = 7),
+        plot.title = element_blank(), 
+        axis.title = element_text(size = 7),
+        legend.title = element_text(size = 7),
+        legend.text = element_text(size = 7),
+        axis.line = element_line(linewidth = 0.2),
+        axis.ticks = element_line(linewidth = 0.2)) 
+ggsave('reports/figures/AllPlates_Samples_PGvsMissing.pdf', width = 16, height = 8, units = 'cm')
 
 
 
 #### plot:RunOrdervsProteinNumber ####
-run_ids <- filtered_df_NA %>%
+run_ids <- df %>%
   group_by(sample_id) %>%
   summarize(count = sum(!is.na(raw_abundance))) %>%
-  left_join(filtered_df_NA %>% select(sample_id, rawfile_id, Sample, Cohort), by = 'sample_id') %>%
+  inner_join(df %>% ungroup() %>% select(sample_id, rawfile_id, Cohort), by = 'sample_id') %>%
   distinct() %>%
+  group_by(sample_id) %>%
+  slice_min(rawfile_id, with_ties = FALSE) %>%
+  ungroup() %>%
   arrange(rawfile_id) %>%
   mutate(order = row_number())
   
@@ -175,8 +184,8 @@ ggplot(run_ids, aes(order, count, color = Cohort)) +
   geom_point() + 
   scale_color_manual(values = pal) +
   xlab('Run Order') +
-  ylab('Filtered PG IDs') +
-  scale_y_continuous(expand = c(0,0), limits = c(0, 7000)) +
+  ylab('PG IDs') +
+  scale_y_continuous(expand = c(0,0), limits = c(0, 8000)) +
   scale_x_continuous(expand = c(0,1)) +
   guides(fill = guide_legend(title = 'Study Group')) +
   theme_classic() +
@@ -201,16 +210,33 @@ ggsave('reports/figures/AllPlates_Sample_PGvsRunOrder_Set_Point.pdf',
 
 #### plot:contaminations ####
 # contaminant lists
-erythrocyte <- c('P69905', 'P68871', 'P00915', 'P02042', 'P00918')
-platelet <- c('P21333', 'Q9Y490', 'P35579', 'P60709', 'P18206')
-coagulation <- c('P02675', 'P02679', 'P02671', 'P00488', 'P01008')
+contaminant <- read.csv("data/metadata/contamination_proteins.csv") %>%
+  mutate(single_id = word(Protein_IDs, 1, sep = ";")) %>%
+  mutate(single_id = word(single_id, 1, sep = "-"))
+
+
+# check for exact matches to contamination vector
+contaminant1 <- contaminant %>%
+  mutate(is = single_id %in% filtered_df$standardized_name) %>%
+  filter(is == T) %>%
+  mutate(standardized_name = single_id) %>%
+  dplyr::select(standardized_name, Type)
 
 contaminant_df <- filtered_df %>%
   mutate(
     group = case_when(
-      standardized_name %in% erythrocyte ~ "erythrocyte",
-      standardized_name %in% platelet ~ "platelet",
-      standardized_name %in% coagulation ~ "coagulation",
+      standardized_name %in% 
+        (contaminant1 %>% 
+           filter(Type == "Erythrocyte") %>% 
+           pull(standardized_name)) ~ "erythrocyte",
+      standardized_name %in% 
+        (contaminant1 %>% 
+           filter(Type == "Platelet") %>% 
+           pull(standardized_name)) ~ "platelet",
+      standardized_name %in% 
+        (contaminant1 %>% 
+           filter(Type == "Coagulation") %>% 
+           pull(standardized_name)) ~ "coagulation",
       TRUE ~ "none" # Default group if no match is found
     )
   ) %>%
@@ -237,7 +263,7 @@ p1 <- ggplot(contaminant_df %>% filter(group == "erythrocyte"),
         axis.title = element_text(size = 7),
         axis.line = element_line(size = 0.2),
         axis.ticks = element_line(size = 0.2),
-        legend.position = 'right',
+        legend.position = 'none',
         legend.title = element_text(size = 7),
         legend.text = element_text(size = 7),
         legend.key.size = unit(0.2, "in")
@@ -263,7 +289,7 @@ p2 <- ggplot(contaminant_df %>% filter(group == "platelet"),
         axis.title = element_text(size = 7),
         axis.line = element_line(size = 0.2),
         axis.ticks = element_line(size = 0.2),
-        legend.position = 'right',
+        legend.position = 'none',
         legend.title = element_text(size = 7),
         legend.text = element_text(size = 7),
         legend.key.size = unit(0.2, "in")
@@ -289,7 +315,7 @@ p3 <- ggplot(contaminant_df %>% filter(group == "coagulation"),
         axis.title = element_text(size = 7),
         axis.line = element_line(size = 0.2),
         axis.ticks = element_line(size = 0.2),
-        legend.position = 'right',
+        legend.position = 'none',
         legend.title = element_text(size = 7),
         legend.text = element_text(size = 7),
         legend.key.size = unit(0.2, "in")
@@ -299,6 +325,277 @@ p3 <- ggplot(contaminant_df %>% filter(group == "coagulation"),
 p1 / p2 / p3
 ggsave('reports/figures/AllPlates_Sample_Contaminants_Set_Point.pdf', 
        width = 16, height = 12, units = 'cm')
+
+## Platelet analysis ----
+platelet <- contaminant1 %>%
+  filter(Type == "Platelet") %>%
+  pull(standardized_name)
+
+platelet_df <- filtered_df %>%
+  group_by(sample_id) %>%
+  summarize(
+    sum_all = sum(normalized_abundance, na.rm = TRUE),
+    sum_subset = sum(normalized_abundance[standardized_name %in% platelet], na.rm = TRUE),
+    ratio = sum_subset / sum_all
+  ) %>%
+  left_join(metadata, by = "sample_id")
+
+platelet_df_mean_sd <- platelet_df %>%
+  ungroup() %>%
+  summarize(
+    median_ratio = median(ratio, na.rm = TRUE),
+    sd_ratio = sd(ratio, na.rm = TRUE)
+  )
+
+
+ggplot(platelet_df, 
+       aes(sample_id, ratio, color = Cohort)) +
+  geom_point(size = 1,
+             alpha = 1,
+             stroke = 0) + 
+  scale_color_manual(values = pal) +
+  geom_hline(yintercept = platelet_df_mean_sd$median_ratio,
+             linewidth = 0.2) +
+  geom_hline(yintercept = platelet_df_mean_sd$median_ratio + (2 * platelet_df_mean_sd$sd_ratio),
+             linetype = 3,
+             linewidth = 0.2) +  
+  geom_hline(yintercept = platelet_df_mean_sd$median_ratio - (2 * platelet_df_mean_sd$sd_ratio),
+             linetype = 3,
+             linewidth = 0.2) +  
+  ggtitle("platelet") +
+  xlab('Sample ID') +
+  ylab('sum(platelet proteins)/sum(all proteins)') +
+  scale_y_continuous(expand = c(0,0), limits = c(0.006, 0.009)) +
+  scale_x_continuous(expand = c(0,1)) +
+  guides(fill = guide_legend(title = 'Proteins')) +
+  theme_classic() +
+  theme(panel.border = element_blank(), 
+        panel.grid.major = element_blank(), 
+        axis.text.x = element_text(size = 7),
+        axis.text.y = element_text(size = 7),
+        axis.title = element_text(size = 7),
+        axis.line = element_line(size = 0.2),
+        axis.ticks = element_line(size = 0.2),
+        legend.position = 'none',
+        legend.title = element_text(size = 7),
+        legend.text = element_text(size = 7),
+        legend.key.size = unit(0.2, "in")
+  )
+ggsave('reports/figures/AllSamples_PlateletContamination.pdf', 
+       width = 12, height = 6, units = 'cm')
+
+
+## Correlation of contaminant index to protein ids
+
+run_ids_platelet <- run_ids %>%
+  left_join(platelet_df %>%
+              dplyr::select(sample_id, ratio),
+            by = "sample_id")
+
+ggplot(run_ids_platelet, aes(ratio, count, color = Cohort)) + 
+  geom_point(size = 1) +
+  scale_color_manual(values = pal) +
+  xlab('platelet contamination index (higher = more platelets)') +
+  ylab('Seer Count') +
+  theme_classic() +
+  theme(panel.border = element_blank(), 
+        panel.grid.major = element_blank(), 
+        axis.text.x = element_text(size = 7),
+        axis.text.y = element_text(size = 7),
+        axis.title = element_text(size = 7),
+        axis.line = element_line(size = 0.2),
+        axis.ticks = element_line(size = 0.2),
+        legend.position = "right", 
+        legend.justification = c("right", "bottom"),
+        legend.margin = margin(2, 2, 2, 2),
+        legend.title = element_text(size = 7),
+        legend.text = element_text(size = 7),
+        legend.key.size = unit(0.2, "in")
+  ) 
+ggsave('reports/figures/AllPlates_Samples_PlateletContamCount_cohort_Point.pdf', 
+       width = 10, height = 6, units = 'cm')
+
+
+## Erythrocyte analysis ----
+erythrocyte <- contaminant1 %>%
+  filter(Type == "Erythrocyte") %>%
+  pull(standardized_name)
+
+erythrocyte_df <- filtered_df %>%
+  group_by(sample_id) %>%
+  summarize(
+    sum_all = sum(normalized_abundance, na.rm = TRUE),
+    sum_subset = sum(normalized_abundance[standardized_name %in% erythrocyte], na.rm = TRUE),
+    ratio = sum_subset / sum_all  
+  ) %>%
+  left_join(metadata, by = "sample_id")
+
+erythrocyte_df_mean_sd <- erythrocyte_df %>%
+  ungroup() %>%
+  summarize(
+    median_ratio = median(ratio, na.rm = TRUE),
+    sd_ratio = sd(ratio, na.rm = TRUE)
+  )
+
+
+ggplot(erythrocyte_df, 
+       aes(sample_id, ratio, color = Cohort)) +
+  geom_point(size = 1,
+             alpha = 1,
+             stroke = 0) + 
+  scale_color_manual(values = pal) +
+  geom_hline(yintercept = erythrocyte_df_mean_sd$median_ratio,
+             linewidth = 0.2) +
+  geom_hline(yintercept = erythrocyte_df_mean_sd$median_ratio + (2 * erythrocyte_df_mean_sd$sd_ratio),
+             linetype = 3,
+             linewidth = 0.2) +  
+  geom_hline(yintercept = erythrocyte_df_mean_sd$median_ratio - (2 * erythrocyte_df_mean_sd$sd_ratio),
+             linetype = 3,
+             linewidth = 0.2) +  
+  ggtitle("erythrocyte") +
+  xlab('Sample ID') +
+  ylab('sum(erythrocyte proteins)/sum(all proteins)') +
+  scale_y_continuous(expand = c(0,0), limits = c(0.0045, 0.007)) +
+  scale_x_continuous(expand = c(0,1)) +
+  guides(fill = guide_legend(title = 'Proteins')) +
+  theme_classic() +
+  theme(panel.border = element_blank(), 
+        panel.grid.major = element_blank(), 
+        axis.text.x = element_text(size = 7),
+        axis.text.y = element_text(size = 7),
+        axis.title = element_text(size = 7),
+        axis.line = element_line(size = 0.2),
+        axis.ticks = element_line(size = 0.2),
+        legend.position = 'none',
+        legend.title = element_text(size = 7),
+        legend.text = element_text(size = 7),
+        legend.key.size = unit(0.2, "in")
+  )
+ggsave('reports/figures/AllSamples_ErythrocyteContamination.pdf', 
+       width = 12, height = 6, units = 'cm')
+
+
+## Correlation of contaminant index to protein ids
+
+run_ids_erythrocyte <- run_ids %>%
+  left_join(erythrocyte_df %>%
+              dplyr::select(sample_id, ratio),
+            by = "sample_id")
+
+ggplot(run_ids_erythrocyte, aes(ratio, count, color = Cohort)) + 
+  geom_point(size = 1) +
+  scale_color_manual(values = pal) +
+  xlab('erythrocyte contamination index (higher = more erythrocyte)') +
+  ylab('Seer Count') +
+  theme_classic() +
+  theme(panel.border = element_blank(), 
+        panel.grid.major = element_blank(), 
+        axis.text.x = element_text(size = 7),
+        axis.text.y = element_text(size = 7),
+        axis.title = element_text(size = 7),
+        axis.line = element_line(size = 0.2),
+        axis.ticks = element_line(size = 0.2),
+        legend.position = "right", 
+        legend.justification = c("right", "bottom"),
+        legend.margin = margin(2, 2, 2, 2),
+        legend.title = element_text(size = 7),
+        legend.text = element_text(size = 7),
+        legend.key.size = unit(0.2, "in")
+  ) 
+ggsave('reports/figures/AllPlates_Samples_ErythrocyteContamCount_cohort_Point.pdf', 
+       width = 10, height = 6, units = 'cm')
+
+
+## Coagulation analysis ----
+coagulation <- contaminant1 %>%
+  filter(Type == "Coagulation") %>%
+  pull(standardized_name)
+
+coagulation_df <- filtered_df %>%
+  group_by(sample_id) %>%
+  summarize(
+    sum_all = sum(normalized_abundance, na.rm = TRUE),
+    sum_subset = sum(normalized_abundance[standardized_name %in% coagulation], na.rm = TRUE),
+    ratio = sum_subset / sum_all 
+  ) %>%
+  left_join(metadata, by = "sample_id")
+
+coagulation_df_mean_sd <- coagulation_df %>%
+  ungroup() %>%
+  summarize(
+    median_ratio = median(ratio, na.rm = TRUE),
+    sd_ratio = sd(ratio, na.rm = TRUE)
+  )
+
+
+ggplot(coagulation_df, 
+       aes(sample_id, ratio, color = Cohort)) +
+  geom_point(size = 1,
+             alpha = 1,
+             stroke = 0) + 
+  scale_color_manual(values = pal) +
+  geom_hline(yintercept = coagulation_df_mean_sd$median_ratio,
+             linewidth = 0.2) +
+  geom_hline(yintercept = coagulation_df_mean_sd$median_ratio + (2 * coagulation_df_mean_sd$sd_ratio),
+             linetype = 3,
+             linewidth = 0.2) +  
+  geom_hline(yintercept = coagulation_df_mean_sd$median_ratio - (2 * coagulation_df_mean_sd$sd_ratio),
+             linetype = 3,
+             linewidth = 0.2) +  
+  ggtitle("coagulation") +
+  xlab('Sample ID') +
+  ylab('sum(coagulation proteins)/sum(all proteins)') +
+  scale_y_continuous(expand = c(0,0), limits = c(0.00225, 0.0032)) +
+  scale_x_continuous(expand = c(0,1)) +
+  guides(fill = guide_legend(title = 'Proteins')) +
+  theme_classic() +
+  theme(panel.border = element_blank(), 
+        panel.grid.major = element_blank(), 
+        axis.text.x = element_text(size = 7),
+        axis.text.y = element_text(size = 7),
+        axis.title = element_text(size = 7),
+        axis.line = element_line(size = 0.2),
+        axis.ticks = element_line(size = 0.2),
+        legend.position = 'none',
+        legend.title = element_text(size = 7),
+        legend.text = element_text(size = 7),
+        legend.key.size = unit(0.2, "in")
+  )
+ggsave('reports/figures/AllSamples_CoagulationContamination.pdf', 
+       width = 12, height = 6, units = 'cm')
+
+
+## Correlation of contaminant index to protein ids
+
+run_ids_coagulation <- run_ids %>%
+  left_join(coagulation_df %>%
+              dplyr::select(sample_id, ratio),
+            by = "sample_id")
+
+ggplot(run_ids_coagulation, aes(ratio, count, color = Cohort)) + 
+  geom_point(size = 1) +
+  scale_color_manual(values = pal) +
+  xlab('coagulation contamination index (higher = more coagulation proteins)') +
+  ylab('Seer Count') +
+  theme_classic() +
+  theme(panel.border = element_blank(), 
+        panel.grid.major = element_blank(), 
+        axis.text.x = element_text(size = 7),
+        axis.text.y = element_text(size = 7),
+        axis.title = element_text(size = 7),
+        axis.line = element_line(size = 0.2),
+        axis.ticks = element_line(size = 0.2),
+        legend.position = "right", 
+        legend.justification = c("right", "bottom"),
+        legend.margin = margin(2, 2, 2, 2),
+        legend.title = element_text(size = 7),
+        legend.text = element_text(size = 7),
+        legend.key.size = unit(0.2, "in")
+  ) 
+ggsave('reports/figures/AllPlates_Samples_CoagulationContamCount_cohort_Point.pdf', 
+       width = 10, height = 6, units = 'cm')
+
+
 
 
 # plot:sample order log2 quant boxplots ----
@@ -341,25 +638,105 @@ ggsave(paste0('reports/figures/AllPlates_Sample_QuantBoxplots_Cohort.pdf'),
 
 
 ## plot:single protein boxplots of cohorts ----
-poi <- "Q9BXD5"
+for (i in unique(filtered_df$standardized_name)) {
+  
+  poi <- i
+  
+  single_prot_df <- filtered_df %>%
+    filter(grepl(poi, standardized_name))
+  
+  ggplot(single_prot_df, aes(Cohort, normalized_abundance, fill = Cohort, color = Cohort)) + 
+    geom_jitter(alpha = 0.5, 
+                width = 0.1, 
+                size = 0.2) +
+    geom_boxplot(width = 0.4, 
+                 alpha = 0.25, 
+                 outliers = F,
+                 size = 0.2) +
+    scale_fill_manual(values = pal) +
+    scale_color_manual(values = pal) +
+    ggtitle(paste(poi, "Abundance")) +
+    labs(x = NULL,
+         y = "Log2 Abundance") +
+    scale_y_continuous(expand = c(0,0), limits = c(min(single_prot_df$normalized_abundance) / 1.1, 
+                                                   max(single_prot_df$normalized_abundance) * 1.1)) +
+    theme_classic() +
+    theme(panel.border = element_blank(), 
+          panel.grid.major = element_blank(), 
+          axis.text.x = element_text(size = 7),
+          axis.text.y = element_text(size = 7),
+          axis.title = element_text(size = 7),
+          axis.line = element_line(size = 0.2),
+          axis.ticks = element_line(size = 0.2),
+          plot.title = element_text(size = 10),
+          legend.title = element_blank(),
+          legend.text = element_blank(),
+          legend.position = "none"
+    )
+  
+  ggsave(paste0('reports/figures/SingleProteinPlots/Proteomics_AllPlates_Sample_singleprotein_', poi, '_distribution_Cohort.pdf'), 
+         width = 8, height = 6, units = "cm")
+}
 
-single_prot_df <- filtered_df %>%
-  filter(grepl(poi, standardized_name))
 
-ggplot(single_prot_df, aes(Cohort, normalized_abundance, fill = Cohort, color = Cohort)) + 
-  geom_jitter(alpha = 0.5, 
-              width = 0.1, 
-              size = 0.2) +
+
+## plot:abundance rank vs missingness ----
+
+df_ab_miss <- df %>%
+  group_by(standardized_name) %>%  
+  summarise(percent_non_na = mean(!is.na(raw_abundance)) * 100,
+            median_abundance = max(normalized_abundance, na.rm = T)) %>%
+  arrange(desc(median_abundance)) %>%
+  mutate(Order = seq(1,nrow(.)),
+         color = "Y")
+
+ggplot(df_ab_miss, 
+       aes(median_abundance, percent_non_na)) + 
+  geom_point(shape = 16,
+             size = 0.2,
+             color = col[3]) +
+  labs(x = "Max log2(Abundance)",
+       y = "Percent non-NA") +
+  scale_y_continuous(expand = c(0,0)) +
+  #guides(fill = guide_legend(title="Cohort")) +
+  theme_classic() +
+  theme(panel.border = element_blank(), 
+        panel.grid.major = element_blank(), 
+        axis.text.x = element_text(size = 7),
+        axis.text.y = element_text(size = 7),
+        axis.title = element_text(size = 7),
+        axis.line = element_line(size = 0.2),
+        axis.ticks = element_line(size = 0.2),
+        plot.title = element_text(size = 10),
+        legend.position = 'bottom',
+        legend.title = element_text(size = 7),
+        legend.text = element_text(size = 7),
+        legend.key.size = unit(0.2, "in")
+  )
+ggsave(paste0('reports/figures/AllPlates_Sample_MaxAbundancevsPercentComplete.pdf'), 
+       width = 8, height = 6, units = "cm")
+  
+  
+  
+  #### plot:first/second PASC protein numbers ####
+item <- run_ids %>%
+  left_join(metadata %>% select(PASC_Cohort, sample_id), by = "sample_id") %>%
+  filter(!is.na(PASC_Cohort))
+
+  
+ggplot(item, aes(PASC_Cohort, count, alpha = PASC_Cohort)) + 
   geom_boxplot(width = 0.4, 
-               alpha = 0.25, 
                outliers = F,
-               size = 0.2) +
-  scale_fill_manual(values = pal) +
-  scale_color_manual(values = pal) +
-  ggtitle(paste(poi, "Abundance")) +
+               size = 0.2,
+               color = "black",
+               fill = pal[5]) +
+  geom_jitter(width = 0.1, 
+              size = 0.2,
+              color = "black") +
+  scale_alpha_manual(values = c(1, 0.5)) +
   labs(x = NULL,
-       y = "Log2 Abundance") +
-  scale_y_continuous(expand = c(0,0), limits = c(0,15)) +
+       y = "Protein IDs") +
+  scale_y_continuous(expand = c(0,0), limits = c(0,7500)) +
   guides(fill = guide_legend(title="Cohort")) +
   theme_classic() +
   theme(panel.border = element_blank(), 
@@ -375,5 +752,8 @@ ggplot(single_prot_df, aes(Cohort, normalized_abundance, fill = Cohort, color = 
         legend.text = element_text(size = 7),
         legend.key.size = unit(0.2, "in")
   )
-ggsave(paste0('reports/figures/AllPlates_Sample_singleprotein_', poi, '_distribution_Cohort.pdf'), 
-              width = 8, height = 6, units = "cm")
+ggsave(paste0('reports/figures/AllPlates_Sample_PASC_Cohort_ProteinIDs_boxplot.pdf'), 
+       width = 8, height = 6, units = "cm")
+
+
+t.test(count ~ PASC_Cohort, data = item)

@@ -1,14 +1,21 @@
-####Libraries/Load Files/colors####
-#libraries#
+#### libraries/colors/files ####
+# libraries #
 library(devtools)
 library(tidyverse)
 library(RColorBrewer)
-library(perm)
+library(ggfortify)
+library(missForest)
+library(VIM)
+library(viridis)
+library(RSQLite)
 library(ggrepel)
+library(pheatmap)
+library(ROTS)
+library(data.table)
 
 
-#Colors#
-#Make a classic palette
+# Colors #
+# Make a classic palette
 col <- brewer.pal(8, "Set2") 
 
 pal <- c("#66C2A5",
@@ -22,129 +29,190 @@ pal <- c("#66C2A5",
          "#B3B3B3",
          "#B2DF8A")
 
-#Make a Custom Gradient
-col1 <- c(rev(colorRampPalette(col)(100)),"white", colorRampPalette(col1)(100))
+pal <- c('#EE6677', 
+         '#AA3377', 
+         '#CCBB44', 
+         '#228833', 
+         '#66CCEE', 
+         '#4477AA')
 
-#plot colors
+# Make a Custom Gradient
+col1 <- colorRampPalette(col)(16)
+
+# plot colors
 pie(rep(1, length(col)), col = col , main="") 
 
 
-#files#
-spec_PG_NPs <- read.csv("data/processed/PG_Matrix_AllPlates_Samples_NPs.csv")
-spec_PG_NPs_50 <- read.csv("data/processed/PG_Matrix_AllPlates_Samples_NPs_50%.csv")
-groups <- read.csv("data/metadata/sample_groups.csv")
-file_info <- read.csv("data/metadata/AllPlates_Samples_file_info.csv")
-spec_PG_NPs <- spec_PG_NPs[-1]
-spec_PG_NPs_50 <- spec_PG_NPs_50[-1]
 
-#change sample colnames
-colnames <- colnames(spec_PG_NPs)
-colnames <- sapply(strsplit(colnames, "_"), function(x) paste(x[5], collapse = "_"))
-colnames[colnames == "NA"] <- "allgenes"
-colnames(spec_PG_NPs) <- colnames
+# files #
+con <- dbConnect(RSQLite::SQLite(), dbname = "P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Database/Long Covid Study DB.sqlite")
 
 
-####DiffExp####
-#split samples into groups to compare
-pos_runs_list <- groups[groups$Set == "Acute_fu", ]
-pos_runs_list <- pos_runs_list$Sample
+proteomics <- dbGetQuery(con, "SELECT standardized_name, rawfile_id, biomolecule_id, raw_abundance, normalized_abundance
+                         FROM proteomics_measurement")
+biomolecules <- dbGetQuery(con, "SELECT biomolecule_id, standardized_name, omics_id, keep 
+                           FROM biomolecules")
+rawfiles <- dbGetQuery(con, "SELECT rawfile_name, Sample, sample_id, ome_id, keep , rawfile_id, run_type
+                           FROM rawfiles_all")
+metadata <- dbGetQuery(con, "SELECT Sample, sample_id, Cohort, Age, Sex, BMI, `SF.36.QOL.Score`, PASC_Cohort, Paired_samples
+                           FROM patient_metadata")
 
-neg_runs_list <- groups[groups$Set == "PASC", ]
-neg_runs_list <- neg_runs_list$Sample
-
-#Here's where to change between datasets
-pos_df <- spec_PG_NPs[, colnames(spec_PG_NPs) %in% pos_runs_list]
-pos_df <- cbind(spec_PG_NPs["allgenes"], pos_df)
-
-neg_df <- spec_PG_NPs[, colnames(spec_PG_NPs) %in% neg_runs_list]
-neg_df <- cbind(spec_PG_NPs["allgenes"], neg_df)
-
-#filter out NAs
-filter_na <- rowSums(is.na(pos_df[,-1])) >= 14
-pos_df <- pos_df[!filter_na,]
-
-filter_na <- rowSums(is.na(neg_df[,-1])) >= 184
-neg_df <-neg_df[!filter_na,]
-
-all_df <- merge(pos_df, neg_df, by = "allgenes")
-write.csv(all_df, file = "data/processed/AllPlates_NoFilter_Samples_PASCvsAcuteFU_Matrix.csv")
-
-all_df[,-1] <- log2(all_df[,-1])
+dbDisconnect(con)
 
 
-all_fc = NULL
-for (i in 1:nrow(all_df)) {
+## Merge rawfiles and proteomics, Combine NPA and NPB measurements by completeness by protein group
+# subset rawfiles to only include sample and QC proteomics runs
+rawfiles <- rawfiles %>%
+  dplyr::select(-keep) %>%
+  filter(ome_id == 1) %>%
+  filter(grepl("Sample|QC", run_type))
+
+metadata <- metadata %>%
+  dplyr::select(-Sample) %>%
+  mutate(sample_id = as.integer(sample_id))
+
+df <- proteomics %>%
+  left_join(rawfiles, by = "rawfile_id") %>%
+  left_join(metadata, by = "sample_id")
+
+
+# Combine by which NP has more completeness by protein group. One NP for each protein group
+df <- df %>%
+  mutate(NP = case_when(
+    grepl("NPA", rawfile_name) == T ~ "NPA",
+    grepl("NPB", rawfile_name) == T ~ "NPB"
+  )) %>%
+  group_by(standardized_name, NP) %>%
+  mutate(na_count = sum(is.na(raw_abundance))) %>%
+  ungroup() %>%
+  group_by(standardized_name) %>%
+  mutate(keep_group = NP[which.min(na_count)]) %>%  
+  filter(NP == keep_group) %>%  
+  dplyr::select(-na_count, -keep_group, -NP)  
+
+length(unique(df$standardized_name))
+
+# Also filter for completeness
+# Show how many non-NA values there are for each protein group in each study group
+na_summary <- df %>%
+  group_by(Cohort, standardized_name) %>%
+  summarise(na_ratio = mean(!is.na(raw_abundance)), .groups = 'drop')
+
+# Make a list of IDs to keep where there are at least 50% non-NA values in one of the cohorts
+ids_to_keep <- na_summary %>%
+  group_by(standardized_name) %>%
+  summarise(max_na_ratio = max(na_ratio)) %>%
+  filter(max_na_ratio >= 0.5) %>% 
+  pull(standardized_name)
+
+filtered_df <- df %>%
+  filter(standardized_name %in% ids_to_keep) %>%
+  filter(!is.na(normalized_abundance))
+
+writeLines(ids_to_keep, "data/processed/proteomics_ids_to_keep.txt")
+
+
+
+#### DiffExp ####
+# Get grouping vector and data matrix
+# Groups: Acute, Acute_fu, Acute_NC, Healthy, PASC, PASC_fu
+# PASC_Cohort: first, second
+group1 <- "first"
+group2 <- "second"
+
+diffexp_df <- filtered_df %>%
+  filter(Cohort %in% c(group1, group2)) %>%
+  select(standardized_name, normalized_abundance, sample_id) %>%
+  pivot_wider(names_from = "sample_id", values_from = "normalized_abundance") %>%
+  tibble::column_to_rownames(var = "standardized_name")
+
+grouping_vector <- metadata %>%
+  filter(sample_id %in% colnames(diffexp_df)) %>%
+  arrange(match(sample_id, colnames(diffexp_df))) %>%
+  pull(Cohort)
+
+
+##* ROTS DEA ----
+# run ROTS
+results <- ROTS(data = diffexp_df, 
+                groups = grouping_vector, 
+                B = 5000, 
+                K = 500, 
+                seed = 1234)
   
-  #get gene name
-  gene <- all_df[i,1]
+summary(results, fdr = 0.05)
   
-  #perform statistical test (ttest)
-  NP_ttest <- t.test(x = as.numeric(all_df[i,colnames(pos_df)[-1]]),
-                     y = as.numeric(all_df[i,colnames(neg_df)[-1]]),
-                     paired = F,
-                     var.equal = F)
+# output df
+volc_plot <- data.frame(results$logfc) %>%
+  tibble::rownames_to_column(var = "PG.ProteinGroup") %>%
+  mutate(logfc = results.logfc) %>%
+  dplyr::select(-results.logfc) %>%
+  mutate(pvalue = results$pvalue) %>%
+  mutate(qvalue = results$FDR)
   
-  #perform permutation test
-  NP_perm <- permTS(x = as.numeric(all_df[i,colnames(pos_df)[-1]]),
-                    y = as.numeric(all_df[i,colnames(neg_df)[-1]]),
-                    alternative = "two.sided",
-                    method = "pclt",
-                    control = permControl(nmc = 10000, seed = 500, digits = 5, tsmethod = "central"))
-  
-  #gives p.value of ttest
-  t_pv <- NP_ttest$p.value
-  
-  #gives p.value of perm test
-  p_pv <- NP_perm$p.value
-  
-  #gives the fold change between the two groups
-  fc <- 2^(mean(na.omit(as.numeric(all_df[i,na.omit(neg_runs_list)]))) - mean(na.omit(as.numeric(all_df[i,na.omit(pos_runs_list)]))))
-  #fc <- NP_ttest$estimate[2]/NP_ttest$estimate[1]
-  
-  all_fc <- rbind(all_fc, c(gene, fc, t_pv, p_pv))
-  
-}
+volc_plot <- volc_plot %>%
+  mutate(neglogpvalue = -log10(pvalue)) %>%
+  mutate(diffexp = case_when(
+    logfc >= 0.263 & qvalue <= 0.05 ~ "UP",
+    logfc <= -0.263 & qvalue <= 0.05 ~ "DOWN",
+    T ~ "NO"
+  ))
 
+fwrite(volc_plot, paste0("data/processed/AllPlates_Samples_Volcano_", group1, "_", group2, ".csv"))
 
-all_fc <- as.data.frame(all_fc)
-all_fc$`mean of y` <- as.numeric(all_fc$`mean of y`)
-all_fc$V2 <- as.numeric(all_fc$V2)
-all_fc$V3 <- as.numeric(all_fc$V3)
-all_fc$V4 <- as.numeric(all_fc$V4)
-all_fc$t_padj <- p.adjust(all_fc$V3, method = "BH")
-all_fc$p_padj <- p.adjust(all_fc$V4, method = "BH")
-all_fc$log2fc <- log2(all_fc$V2)
-all_fc$log10_t_padj <- -log10(all_fc$t_padj)
-all_fc$log10_p_padj <- -log10(all_fc$p_padj)
-all_fc$diffexp <- "NO"
-all_fc$diffexp[all_fc$log2fc > 1 & all_fc$t_padj < 0.05] <- "UP"
-all_fc$diffexp[all_fc$log2fc < -1 & all_fc$t_padj < 0.05] <- "DOWN"
-colnames(all_fc) <- c("gene", "fc", "t_pv", "p_pv", "t_padj", "p_padj", "log2(fc)", "-log10(t_padj)", "-log10(p_padj)", "diffexp")
+volc_plot <- fread(paste0("data/processed/AllPlates_Samples_Volcano_", group1, "_", group2, ".csv"))
 
+counts <- volc_plot %>%
+  filter(diffexp %in% c("DOWN", "UP", "NO")) %>%
+  count(diffexp)
 
-ggplot(all_fc, aes(`log2(fc)`, `-log10(t_padj)`, color = factor(diffexp), size = factor(diffexp))) + 
+ggplot(volc_plot, aes(logfc, neglogpvalue, color = diffexp, size = diffexp)) + 
   geom_point() +
-  geom_vline(xintercept=c(-1, 1), col="black") +
-  geom_hline(yintercept=-log10(0.05), col="black") +
-  scale_color_manual(values = c(col[8], col[5])) +
-  scale_size_manual(values = c(1,3)) +
-  scale_x_continuous(limits = c(-max(abs(all_fc$`log2(fc)`)), max(abs(all_fc$`log2(fc)`))), breaks = seq(-7, 7, by = 1)) +
-  geom_text_repel(data = subset(all_fc, diffexp == "UP"), aes(label = gene), size = 4) +
-  ggtitle("PASC vs Acute_fu") +
-  xlab("Log2 Fold Change (PASC/Acute_fu)") +
+  geom_vline(xintercept=c(-0.263, 0.263), 
+             col="black",
+             size = 0.2) +
+  #geom_hline(yintercept=-log10(0.05), 
+  #           col="black",
+  #           size = 0.2) +
+  scale_color_manual(values = c("#9e1b45", col[8], "#9e1b45")) +
+  scale_size_manual(values = c(0.5,0.1,0.5)) +
+  scale_x_continuous(limits = c(-max(abs(volc_plot$logfc)), max(abs(volc_plot$logfc))), breaks = seq(-5, 5, by = 2)) +
+  #geom_text_repel(data = subset(volc_plot, diffexp != "NO"), aes(label = gene), size = 2) +
+  xlab(paste0("Log2 Fold Change (", group1, "/", group2, ")")) +
   ylab("-Log10 Adjusted P-Value") +
   #xlim(-2, 2) +
-  guides(fill = guide_legend(title = "Differetially Expressed")) +
   theme_classic() +
-  theme(panel.border = element_blank(), 
-        panel.grid.major = element_blank(), 
-        axis.text.x = element_text(size = 20, angle = 0, vjust = 0.5, hjust = 0.5),
-        axis.text.y = element_text(size = 20),
-        plot.title = element_text(size = 20, face = 'bold', hjust = 0.5), 
-        axis.title = element_text(size = 24, face = 'bold'),
-        legend.title = element_text(size = 20),
-        legend.text = element_text(size = 16)) 
-ggsave("reports/figures/AllPlates_NoFilter_Samples_PASCvsAcuteFU_Volcano.pdf", width = 24, height = 16, units = "cm")
+  theme(panel.border = element_rect(color = "black", fill = NA, size = 0.2), 
+        panel.grid.major = element_blank(),
+        panel.spacing = unit(0.5, "lines"), 
+        axis.text.x = element_text(size = 7),
+        axis.text.y = element_text(size = 7),
+        axis.title = element_text(size = 7),
+        axis.line = element_line(size = 0.2),
+        axis.ticks = element_line(size = 0.2),
+        strip.text = element_blank(),
+        legend.position = "bottom") +
+  #facet_wrap(. ~ factor(method, levels = c("neat", "acid", "preomics", "magnet", "seer", "olink")),
+  #           scales = "free",
+  #           ncol = 2) +
+  #geom_text(data = volc_plot %>% distinct(method),
+  #          aes(x = -3.5, y = 8, label = method),
+  #          size = 3, 
+  #          color = "black", 
+  #          hjust = 0) +
+  geom_text(data = counts[counts$diffexp == "DOWN",], 
+            aes(x = -3, y = Inf, 
+                label = paste(n)),
+            hjust = 1.1, vjust = 1.5, size = 3, show.legend = FALSE) +
+  geom_text(data = counts[counts$diffexp == "UP",], 
+            aes(x = 3, y = Inf, 
+                label = paste(n)),
+            hjust = 1.1, vjust = 1.5, size = 3, show.legend = FALSE) +
+  geom_text(data = counts[counts$diffexp == "NO",], 
+            aes(x = 0, y = Inf, 
+                label = paste(n)),
+            hjust = 0.5, vjust = 1.5, size = 3, show.legend = FALSE) 
+ggsave(paste0("reports/figures/AllPlates_Samples_50pconditionMissingImputed_Volcano_small_", group1, "_", group2, ".pdf"), 
+       width = 8, height = 6, units = "cm")
 
-write.csv(all_fc, file = "data/processed/AllPlates_NoFilter_Samples_PASCvsAcuteFU_DE_list.csv")
 

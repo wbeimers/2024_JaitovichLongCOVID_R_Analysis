@@ -43,17 +43,17 @@ pie(rep(1, length(col)), col = col , main="")
 
 
 # files #
-con <- dbConnect(RSQLite::SQLite(), dbname = "P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Database/Long Covid Study DB.sqlite")
+con <- dbConnect(RSQLite::SQLite(), dbname = 'P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Database/Long Covid Study DB.sqlite')
 
 
-proteomics <- dbGetQuery(con, "SELECT standardized_name, rawfile_id, biomolecule_id, raw_abundance, normalized_abundance
-                         FROM proteomics_measurement")
-biomolecules <- dbGetQuery(con, "SELECT biomolecule_id, standardized_name, omics_id, keep 
-                           FROM biomolecules")
-rawfiles <- dbGetQuery(con, "SELECT rawfile_name, Sample, sample_id, ome_id, keep , rawfile_id, run_type
-                           FROM rawfiles_all")
-metadata <- dbGetQuery(con, "SELECT Sample, sample_id, Cohort, Age, Sex, BMI, `SF.36.QOL.Score`
-                           FROM patient_metadata")
+proteomics <- dbGetQuery(con, 'SELECT standardized_name, rawfile_id, biomolecule_id, raw_abundance, normalized_abundance
+                         FROM proteomics_measurement')
+biomolecules <- dbGetQuery(con, 'SELECT biomolecule_id, standardized_name, omics_id, keep 
+                           FROM biomolecules')
+rawfiles <- dbGetQuery(con, 'SELECT rawfile_name, Sample, sample_id, ome_id, keep , rawfile_id, run_type
+                           FROM rawfiles_all')
+metadata <- dbGetQuery(con, 'SELECT Sample, sample_id, Cohort, Age, Sex, BMI, `SF.36.QOL.Score`, PASC_Cohort, Paired_samples
+                           FROM patient_metadata')
 
 dbDisconnect(con)
 
@@ -74,16 +74,27 @@ df <- proteomics %>%
   left_join(metadata, by = "sample_id")
 
 
-## LIMIT TO NPA FOR NOW, AFTER RE-SEARCHING COMBINE NPs BY COMPLETENESS
-# Also filter for completeness
-
+# Combine by which NP has more completeness by protein group. One NP for each protein group
 df <- df %>%
-  filter(grepl("NPA", rawfile_name)) #Select only sample runs
+  mutate(NP = case_when(
+    grepl("NPA", rawfile_name) == T ~ "NPA",
+    grepl("NPB", rawfile_name) == T ~ "NPB"
+  )) %>%
+  group_by(standardized_name, NP) %>%
+  mutate(na_count = sum(is.na(raw_abundance))) %>%
+  ungroup() %>%
+  group_by(standardized_name) %>%
+  mutate(keep_group = NP[which.min(na_count)]) %>%  
+  filter(NP == keep_group) %>%  
+  select(-na_count, -keep_group, -NP)  
 
+length(unique(df$standardized_name))
+
+# Also filter for completeness
 # Show how many non-NA values there are for each protein group in each study group
 na_summary <- df %>%
   group_by(Cohort, standardized_name) %>%
-  summarise(na_ratio = mean(!is.na(raw_abundance)), .groups = "drop")
+  summarise(na_ratio = mean(!is.na(raw_abundance)), .groups = 'drop')
 
 # Make a list of IDs to keep where there are at least 50% non-NA values in one of the cohorts
 ids_to_keep <- na_summary %>%
@@ -92,12 +103,11 @@ ids_to_keep <- na_summary %>%
   filter(max_na_ratio >= 0.5) %>% 
   pull(standardized_name)
 
-
 filtered_df <- df %>%
   filter(standardized_name %in% ids_to_keep)
 
 
-####Heatmap####
+#### Heatmap:all ####
 expression_matrix <- filtered_df %>%
   select(standardized_name, sample_id, normalized_abundance) %>%
   pivot_wider(names_from = sample_id, values_from = normalized_abundance) %>%
@@ -105,9 +115,11 @@ expression_matrix <- filtered_df %>%
 
 #Make annotation dataframe for the sample groups
 sample_annot <- filtered_df %>%
-  select(sample_id, Cohort) %>%
+  ungroup() %>%
+  select(sample_id, Cohort, Age, Sex, BMI, SF.36.QOL.Score) %>%
   distinct() %>%
-  tibble::column_to_rownames(var = "sample_id")
+  tibble::column_to_rownames(var = "sample_id") %>%
+  mutate(SF.36.QOL.Score = as.numeric(SF.36.QOL.Score))
 
 #make annotation dataframe for the genes
 #heatmap_annot <- human_gene_list %>%
@@ -137,13 +149,13 @@ pheatmap(expression_matrix,
          #annotation_row = heatmap_annot,
          annotation_col = sample_annot,
          annotation_colors = list(Cohort = c(Acute = pal[1], Acute_fu = pal[2], Acute_NC = pal[3], Healthy = pal[4], PASC = pal[5], PASC_fu = pal[6])),
-         filename = "reports/figures/AllPlates_Samples_heatmap.png",
+         filename = "reports/figures/AllPlates_Samples_heatmap_Cohort.png",
          width = 8,
          height = 8)
 
 
 
-#Get clustering Information for proteins
+# Get clustering Information for proteins
 hm <- pheatmap(expression_matrix)
 row_cluster <- data.frame(cluster = cutree(hm$tree_row, k = 5))
 row_cluster_3 <- filter(row_cluster, row_cluster$cluster == 3)
@@ -151,3 +163,52 @@ row_cluster_3 <- rownames(row_cluster_3)
 
 
 
+
+
+#### Heatmap:PASC_Cohort ####
+expression_matrix <- filtered_df %>%
+  filter(!is.na(PASC_Cohort)) %>%
+  select(standardized_name, sample_id, normalized_abundance) %>%
+  pivot_wider(names_from = sample_id, values_from = normalized_abundance) %>%
+  tibble::column_to_rownames(var = "standardized_name")
+
+#Make annotation dataframe for the sample groups
+sample_annot <- filtered_df %>%
+  ungroup() %>%
+  filter(!is.na(PASC_Cohort)) %>%
+  select(sample_id, PASC_Cohort, Age, Sex, BMI, SF.36.QOL.Score) %>%
+  distinct() %>%
+  tibble::column_to_rownames(var = "sample_id") %>%
+  mutate(SF.36.QOL.Score = as.numeric(SF.36.QOL.Score))
+
+#make annotation dataframe for the genes
+#heatmap_annot <- human_gene_list %>%
+#  dplyr::select(c("Entry", "Gene.Ontology..cellular.component."))
+#heatmap_annot <- semi_join(heatmap_annot, twentyfive_NPs_pgs_f_imputed_log2,
+#                           by = join_by("Entry" == "allgenes"))
+#rownames(heatmap_annot) <- heatmap_annot[,1]
+#heatmap_annot <- mutate(heatmap_annot, Intracellular = ifelse(grepl("cytosol|cytoplasm", Gene.Ontology..cellular.component.), "Yes", "No"))
+#heatmap_annot <- mutate(heatmap_annot, Membrane = ifelse(grepl("membrane", Gene.Ontology..cellular.component.), "Yes", "No"))
+#heatmap_annot <- mutate(heatmap_annot, Plasma = ifelse(grepl("plasma", Gene.Ontology..cellular.component.), "Yes", "No"))
+#heatmap_annot <- heatmap_annot[,-1]
+#heatmap_annot <- heatmap_annot[,-1]
+
+
+pheatmap(expression_matrix,
+         #color = viridis(24, direction = 1, option = "plasma"),
+         color = rev(colorRampPalette(brewer.pal(24, "RdYlBu"))(24)),
+         breaks = c(-11, -9, -7, -5, -4, -3, -2.5, -2, -1.5, -1, -0.5, 0, 0.5, 1, 1.5, 2, 2.5, 3, 4, 5, 7, 9, 11),
+         cluster_rows = T,
+         cluster_cols = T,
+         treeheight_row = 0,
+         treeheight_col = 10,
+         show_rownames = F,
+         show_colnames = F,
+         border_color = NA,
+         scale = "row",
+         #annotation_row = heatmap_annot,
+         annotation_col = sample_annot,
+         annotation_colors = list(PASC_Cohort = c(first = col[3], second = col[5])),
+         filename = "reports/figures/AllPlates_Samples_heatmap_PASC_Cohort.png",
+         width = 8,
+         height = 8)

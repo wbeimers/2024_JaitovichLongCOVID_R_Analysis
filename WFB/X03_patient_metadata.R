@@ -60,14 +60,6 @@ replaceValues <- function(row) {
   )
 }
 
-##### Iterate over data frame to update normalized_abundance values in sqlite db ######
-
-apply(df_fixed, 1, replaceValues)
-
-dbDisconnect(con)
-
-
-
 
 
 ## Fix wrong Sample numbers in patient_metadata
@@ -136,5 +128,64 @@ replaceValues <- function(row) {
 }
 
 apply(df, 1, replaceValues)
+
+dbDisconnect(con)
+
+
+
+## Add columns to distinguish PASC 1 from PASC 2 and also pair samples together (from PASC and PASC_fu) ----
+con <- dbConnect(RSQLite::SQLite(), dbname = "P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Database/Long Covid Study DB.sqlite")
+
+df <- dbGetQuery(con, "SELECT Sample, sample_id, Cohort, Age, Sex, BMI, `SF.36.QOL.Score`
+           FROM patient_metadata
+           ")
+
+unique(df$Cohort)
+
+# add cohort distinction column
+df <- df %>%
+  mutate(sample_id = as.integer(sample_id)) %>%
+  mutate(PASC_Cohort = case_when(
+    101 <= sample_id & sample_id <= 203 ~ "first",
+    204 <= sample_id & sample_id <= 287 ~ "second",
+    T ~ NA
+  ))
+
+# add paired info for the patients with 2 samples
+df1 <- df %>%
+  mutate(patient_id = paste0(Age, "_", Sex, "_", BMI))
+df1 <- df1 %>%
+  group_by(patient_id) %>%
+  filter(n() > 1) %>%
+  ungroup()
+
+Acute_samples <- df %>%
+  filter(Cohort == "Acute_fu") %>%
+  dplyr::select(Sample) %>%
+  mutate(sampl = word(Sample, 2, 2, "\\.")) %>%
+  dplyr::select(sampl) %>%
+  unlist()
+PASC_samples <- df %>%
+  filter(Cohort == "PASC_fu") %>%
+  dplyr::select(Sample) %>%
+  mutate(sampl = word(Sample, 1, 1, "\\.")) %>%
+  dplyr::select(sampl) %>%
+  unlist()
+  
+df1 <- df %>%
+  mutate(Paired_samples = case_when(
+    Cohort == "Acute_fu" ~ paste0(word(Sample, 2, 2, "\\."), "_2"),
+    Sample %in% Acute_samples ~ paste0(Sample, "_1"),
+    Sample %in% PASC_samples ~ paste0(Sample, "_1"),
+    Cohort == "PASC_fu" ~ paste0(word(Sample, 1, 1, "\\."), "_2"),
+    T ~ NA
+  ))
+
+
+# drop old patient metadata table before adding new one
+dbExecute(con, "DROP TABLE IF EXISTS patient_metadata")
+
+# Write the new patient_metadata table to the database
+dbWriteTable(con, "patient_metadata", df1, append = F, overwrite = T)
 
 dbDisconnect(con)

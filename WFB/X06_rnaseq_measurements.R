@@ -78,3 +78,38 @@ dbDisconnect(con)
 
 
 
+## Put new biomolecule IDs in the rnaseq table
+
+con <- dbConnect(RSQLite::SQLite(), dbname = "P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Database/Long Covid Study DB.sqlite")
+transcriptomics <- dbGetQuery(con, 'SELECT standardized_name, SYMBOL, GENENAME, Sample, Counts, measurement_id
+                                    FROM rnaseq_measurements')
+biomolecules <- dbGetQuery(con, 'SELECT biomolecule_id, standardized_name, omics_id, keep 
+                                 FROM biomolecules')
+dbDisconnect(con)
+
+transcriptomics1 <- transcriptomics %>%
+  mutate(standardized_name = as.character(standardized_name)) %>%
+  left_join(biomolecules %>% dplyr::select(biomolecule_id, standardized_name), by = "standardized_name")
+
+transcriptomics1 <- transcriptomics1 %>%
+  dplyr::select(measurement_id, standardized_name, biomolecule_id, everything())
+
+
+con <- dbConnect(RSQLite::SQLite(), dbname = "P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Database/Long Covid Study DB.sqlite")
+dbWriteTable(con, "rnaseq_measurements", transcriptomics1, append = T, row.names = F)
+dbDisconnect(con)
+
+
+## RNAseq GO Terms ----
+
+transcript_go <- fread("data/metadata/transcripts_go_terms.csv") %>%
+  mutate(standardized_name = as.character(standardized_name))
+
+transcript_go <- biomolecules %>%
+  filter(omics_id == 3) %>%
+  dplyr::select(biomolecule_id, standardized_name) %>%
+  right_join(transcript_go, by = "standardized_name")
+
+con <- dbConnect(RSQLite::SQLite(), dbname = "P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Database/Long Covid Study DB.sqlite")
+dbWriteTable(con, "rnaseq_metadata", transcript_go, row.names = F, overwrite = T)
+dbDisconnect(con)
