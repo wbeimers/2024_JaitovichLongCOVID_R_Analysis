@@ -1,0 +1,27 @@
+LipidClass,LipidCategory,MainClass,SubClass,NumFattyAcyls
+TG,Glycerolipids,Triradylglycerols,Triacylglycerols,3
+SM,Sphingolipids,Phosphosphingolipids,Ceramidephosphocholines,2
+S1P,Sphingolipids,Sphingoid bases,Sphingoid base 1-phosphates,1
+Plasmenyl-PE,Glycerophospholipids,Glycerophosphoethanolamines,Diacylglycerophosphoethanolamines,2
+Plasmenyl-PC,Glycerophospholipids,Glycerophosphocholines,Diacylglycerophosphocholines,2
+Plasmanyl-PC,Glycerophospholipids,Glycerophosphocholines,Diacylglycerophosphocholines,2
+PI,Glycerophospholipids,Glycerophosphoinositols,Diacylglycerophosphoinositols,2
+PE-NMe2,Glycerophospholipids,Glycerophosphoethanolamines,Diacylglycerophosphoethanolamines,2
+PE,Glycerophospholipids,Glycerophosphoethanolamines,Diacylglycerophosphoethanolamines,2
+PC,Glycerophospholipids,Glycerophosphocholines,Diacylglycerophosphocholines,2
+LysoPI,Glycerophospholipids,Glycerophosphoinositols,Monoacylglycerophosphoinositols,1
+LysoPE,Glycerophospholipids,Glycerophosphoethanolamines,Monoacylglycerophosphoethanolamines,1
+LysoPC,Glycerophospholipids,Glycerophosphocholines,Monoacylglycerophosphocholines,1
+DG,Glycerolipids,Diradylglycerols,Diacylglycerols,2
+Cer[NS],Sphingolipids,Ceramides,N-acylsphingosines,2
+Alkanyl-TG,Glycerolipids,Triradylglycerols,Triacylglycerols,3
+Alkenyl-TG,Glycerolipids,Triradylglycerols,Triacylglycerols,3
+AC,Fatty Acyls,Fatty esters,Acyl Carnitines,1
+CE,Sterol Lipids,Sterols,Steryl esters,1
+CerP,Sphingolipids,Ceramides,Ceramide 1-phosphates,1
+dTG,InternalStandard_Glycerophospholipids,Triradylglycerols,Triacylglycerols,3
+GM3-NANA,Sphingolipids,Acidic glycosphingolipids,Gangliosides,1
+GM3-NGNA,Sphingolipids,Acidic glycosphingolipids,Gangliosides,1
+HexCer[NS],Sphingolipids,Ceramides,Hexosylceramide,1
+PA,Glycerophospholipids,Glycerophosphates,Diacylglycerophosphates,2
+SP,Sphingolipids,Sphingoid bases,Sphingoid base phosphates,1
