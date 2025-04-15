@@ -189,3 +189,139 @@ dbExecute(con, "DROP TABLE IF EXISTS patient_metadata")
 dbWriteTable(con, "patient_metadata", df1, append = F, overwrite = T)
 
 dbDisconnect(con)
+
+
+
+## Add collection date column to the metadata ----
+
+col_date <- fread("data/metadata/Coon_lab_SEER_sample_list_2024_withCollectionDate.csv")
+
+con <- dbConnect(RSQLite::SQLite(), dbname = "P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Database/Long Covid Study DB.sqlite")
+
+df <- dbGetQuery(con, "SELECT Sample, sample_id, Cohort, Age, Sex, BMI, `SF.36.QOL.Score`, PASC_Cohort, Paired_samples, unique_patient_id
+           FROM patient_metadata
+           ")
+
+dbDisconnect(con)
+
+df <- df %>%
+  left_join(col_date, by = "Sample") %>%
+  mutate(Collection_date = format(mdy(Collection_date), "%Y%m%d"))
+
+
+con <- dbConnect(RSQLite::SQLite(), dbname = "P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Database/Long Covid Study DB.sqlite")
+
+# drop old patient metadata table before adding new one
+dbExecute(con, "DROP TABLE IF EXISTS patient_metadata")
+
+# Write the new patient_metadata table to the database
+dbWriteTable(con, "patient_metadata", df, append = F, overwrite = T)
+
+dbDisconnect(con)
+
+
+
+## Add boolean for collection date cutoff for protein changes ----
+
+con <- dbConnect(RSQLite::SQLite(), dbname = "P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Database/Long Covid Study DB.sqlite")
+
+patient_metadata <- dbGetQuery(con, "SELECT *
+           FROM patient_metadata
+           ")
+
+dbDisconnect(con)
+
+# change SF.36.QOL.Score to NA
+
+patient_metadata1 <- patient_metadata %>%
+  mutate(SF.36.QOL.Score = case_when(
+    SF.36.QOL.Score == "N/A" ~ NA,
+    TRUE ~ SF.36.QOL.Score)) %>%
+  mutate(SF.36.QOL.Score = as.numeric(SF.36.QOL.Score))
+
+
+# add protein IDs column
+
+patient_metadata2 <- patient_metadata1 %>%
+  left_join(run_ids %>% select(sample_id, count), by = "sample_id") %>%
+  rename(PG_IDs = count)
+
+
+# add cutoff based on second derivative
+# will put the cutoff at 331 for collection_order, or 20230607 for date based on first/second derivatives
+
+second_collection <- run_ids %>%
+  filter(collection_order >= 331) %>%
+  pull(sample_id)
+
+patient_metadata3 <- patient_metadata2 %>%
+  mutate(PG_change_collection_cutoff = case_when(
+    sample_id %in% second_collection ~ 1,
+    TRUE ~ 0
+  ))
+
+
+con <- dbConnect(RSQLite::SQLite(), dbname = "P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Database/Long Covid Study DB.sqlite")
+
+# drop old patient metadata table before adding new one
+dbExecute(con, "DROP TABLE IF EXISTS patient_metadata")
+
+# Write the new patient_metadata table to the database
+dbWriteTable(con, "patient_metadata", patient_metadata3, append = F, overwrite = T)
+
+dbDisconnect(con)
+
+
+
+
+## Add Analysis Groups columns ----
+
+con <- dbConnect(RSQLite::SQLite(), dbname = "P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Database/Long Covid Study DB.sqlite")
+
+patient_metadata <- dbGetQuery(con, "SELECT *
+           FROM patient_metadata
+           ")
+
+dbDisconnect(con)
+
+
+# Group 1
+patient_metadata1 <- patient_metadata %>%
+  mutate(analysis_group_1 = case_when(
+    PG_change_collection_cutoff == 0 & Cohort %in% c("Healthy", "Acute_fu", "PASC", "PASC_fu") ~ 1,
+    T ~ 0
+  ))
+
+# Group 2
+paired_samples <- patient_metadata1 %>%
+  filter(Cohort %in% c("PASC", "PASC_fu")) %>%
+  group_by(unique_patient_id) %>%
+  filter(n() == 2) %>%
+  filter(n_distinct(PG_change_collection_cutoff) == 1) %>%
+  ungroup() %>%
+  pull(sample_id)
+
+patient_metadata2 <- patient_metadata1 %>%
+  mutate(analysis_group_2 = case_when(
+    sample_id %in% paired_samples ~ 1,
+    T ~ 0
+  ))
+
+# Group 3
+patient_metadata3 <- patient_metadata2 %>%
+  mutate(analysis_group_3 = case_when(
+    PG_change_collection_cutoff == 0 & Cohort %in% c("Healthy", "PASC") ~ 1,
+    T ~ 0
+  ))
+
+
+con <- dbConnect(RSQLite::SQLite(), dbname = "P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Database/Long Covid Study DB.sqlite")
+
+# drop old patient metadata table before adding new one
+dbExecute(con, "DROP TABLE IF EXISTS patient_metadata")
+
+# Write the new patient_metadata table to the database
+dbWriteTable(con, "patient_metadata", patient_metadata3, append = F, overwrite = T)
+
+dbDisconnect(con)
+

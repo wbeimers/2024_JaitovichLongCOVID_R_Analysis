@@ -52,7 +52,7 @@ biomolecules <- dbGetQuery(con, 'SELECT biomolecule_id, standardized_name, omics
                            FROM biomolecules')
 rawfiles <- dbGetQuery(con, 'SELECT rawfile_name, Sample, sample_id, ome_id, keep , rawfile_id, run_type
                            FROM rawfiles_all')
-metadata <- dbGetQuery(con, 'SELECT Sample, sample_id, Cohort, Age, Sex, BMI, `SF.36.QOL.Score`, PASC_Cohort, Paired_samples
+metadata <- dbGetQuery(con, 'SELECT sample_id, Cohort, Age, Sex, BMI, `SF.36.QOL.Score`, PASC_Cohort, Paired_samples, unique_patient_id, Collection_date
                            FROM patient_metadata')
 
 dbDisconnect(con)
@@ -63,18 +63,22 @@ dbDisconnect(con)
 rawfiles <- rawfiles %>%
   select(-keep) %>%
   filter(ome_id == 1) %>%
-  filter(grepl("Sample|QC", run_type))
-
-metadata <- metadata %>%
-  select(-Sample) %>%
-  mutate(sample_id = as.integer(sample_id))
+  filter(grepl('Sample', run_type))
 
 df <- proteomics %>%
-  left_join(rawfiles, by = "rawfile_id") %>%
-  left_join(metadata, by = "sample_id")
+  left_join(rawfiles, by = 'rawfile_id') %>%
+  left_join(metadata, by = 'sample_id')
+
+biomolecules_to_keep <- biomolecules %>%
+  filter(omics_id == 1) %>%
+  filter(keep == "1") %>%
+  pull(biomolecule_id)
+
+filtered_df <- df %>%
+  filter(biomolecule_id %in% biomolecules_to_keep)
 
 
-# Combine by which NP has more completeness by protein group. One NP for each protein group
+## Can make a combined NP unfiltered data frame here 
 df <- df %>%
   mutate(NP = case_when(
     grepl("NPA", rawfile_name) == T ~ "NPA",
@@ -86,25 +90,11 @@ df <- df %>%
   group_by(standardized_name) %>%
   mutate(keep_group = NP[which.min(na_count)]) %>%  
   filter(NP == keep_group) %>%  
-  select(-na_count, -keep_group, -NP)  
+  dplyr::select(-na_count, -keep_group, -NP)  
 
 length(unique(df$standardized_name))
 
-# Also filter for completeness
-# Show how many non-NA values there are for each protein group in each study group
-na_summary <- df %>%
-  group_by(Cohort, standardized_name) %>%
-  summarise(na_ratio = mean(!is.na(raw_abundance)), .groups = 'drop')
 
-# Make a list of IDs to keep where there are at least 50% non-NA values in one of the cohorts
-ids_to_keep <- na_summary %>%
-  group_by(standardized_name) %>%
-  summarise(max_na_ratio = max(na_ratio)) %>%
-  filter(max_na_ratio >= 0.5) %>% 
-  pull(standardized_name)
-
-filtered_df <- df %>%
-  filter(standardized_name %in% ids_to_keep)
 
 
 #### Heatmap:all ####
@@ -156,10 +146,15 @@ pheatmap(expression_matrix,
 
 
 # Get clustering Information for proteins
-hm <- pheatmap(expression_matrix)
-row_cluster <- data.frame(cluster = cutree(hm$tree_row, k = 5))
-row_cluster_3 <- filter(row_cluster, row_cluster$cluster == 3)
-row_cluster_3 <- rownames(row_cluster_3)
+protein_hclust <- hclust(dist(expression_matrix), method = "complete")
+
+plot(protein_hclust, labels = F)
+k = 16
+rect.hclust(protein_hclust, k = k, border = "red")
+
+protein_hclust_clusters <- cutree(as.hclust(protein_hclust), k = k)
+
+
 
 
 
@@ -212,3 +207,68 @@ pheatmap(expression_matrix,
          filename = "reports/figures/AllPlates_Samples_heatmap_PASC_Cohort.png",
          width = 8,
          height = 8)
+
+
+
+
+## Heatmap Showing NAs ----
+
+expression_matrix <- df %>%
+  dplyr::select(standardized_name, raw_abundance, sample_id) %>%
+  mutate(raw_abundance = log2(raw_abundance)) %>%
+  pivot_wider(names_from = sample_id, values_from = raw_abundance) %>%
+  tibble::column_to_rownames(var = "standardized_name")
+
+# Make annotation dataframe for the sample groups
+sample_annot <- df %>%
+  ungroup() %>%
+  dplyr::select(sample_id, Cohort, Age, Sex, BMI, SF.36.QOL.Score) %>%
+  distinct() %>%
+  tibble::column_to_rownames(var = "sample_id") %>%
+  mutate(SF.36.QOL.Score = as.numeric(SF.36.QOL.Score))
+
+
+# Make annotation dataframe for the rows of proteins
+# remove NAs to cluster
+clust <- expression_matrix %>%
+  mutate(across(everything(), ~ ifelse(is.na(.), mean(., na.rm = TRUE), .))) # column mean
+
+# do protein clustering
+protein_hclust <- hclust(dist(clust), method = "complete")
+
+# check clustering and choose number of clusters
+plot(protein_hclust, labels = F)
+k = 8
+rect.hclust(protein_hclust, k = k, border = "red")
+
+# make annotation dataframe from clustering info
+row_annot <- data.frame(cluster = cutree(as.hclust(protein_hclust), k = k),
+                        row.names = rownames(clust))
+
+
+pheatmap(expression_matrix,
+         clustering_distance_rows = dist(clust), 
+         clustering_distance_cols = dist(t(clust)),
+         #color = viridis(24, direction = 1, option = "plasma"),
+         color = rev(colorRampPalette(brewer.pal(24, "RdYlBu"))(24)),
+         na_col = "lightgray",
+         breaks = c(-11, -9, -7, -5, -4, -3, -2.5, -2, -1.5, -1, -0.5, 0, 0.5, 1, 1.5, 2, 2.5, 3, 4, 5, 7, 9, 11),
+         cluster_rows = T,
+         #cutree_rows = 8, 
+         #gaps_row = T,
+         cluster_cols = T,
+         cutree_cols = 5,
+         gaps_col = T,
+         treeheight_row = 0,
+         treeheight_col = 10,
+         show_rownames = F,
+         show_colnames = F,
+         border_color = NA,
+         scale = "row",
+         #annotation_row = row_annot,
+         annotation_col = sample_annot,
+         annotation_colors = list(Cohort = c(Acute = pal[1], Acute_fu = pal[2], Acute_NC = pal[3], Healthy = pal[4], PASC = pal[5], PASC_fu = pal[6])),
+         filename = "reports/figures/AllPlates_Samples_heatmap_Cohort_NAs_clusterscols.png",
+         width = 8,
+         height = 8)
+

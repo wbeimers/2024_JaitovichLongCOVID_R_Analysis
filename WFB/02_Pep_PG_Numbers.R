@@ -38,7 +38,7 @@ col1 <- c(rev(colorRampPalette(col)(100)),'white', colorRampPalette(col1)(100))
 pie(rep(1, length(col)), col = col , main='') 
 
 
-# files
+# files #
 con <- dbConnect(RSQLite::SQLite(), dbname = 'P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Database/Long Covid Study DB.sqlite')
 
 
@@ -48,7 +48,7 @@ biomolecules <- dbGetQuery(con, 'SELECT biomolecule_id, standardized_name, omics
                            FROM biomolecules')
 rawfiles <- dbGetQuery(con, 'SELECT rawfile_name, Sample, sample_id, ome_id, keep , rawfile_id, run_type
                            FROM rawfiles_all')
-metadata <- dbGetQuery(con, 'SELECT Sample, sample_id, Cohort, Age, Sex, BMI, `SF.36.QOL.Score`, PASC_Cohort, Paired_samples
+metadata <- dbGetQuery(con, 'SELECT sample_id, Cohort, Age, Sex, BMI, `SF.36.QOL.Score`, PASC_Cohort, Paired_samples, unique_patient_id, Collection_date
                            FROM patient_metadata')
 
 dbDisconnect(con)
@@ -61,48 +61,37 @@ rawfiles <- rawfiles %>%
   filter(ome_id == 1) %>%
   filter(grepl('Sample', run_type))
 
-metadata <- metadata %>%
-  select(-Sample) %>%
-  mutate(sample_id = as.integer(sample_id))
-
 df <- proteomics %>%
   left_join(rawfiles, by = 'rawfile_id') %>%
   left_join(metadata, by = 'sample_id')
 
-
-# Combine by which NP has more completeness by protein group. One NP for each protein group
-df <- df %>%
-  mutate(NP = case_when(
-    grepl("NPA", rawfile_name) == T ~ "NPA",
-    grepl("NPB", rawfile_name) == T ~ "NPB"
-  )) %>%
-  group_by(standardized_name, NP) %>%
-  mutate(na_count = sum(is.na(raw_abundance))) %>%
-  ungroup() %>%
-  group_by(standardized_name) %>%
-  mutate(keep_group = NP[which.min(na_count)]) %>%  
-  filter(NP == keep_group) %>%  
-  select(-na_count, -keep_group, -NP)  
-  
-length(unique(df$standardized_name))
-
-# Also filter for completeness
-# Show how many non-NA values there are for each protein group in each study group
-na_summary <- df %>%
-  group_by(Cohort, standardized_name) %>%
-  summarise(na_ratio = mean(!is.na(raw_abundance)), .groups = 'drop')
-
-# Make a list of IDs to keep where there are at least 50% non-NA values in one of the cohorts
-ids_to_keep <- na_summary %>%
-  group_by(standardized_name) %>%
-  summarise(max_na_ratio = max(na_ratio)) %>%
-  filter(max_na_ratio >= 0.5) %>% 
-  pull(standardized_name)
+biomolecules_to_keep <- biomolecules %>%
+  filter(omics_id == 1) %>%
+  filter(keep == "1") %>%
+  pull(biomolecule_id)
 
 filtered_df <- df %>%
-  filter(standardized_name %in% ids_to_keep) %>%
-  filter(!is.na(normalized_abundance))
+  filter(biomolecule_id %in% biomolecules_to_keep)
 
+
+## Use this run_ids for the rest of the script ----
+run_ids <- df %>%
+  group_by(sample_id, standardized_name) %>%
+  summarize(has_value = any(!is.na(raw_abundance)), .groups = "drop") %>%
+  group_by(sample_id) %>%
+  summarize(count = sum(has_value)) %>%
+  left_join(metadata, by = 'sample_id') %>%
+  left_join(rawfiles %>%
+              dplyr::select(sample_id, rawfile_id), by = "sample_id") %>%
+  group_by(sample_id) %>%
+  slice_min(rawfile_id, with_ties = FALSE) %>%
+  ungroup() %>%
+  arrange(rawfile_id) %>%
+  mutate(order = row_number()) %>%
+  arrange(Collection_date) %>%
+  mutate(collection_order = row_number())
+  
+  
 
 
 #### plot:missingness heatmap ----
@@ -168,17 +157,7 @@ ggsave('reports/figures/AllPlates_Samples_PGvsMissing.pdf', width = 16, height =
 
 
 
-#### plot:RunOrdervsProteinNumber ####
-run_ids <- df %>%
-  group_by(sample_id) %>%
-  summarize(count = sum(!is.na(raw_abundance))) %>%
-  inner_join(df %>% ungroup() %>% select(sample_id, rawfile_id, Cohort), by = 'sample_id') %>%
-  distinct() %>%
-  group_by(sample_id) %>%
-  slice_min(rawfile_id, with_ties = FALSE) %>%
-  ungroup() %>%
-  arrange(rawfile_id) %>%
-  mutate(order = row_number())
+#### plot:RunOrdervsIDs ####
   
 ggplot(run_ids, aes(order, count, color = Cohort)) + 
   geom_point() + 
@@ -718,7 +697,7 @@ ggsave(paste0('reports/figures/AllPlates_Sample_MaxAbundancevsPercentComplete.pd
   
   
   
-  #### plot:first/second PASC protein numbers ####
+#### plot:first/second PASC protein numbers ####
 item <- run_ids %>%
   left_join(metadata %>% select(PASC_Cohort, sample_id), by = "sample_id") %>%
   filter(!is.na(PASC_Cohort))
@@ -757,3 +736,66 @@ ggsave(paste0('reports/figures/AllPlates_Sample_PASC_Cohort_ProteinIDs_boxplot.p
 
 
 t.test(count ~ PASC_Cohort, data = item)
+
+#### plot:collection date vs IDs ####
+
+ggplot(run_ids, aes(collection_order, count, color = Cohort)) + 
+  geom_point() +
+  geom_smooth(aes(group = 1, color = NULL), method = "loess", span = 0.2, se = FALSE) + 
+  scale_color_manual(values = pal) +
+  xlab('Collection Order') +
+  ylab('PG IDs') +
+  scale_y_continuous(expand = c(0,0), limits = c(0, 8000)) +
+  #scale_x_date(
+  #  date_breaks = "1 year",  # Change as needed (day, week, month, year)
+  #  minor_breaks = "1 month",
+  #  date_labels = "%Y"     # Format: Jan 2021
+  #) +
+  guides(fill = guide_legend(title = 'Study Group')) +
+  theme_classic() +
+  theme(panel.border = element_blank(), 
+        panel.grid.major = element_blank(), 
+        axis.text.x = element_text(size = 7),
+        axis.text.y = element_text(size = 7),
+        axis.title = element_text(size = 7),
+        axis.line = element_line(size = 0.2),
+        axis.ticks = element_line(size = 0.2),
+        legend.position = "right", 
+        legend.justification = c("right", "bottom"),
+        legend.margin = margin(2, 2, 2, 2),
+        legend.title = element_text(size = 7),
+        legend.text = element_text(size = 7),
+        legend.key.size = unit(0.2, "in")
+  ) 
+ggsave('reports/figures/AllPlates_Sample_PGvsCollectionOrder_Set_Point.pdf', 
+       width = 16, height = 6, units = 'cm')
+
+fwrite(run_ids, "data/processed/SamplePGcountWithMetadata.csv")
+
+
+# second derivative to figure out cutoff location for collection date
+library(splines)
+
+smooth_fit <- with(run_ids, smooth.spline(collection_order, count, df = 10))
+
+# Calculate derivatives
+first_deriv <- predict(smooth_fit, deriv = 1)
+second_deriv <- predict(smooth_fit, deriv = 2)
+
+# Create data frame for plotting
+deriv_data <- data.frame(
+  date = smooth_fit$x,
+  value = smooth_fit$y,
+  first_deriv = first_deriv$y,
+  second_deriv = second_deriv$y
+)
+
+# Plot original data and second derivative
+ggplot() +
+  geom_line(data=deriv_data, aes(x=date, y=second_deriv), color="red") 
+ggsave("reports/figures/AllPlates_samples_RunIDsCollectionDate_secondderivative.pdf",
+       width = 8,
+       height = 6,
+       units = "cm")
+
+# will put the cutoff at 331 for collection_order, or 20230607 for date

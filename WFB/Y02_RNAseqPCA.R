@@ -45,32 +45,30 @@ pie(rep(1, length(col)), col = col , main="")
 con <- dbConnect(RSQLite::SQLite(), dbname = "P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Database/Long Covid Study DB.sqlite")
 
 
-rnaseq <- dbGetQuery(con, "SELECT standardized_name, SYMBOL, Sample, Counts, biomolecule_id, measurement_id
+rnaseq <- dbGetQuery(con, "SELECT standardized_name, SYMBOL, Sample, Counts, biomolecule_id
                          FROM rnaseq_measurements")
-biomolecules <- dbGetQuery(con, "SELECT biomolecule_id, standardized_name, omics_id, keep 
-                           FROM biomolecules")
-metadata <- dbGetQuery(con, "SELECT Sample, sample_id, Cohort, Age, Sex, BMI, `SF.36.QOL.Score`
-                           FROM patient_metadata")
+biomolecules <- dbGetQuery(con, 'SELECT biomolecule_id, standardized_name, omics_id, keep 
+                           FROM biomolecules')
+metadata <- dbGetQuery(con, 'SELECT Sample, Cohort, Age, Sex, BMI, `SF.36.QOL.Score`, PASC_Cohort, Paired_samples, unique_patient_id, Collection_date
+                           FROM patient_metadata')
 
 dbDisconnect(con)
 
 
 ## Merge rawfiles and proteomics, Combine NPA and NPB measurements by completeness by protein group
 # subset rawfiles to only include sample and QC proteomics runs
-metadata <- metadata %>%
-  mutate(sample_id = as.integer(sample_id))
 
 df <- rnaseq %>%
-  left_join(metadata, by = "Sample")
+  inner_join(metadata, by = "Sample")
 
 
 
 #### PCA ####
 pca_set <- df %>%
-  dplyr::select(standardized_name, Counts, sample_id) %>%
-  group_by(standardized_name, sample_id) %>%
+  dplyr::select(standardized_name, Counts, Sample) %>%
+  group_by(standardized_name, Sample) %>%
   summarise(Counts = mean(Counts)) %>%
-  pivot_wider(names_from = sample_id, values_from = Counts)
+  pivot_wider(names_from = Sample, values_from = Counts)
 
 t_pca_set <- as.data.frame(t(pca_set))
 
@@ -81,11 +79,9 @@ t_pca_set <- t_pca_set[-1, ]
 #change to numeric
 t_pca_set <- data.frame(lapply(t_pca_set, as.numeric), row.names = rownames(t_pca_set))
 # re-add sample_id
-t_pca_set <- tibble::rownames_to_column(t_pca_set, "sample_id")
+t_pca_set <- tibble::rownames_to_column(t_pca_set, "Sample")
 ncol(t_pca_set)
 
-t_pca_set <- t_pca_set %>%
-  mutate(sample_id = as.integer(sample_id)) 
 
 pca_score <- prcomp(t_pca_set[,c(2:19772)],
                     scale. = T)
@@ -95,33 +91,31 @@ summary(pca_score)
 # scree
 explained_variance <- pca_score$sdev^2 / sum(pca_score$sdev^2)
 variance <- data.frame(proportion = explained_variance,
-                       PC = 1:270)
+                       PC = 1:269)
 
 # pca scores
 scores <- as.data.frame(pca_score$x)
 scores <- scores %>%
-  mutate(sample_id = t_pca_set$sample_id) %>%
+  mutate(Sample = t_pca_set$Sample) %>%
   left_join(df %>% 
             ungroup() %>%
-            dplyr::select(sample_id, Sample, Cohort, Age, Sex, BMI, `SF.36.QOL.Score`) %>%
+            dplyr::select(Sample, Cohort, Age, Sex, BMI, `SF.36.QOL.Score`, Collection_date) %>%
             distinct(), 
-          by = "sample_id") %>%
+          by = "Sample") %>%
   mutate(SF.36.QOL.Score = as.numeric(SF.36.QOL.Score))
 
 
-ggplot(scores, aes(PC1, PC2, fill = Cohort)) + 
+ggplot(scores, aes(PC1, PC2, fill = as.Date(Collection_date, format = "%Y%m%d"))) + 
   geom_point(shape = 21,
              size = 1,
              color = "black",
              stroke = 0.1) +
-  stat_ellipse(aes(color = Cohort), 
-               geom = "path", 
-               show.legend = FALSE,
-               linewidth = 0.2) +
-  scale_fill_manual(values = c(pal[2], pal[4], pal[5], pal[6])) +
-  scale_color_manual(values = c(pal[2], pal[4], pal[5], pal[6])) +
-  #scale_fill_viridis_c(option = "plasma", direction = -1) +
-  #scale_color_viridis_c(option = "plasma", direction = -1) +
+  #stat_ellipse(aes(color = Cohort), 
+  #             geom = "path", 
+  #             show.legend = FALSE,
+  #             linewidth = 0.2) +
+  #scale_fill_manual(values = c(pal[2], pal[4], pal[5], pal[6])) +
+  scale_fill_viridis_c(option = "viridis", direction = -1) +
   xlab(paste("PC1", round(variance$proportion[1]*100, 2))) +
   ylab(paste("PC2", round(variance$proportion[2]*100, 2))) +
   theme_classic() +
@@ -134,7 +128,7 @@ ggplot(scores, aes(PC1, PC2, fill = Cohort)) +
         axis.line = element_blank(),
         axis.ticks = element_line(size = 0.2),
         strip.text = element_blank(),
-        legend.position = c(0.95, 0.05), 
+        legend.position = "right", 
         legend.justification = c("right", "bottom"),
         legend.margin = margin(2, 2, 2, 2),
         legend.title = element_text(size = 7),
@@ -142,8 +136,8 @@ ggplot(scores, aes(PC1, PC2, fill = Cohort)) +
         legend.spacing.y = unit(0.1, "cm"),
         legend.key.size = unit(0.25, "cm")
   )
-ggsave("reports/figures/RNAseq_Samples_cohort_PCA_PC1PC2.pdf", 
-       width = 8, height = 6, units = "cm")
+ggsave("reports/figures/RNAseq_Samples_CollectionDate_PCA_PC1PC2.pdf", 
+       width = 12, height = 6, units = "cm")
 
 
 ## loadings ----

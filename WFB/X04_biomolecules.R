@@ -77,3 +77,21 @@ dbWriteTable(con, "biomolecules", db_table_all, overwrite = T)
 dbDisconnect(con)
 
 
+## Fix keep column ----
+
+con <- dbConnect(RSQLite::SQLite(), dbname = "P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Database/Long Covid Study DB.sqlite")
+db_table <- dbGetQuery(con, "SELECT *
+                           FROM biomolecules")
+dbDisconnect(con)
+
+
+db_table1 <- db_table %>%
+  mutate(keep = case_when(
+    keep == "1.0" ~ "1",
+    T ~ keep
+  ))
+
+
+con <- dbConnect(RSQLite::SQLite(), dbname = "P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Database/Long Covid Study DB.sqlite")
+dbWriteTable(con, "biomolecules", db_table1, overwrite = T)
+dbDisconnect(con)

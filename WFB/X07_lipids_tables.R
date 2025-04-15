@@ -26,10 +26,7 @@ dbDisconnect(con)
 
 #### Add lipidomics measurements table ####
 
-measurements_lipids <- fread("P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Lipidomics/db_formatted_tables/lipidomics_measurements_table.csv") %>%
-  select(-UniqueID) %>%
-  mutate(standardized_name = standarized_name) %>%
-  select(-standarized_name)
+measurements_lipids <- fread("P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Lipidomics/db_formatted_tables/lipidomics_measurements_table.csv")
 
 con <- dbConnect(RSQLite::SQLite(), dbname = "P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Database/Long Covid Study DB.sqlite")
 
@@ -92,3 +89,33 @@ dbWriteTable(con, "lipidomics_measurements", lipidomics1, append = T, row.names 
 dbDisconnect(con)
 
   
+
+## Lipidomics Metadata ----
+
+metadata_lipids <- fread("P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Lipidomics/db_formatted_tables/biomolecules_metadata.csv") %>%
+  dplyr::select(-omics_id, -keep)
+
+con <- dbConnect(RSQLite::SQLite(), dbname = "P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Database/Long Covid Study DB.sqlite")
+dbWriteTable(con, "lipidomics_metadata", metadata_lipids, row.names = F)
+dbDisconnect(con)
+
+
+
+#### Remove a rawfile from the samples ####
+
+con <- dbConnect(RSQLite::SQLite(), dbname = "P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Database/Long Covid Study DB.sqlite")
+
+rawfiles_all <- dbGetQuery(con, "SELECT * 
+                       FROM rawfiles_all")
+
+dbDisconnect(con)
+
+rawfiles_all[rawfiles_all$rawfile_id == 979, "keep"] <- "0; replicate_injection"
+  
+con <- dbConnect(RSQLite::SQLite(), dbname = "P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Database/Long Covid Study DB.sqlite")
+
+dbExecute(con, "DROP TABLE IF EXISTS rawfiles_all")
+
+dbWriteTable(con, "rawfiles_all", rawfiles_all, overwrite = T)
+
+dbDisconnect(con)
