@@ -137,7 +137,7 @@ data_matrix_all_long <- data_matrix_all_long %>%
 
 con <- dbConnect(RSQLite::SQLite(), dbname = 'P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Database/Long Covid Study DB.sqlite')
 
-metadata <- dbGetQuery(con, 'SELECT Sample, sample_id, Cohort, Age, Sex, BMI, `SF.36.QOL.Score`, PASC_Cohort, Paired_samples
+metadata <- dbGetQuery(con, 'SELECT Sample, sample_id, Cohort, Age, Sex, BMI, `SF.36.QOL.Score`, PASC_Cohort, Paired_samples, unique_patient_id, Collection_date
                            FROM patient_metadata')
 
 dbDisconnect(con)
@@ -338,15 +338,15 @@ scores <- scores %>%
   mutate(sample_id = t_pca_set$sample_id) %>%
   left_join(neat_data_df %>% 
               ungroup() %>%
-              dplyr::select(sample_id, rawfile_id, Sample, Cohort, Age, Sex, BMI, `SF.36.QOL.Score`) %>%
+              dplyr::select(sample_id, rawfile_id, Sample, Cohort, Age, Sex, BMI, `SF.36.QOL.Score`, Collection_date) %>%
               distinct(), 
             by = "sample_id") %>%
-  mutate(SF.36.QOL.Score = as.numeric(SF.36.QOL.Score))
+  mutate(SF.36.QOL.Score = as.numeric(SF.36.QOL.Score)) %>%
+  mutate(Collection_date = as.integer(Collection_date))
 
 
-ggplot(scores, aes(PC2, PC3, fill = Cohort)) + 
-  geom_point(shape = 21,
-             size = 1,
+ggplot(scores, aes(PC1, PC2, fill = as.Date(Collection_date, format = "%Y%m%d"), shape = Cohort)) + 
+  geom_point(size = 1,
              color = "black",
              stroke = 0.1) +
   #stat_ellipse(aes(color = Cohort), 
@@ -354,12 +354,11 @@ ggplot(scores, aes(PC2, PC3, fill = Cohort)) +
   #             show.legend = FALSE,
   #             linewidth = 0.2) +
   #geom_text_repel(aes(label = Sample), size = 2) +
-  scale_fill_manual(values = c(pal[4], pal[6])) +
-  scale_color_manual(values = c(pal[4], pal[6])) +
-  #scale_fill_viridis_c(option = "plasma", direction = -1) +
-  #scale_color_viridis_c(option = "plasma", direction = -1) +
-  xlab(paste("PC2", round(variance$proportion[2]*100, 2))) +
-  ylab(paste("PC3", round(variance$proportion[3]*100, 2))) +
+  #scale_fill_manual(values = c(pal[4], pal[6])) +
+  scale_fill_viridis_c(option = "plasma", direction = -1, name = "Collection_date") +
+  scale_shape_manual(values = c(21, 24)) +
+  xlab(paste("PC1", round(variance$proportion[1]*100, 2))) +
+  ylab(paste("PC2", round(variance$proportion[2]*100, 2))) +
   theme_classic() +
   theme(panel.border = element_rect(color = "black", fill = NA, size = 0.2), 
         panel.grid.major = element_blank(),
@@ -370,7 +369,7 @@ ggplot(scores, aes(PC2, PC3, fill = Cohort)) +
         axis.line = element_blank(),
         axis.ticks = element_line(size = 0.2),
         strip.text = element_blank(),
-        legend.position = c(0.95, 0.05), 
+        legend.position = "right", 
         legend.justification = c("right", "bottom"),
         legend.margin = margin(2, 2, 2, 2),
         legend.title = element_text(size = 7),
@@ -378,8 +377,8 @@ ggplot(scores, aes(PC2, PC3, fill = Cohort)) +
         legend.spacing.y = unit(0.1, "cm"),
         legend.key.size = unit(0.25, "cm")
   )
-ggsave("reports/figures/NeatRePrep_cohort_PCA_PC2PC3.pdf", 
-       width = 8, height = 6, units = "cm") 
+ggsave("reports/figures/NeatRePrep_collectiondate_PCA_PC1PC2.pdf", 
+       width = 12, height = 6, units = "cm") 
 
 
 
@@ -391,7 +390,7 @@ expression_matrix <- neat_data_df %>%
   pivot_wider(names_from = sample_id, values_from = raw_abundance) %>%
   tibble::column_to_rownames(var = "PG.ProteinGroups")
 
-#Make annotation dataframe for the sample groups
+# Make annotation dataframe for the sample groups
 sample_annot <- neat_data_df %>%
   ungroup() %>%
   dplyr::select(sample_id, Cohort, Age, Sex, BMI, SF.36.QOL.Score) %>%
@@ -399,8 +398,24 @@ sample_annot <- neat_data_df %>%
   tibble::column_to_rownames(var = "sample_id") %>%
   mutate(SF.36.QOL.Score = as.numeric(SF.36.QOL.Score))
 
+
+# Make annotation dataframe for the rows of proteins
+# remove NAs to cluster
 clust <- expression_matrix %>%
   mutate(across(everything(), ~ ifelse(is.na(.), mean(., na.rm = TRUE), .))) # column mean
+
+# do protein clustering
+protein_hclust <- hclust(dist(clust), method = "complete")
+
+# check clustering and choose number of clusters
+plot(protein_hclust, labels = F)
+k = 8
+rect.hclust(protein_hclust, k = k, border = "red")
+
+# make annotation dataframe from clustering info
+row_annot <- data.frame(cluster = cutree(as.hclust(protein_hclust), k = k),
+                                      row.names = rownames(clust))
+
 
 pheatmap(expression_matrix,
          clustering_distance_rows = dist(clust), 
@@ -411,16 +426,18 @@ pheatmap(expression_matrix,
          breaks = c(-11, -9, -7, -5, -4, -3, -2.5, -2, -1.5, -1, -0.5, 0, 0.5, 1, 1.5, 2, 2.5, 3, 4, 5, 7, 9, 11),
          cluster_rows = T,
          cluster_cols = T,
+         cutree_rows = 8,  
+         gaps_row = TRUE,
          treeheight_row = 0,
          treeheight_col = 10,
          show_rownames = F,
          show_colnames = F,
          border_color = NA,
          scale = "row",
-         #annotation_row = heatmap_annot,
+         annotation_row = row_annot,
          annotation_col = sample_annot,
          annotation_colors = list(Cohort = c(Healthy = pal[4], PASC_fu = pal[6])),
-         filename = "reports/figures/NeatRePrep_heatmap_Cohort_withNAs.png",
+         filename = "reports/figures/NeatRePrep_heatmap_Cohort_withNAs_clusters.png",
          width = 8,
          height = 8)
 
@@ -1102,8 +1119,126 @@ ggsave('reports/figures/NeatRePrep_ContaminantProfiles.pdf',
 
 
 
+## Check protein content correlation to Neat IDs or Seer IDs ----
+
+protein_bca <- fread("data/metadata/HealthyPASC_fuBCA.csv")
+
+bca_cor <- run_ids_cor %>%
+  left_join(protein_bca, by = "Sample")
+
+ggplot(bca_cor, aes(Concentration, count_seer, color = Cohort)) + 
+  geom_point(size = 1) +
+  scale_color_manual(values = c(pal[4], pal[6])) +
+  xlab('BCA Concentration') +
+  ylab('Seer Count') +
+  theme_classic() +
+  theme(panel.border = element_blank(), 
+        panel.grid.major = element_blank(), 
+        axis.text.x = element_text(size = 7),
+        axis.text.y = element_text(size = 7),
+        axis.title = element_text(size = 7),
+        axis.line = element_line(size = 0.2),
+        axis.ticks = element_line(size = 0.2),
+        legend.position = "right", 
+        legend.justification = c("right", "bottom"),
+        legend.margin = margin(2, 2, 2, 2),
+        legend.title = element_text(size = 7),
+        legend.text = element_text(size = 7),
+        legend.key.size = unit(0.2, "in")
+  ) 
+ggsave('reports/figures/NeatRePrep_ProteinBCA_SeerCount_cohort_Point.pdf', 
+       width = 10, height = 6, units = 'cm')
 
 
+## plot:CollectionDatevsIDs ----
+
+neat_run_ids <- neat_data_df %>%
+  group_by(sample_id) %>%
+  summarize(count = sum(!is.na(raw_abundance))) %>%
+  left_join(metadata, by = 'sample_id') %>%
+  left_join(rawfiles, by = 'Sample') %>%
+  group_by(sample_id) %>%
+  slice_min(rawfile_id, with_ties = FALSE) %>%
+  ungroup() %>%
+  arrange(rawfile_id) %>%
+  mutate(order = row_number()) %>%
+  arrange(Collection_date) %>%
+  mutate(collection_order = row_number()) %>%
+  mutate(Collection_date = as.character(Collection_date))
 
 
+ggplot(neat_run_ids, aes(collection_order, count, color = Cohort)) + 
+  geom_point(size = 1) +
+  scale_color_manual(values = c(pal[4], pal[6])) +
+  xlab('Collection Order') +
+  ylab('Neat Count') +
+  #scale_x_date(
+  #  date_breaks = "1 year",  # Change as needed (day, week, month, year)
+  #  minor_breaks = "1 month",
+  #  date_labels = "%Y"     # Format: Jan 2021
+  #) +
+  theme_classic() +
+  theme(panel.border = element_blank(), 
+        panel.grid.major = element_blank(), 
+        axis.text.x = element_text(size = 7),
+        axis.text.y = element_text(size = 7),
+        axis.title = element_text(size = 7),
+        axis.line = element_line(size = 0.2),
+        axis.ticks = element_line(size = 0.2),
+        legend.position = "right", 
+        legend.justification = c("right", "bottom"),
+        legend.margin = margin(2, 2, 2, 2),
+        legend.title = element_text(size = 7),
+        legend.text = element_text(size = 7),
+        legend.key.size = unit(0.2, "in")
+  ) 
+ggsave('reports/figures/NeatRePrep_PGvsCollectionOrder_Set_Point.pdf', 
+       width = 12, height = 6, units = 'cm')
+
+
+# plot:BCAvsCollectionDate
+
+neat_run_ids_bca <- neat_data_df %>%
+  group_by(sample_id) %>%
+  summarize(count = sum(!is.na(raw_abundance))) %>%
+  left_join(metadata, by = 'sample_id') %>%
+  left_join(rawfiles, by = 'Sample') %>%
+  group_by(sample_id) %>%
+  slice_min(rawfile_id, with_ties = FALSE) %>%
+  ungroup() %>%
+  arrange(rawfile_id) %>%
+  mutate(order = row_number()) %>%
+  arrange(Collection_date) %>%
+  mutate(collection_order = row_number()) %>%
+  mutate(Collection_date = as.character(Collection_date)) %>%
+  left_join(protein_bca, by = "Sample")
+
+
+ggplot(neat_run_ids_bca, aes(collection_order, Concentration, color = Cohort)) + 
+  geom_point(size = 1) +
+  scale_color_manual(values = c(pal[4], pal[6])) +
+  xlab('Collection Order') +
+  ylab('Neat Count') +
+  #scale_x_date(
+  #  date_breaks = "1 year",  # Change as needed (day, week, month, year)
+  #  minor_breaks = "1 month",
+  #  date_labels = "%Y"     # Format: Jan 2021
+  #) +
+  theme_classic() +
+  theme(panel.border = element_blank(), 
+        panel.grid.major = element_blank(), 
+        axis.text.x = element_text(size = 7),
+        axis.text.y = element_text(size = 7),
+        axis.title = element_text(size = 7),
+        axis.line = element_line(size = 0.2),
+        axis.ticks = element_line(size = 0.2),
+        legend.position = "right", 
+        legend.justification = c("right", "bottom"),
+        legend.margin = margin(2, 2, 2, 2),
+        legend.title = element_text(size = 7),
+        legend.text = element_text(size = 7),
+        legend.key.size = unit(0.2, "in")
+  ) 
+ggsave('reports/figures/NeatRePrep_CollectionOrdervsBCA_Set_Point.pdf', 
+       width = 12, height = 6, units = 'cm')
 

@@ -37,9 +37,42 @@ rnaseq_long <- rnaseq %>%
     Sample == 'PC2018' ~ '2018.67',
     Sample == 'PC2019' ~ '2019.61',
     T ~ Sample)) %>%
-  mutate(biomolecule_id = 9595 + cumsum(!duplicated(ENTREZID))) %>%
   mutate(measurement_id = row_number()) %>%
-  rename(standardized_name = ENTREZID)
+  rename(standardized_name = ENTREZID) %>%
+  mutate(standardized_name = as.character(standardized_name)) %>%
+  left_join(biomolecules %>% 
+              filter(omics_id == 3) %>%
+              select(standardized_name, biomolecule_id),
+            by = "standardized_name") %>%
+  left_join(rawfiles %>% 
+              select(Sample, sample_id) %>%
+              distinct(),
+            by = "Sample") %>%
+  mutate(normalized_counts = log2(Counts)) %>%
+  select(-Sample) %>%
+  select(measurement_id, standardized_name, biomolecule_id, SYMBOL, GENENAME, sample_id, Counts, normalized_counts)
+
+
+hist(rnaseq_long %>%
+       filter(biomolecule_id == 25000) %>%
+       pull(normalized_counts))
+
+
+
+con <- dbConnect(RSQLite::SQLite(), dbname = "P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Database/Long Covid Study DB.sqlite")
+
+# drop old patient metadata table before adding new one
+dbExecute(con, "DROP TABLE IF EXISTS rnaseq_measurements")
+
+# Write the new patient_metadata table to the database
+dbWriteTable(con, "rnaseq_measurements", rnaseq_long, append = F, overwrite = T)
+
+dbDisconnect(con)
+
+
+
+
+
 
 
 # Add rnaseq table to the sql database
@@ -113,3 +146,92 @@ transcript_go <- biomolecules %>%
 con <- dbConnect(RSQLite::SQLite(), dbname = "P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Database/Long Covid Study DB.sqlite")
 dbWriteTable(con, "rnaseq_metadata", transcript_go, row.names = F, overwrite = T)
 dbDisconnect(con)
+
+
+## RNAseq counts filtering ----
+con <- dbConnect(RSQLite::SQLite(), dbname = "P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Database/Long Covid Study DB.sqlite")
+transcriptomics <- dbGetQuery(con, 'SELECT *
+                                    FROM rnaseq_measurements')
+dbDisconnect(con)
+
+
+# Also filter for completeness
+# Show how many counts<10 there are for each gene
+counts_summary <- transcriptomics %>%
+  group_by(biomolecule_id) %>%
+  summarise(countsunder10 = mean(Counts < 10), .groups = 'drop')
+
+hist(counts_summary$countsunder10)
+
+# Make a list of IDs to keep where there are at least 25% samples counts < 10
+ids_to_exclude <- counts_summary %>%
+  group_by(biomolecule_id) %>%
+  filter(countsunder10 >= 0.75) %>% 
+  pull(biomolecule_id)
+
+con <- dbConnect(RSQLite::SQLite(), dbname = "P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Database/Long Covid Study DB.sqlite")
+biomolecules <- dbGetQuery(con, 'SELECT *
+                                    FROM biomolecules')
+dbDisconnect(con)
+
+biomolecules1 <- biomolecules %>%
+  mutate(keep = case_when(
+    biomolecule_id %in% ids_to_exclude ~ "0",
+    T ~ keep
+  ))
+
+asdfasdfs <- biomolecules1 %>%
+  filter(omics_id == 3)
+
+table(asdfasdfs$keep)
+
+
+con <- dbConnect(RSQLite::SQLite(), dbname = "P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Database/Long Covid Study DB.sqlite")
+
+# drop old patient metadata table before adding new one
+dbExecute(con, "DROP TABLE IF EXISTS biomolecules")
+
+# Write the new patient_metadata table to the database
+dbWriteTable(con, "biomolecules", biomolecules1, append = F, overwrite = T)
+
+dbDisconnect(con)
+
+
+
+
+## RNAseq normalized_counts Inf to 0 ----
+con <- dbConnect(RSQLite::SQLite(), dbname = "P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Database/Long Covid Study DB.sqlite")
+transcriptomics <- dbGetQuery(con, 'SELECT *
+                                    FROM rnaseq_measurements')
+dbDisconnect(con)
+
+transcriptomics1 <- transcriptomics %>% 
+  mutate(normalized_counts = case_when(
+    is.infinite(normalized_counts) ~ 0,
+    T ~ normalized_counts
+  )) # replace infinite values (0 counts) with 0
+
+
+
+con <- dbConnect(RSQLite::SQLite(), dbname = "P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Database/Long Covid Study DB.sqlite")
+
+# drop old patient metadata table before adding new one
+dbExecute(con, "DROP TABLE IF EXISTS rnaseq_measurements")
+
+# Write the new patient_metadata table to the database
+dbWriteTable(con, "rnaseq_measurements", transcriptomics1, append = F, overwrite = T)
+
+dbDisconnect(con)
+
+
+
+
+## Drop extra columns ----
+
+con <- dbConnect(RSQLite::SQLite(), dbname = "P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Database/Long Covid Study DB.sqlite")
+
+dbExecute(con, "ALTER TABLE rnaseq_measurements DROP COLUMN SYMBOL")
+dbExecute(con, "ALTER TABLE rnaseq_measurements DROP COLUMN GENENAME")
+
+dbDisconnect(con)
+

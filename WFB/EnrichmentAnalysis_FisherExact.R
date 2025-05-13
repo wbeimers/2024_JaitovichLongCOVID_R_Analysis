@@ -1,15 +1,4 @@
 
-
-
-
-significant_features = read.csv("20230315_NamedSignificantFeatures_diet_simple.csv", header=TRUE)
-data_normalized_Annotated = read.csv("Normalization_Feature(row)_EnrichmentTEST.csv", header =TRUE)
-
-reference_index = data_normalized_Annotated$Class.All.
-id_index <- data_normalized_Annotated$All.Features
-set <- Volcano_data$Feature[Volcano_data$significant == "yes"]
-background = data_normalized_Annotated$All.Features
-
 ##########  REFERENCE SETS   #########
 make_reference_sets <- function(reference_index, id_index, split_str = "; "){
   all_reference <- NULL
@@ -24,7 +13,6 @@ make_reference_sets <- function(reference_index, id_index, split_str = "; "){
   
   reference_sets
 }
-
 
 
 ############ Function for testing enrichment ############## 
@@ -65,39 +53,3 @@ enrichment <- function(set, reference_sets, background){
   # Return the output dataframe
   return(output)
 } 
-
-
-
-
-reference_sets <- make_reference_sets(reference_index, id_index)
-
-enrichment_results <- enrichment(set, reference_sets, background)
-
-
-
-
-
-
-
-
-# Reorder the levels of 'reference' based on 'enrichment_ratio'
-enrichment_results <- enrichment_results[order(enrichment_results$enrichment_ratio, decreasing = TRUE), ]
-
-# Calculate -log10(p-value)
-enrichment_results$log_pvalue <- -log10(enrichment_results$pvalue)
-
-# Define color scale for p-values
-pvalue_color <- scale_color_gradient(low = "red", high = "pink")
-
-# Create the bar plot
-p <- ggplot(enrichment_results, aes(x = log_pvalue, y = reorder(reference, enrichment_ratio), 
-                                    size = enrichment_ratio, color = pvalue)) +
-  geom_point() + 
-  scale_size_continuous() + 
-  pvalue_color +
-  labs(x = "-log10(p-value)", y = "Reference", size = "Enrichment Ratio", color = "p-value") +
-  theme_minimal()
-
-# Display the plot
-print(p)
-
