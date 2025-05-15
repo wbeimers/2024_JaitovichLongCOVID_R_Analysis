@@ -54,8 +54,8 @@ pal <- c("Acute" = "#E78AC3",
 # plot colors
 pie(rep(1, length(col)), col = col , main="") 
 
-
-colorRampPalette(col)(15)
+color_to_adjust <- col[3]
+lighter_shades <- lighten(color_to_adjust, amount = c(0, 0.4))
 
 
 # files #
@@ -83,7 +83,7 @@ comp <- "PASC_noPASC"
 # formula (1, 2, 3, etc.)
 form <- 35
 # ome
-omea <- "protein"
+omea <- "transcript"
 
 
 volc_plot <- pvalues %>%
@@ -111,8 +111,8 @@ counts <- volc_plot %>%
 
 # Color Based on GO TERM
 GO_colors <- c(
-  #"GO:0000786", "GO:0005884" # trascript
-  "GO:0060589", "GO:0035173", "GO:0006959", "GO:0030545" # protein
+  "GO:0000786", "GO:0015629" # transcript
+  #"GO:0060589", "GO:0006959" # protein
                )
 
 con <- dbConnect(RSQLite::SQLite(), dbname = 'P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Database/Long Covid Study DB.sqlite')
@@ -134,28 +134,28 @@ volc_plot <- volc_plot %>%
   mutate(metadata_value = ifelse(is.na(metadata_value), "NO", metadata_value))
 
 
-ggplot(volc_plot %>%
+tp <- ggplot(volc_plot %>%
          filter(metadata_value == "NO") %>%
-         filter(ome != "protein"), 
+         filter(ome != omea), 
        aes(effect_size, neglogpvalue)) + 
   geom_point(aes(size = diffexp),
              shape = 21,
              color = "black",
              fill = "lightgray",
-             alpha = 0.1,
+             alpha = 0.05,
              stroke = 0.2) +
   geom_point(data = volc_plot %>%
                filter(metadata_value == "NO") %>%
-               filter(ome == "protein"), 
+               filter(ome == omea), 
              mapping = aes(size = diffexp),
              shape = 21,
              color = "black",
              fill = "lightgray",
-             alpha = 0.6,
+             alpha = 0.5,
              stroke = 0.2) +
   geom_point(data = volc_plot %>%
                filter(metadata_value != "NO") %>%
-               filter(ome == "protein"), 
+               filter(ome == omea), 
              mapping = aes(effect_size, neglogpvalue,
                            fill = metadata_value,
                            size = diffexp),
@@ -163,8 +163,8 @@ ggplot(volc_plot %>%
              color = "black",
              stroke = 0.2,
              alpha = 1) +
-  scale_fill_manual(values = c("#1B9E77", "#57C39C", "#83EAC2", "#FAFFFD")) +
-  scale_size_manual(values = c(0.5, 1.5), guide = "none") +
+  scale_fill_manual(values = lighter_shades) +
+  scale_size_manual(values = c(0.5, 2), guide = "none") +
   #geom_vline(xintercept = c(-0.263, 0.263), 
   #          col = "black",
   #           size = 0.2) +
@@ -180,16 +180,16 @@ ggplot(volc_plot %>%
   theme(panel.border = element_blank(), 
         panel.grid.major = element_blank(),
         panel.spacing = unit(0.5, "lines"), 
-        axis.text.x = element_text(size = 7),
-        axis.text.y = element_text(size = 7),
-        axis.title = element_text(size = 7),
+        axis.text.x = element_text(size = 5),
+        axis.text.y = element_text(size = 5),
+        axis.title = element_text(size = 5),
         axis.line = element_line(linewidth = 0.2),
         axis.ticks = element_line(linewidth = 0.2),
         strip.text = element_blank(),
-        legend.position = "bottom",
-        legend.margin = margin(1, 1, 1, 1),
-        legend.title = element_text(size = 7),
-        legend.text = element_text(size = 7),
+        legend.position = "inside",
+        legend.margin = margin(0, 0, 0, 0),
+        legend.title = element_text(size = 5),
+        legend.text = element_text(size = 5),
         legend.spacing.y = unit(0.1, "cm"),
         legend.key.size = unit(0.25, "cm")) 
 #+
@@ -200,9 +200,12 @@ ggplot(volc_plot %>%
 #  geom_text(data = counts[counts$diffexp == "NO",], 
 #            aes(x = 0.001, y = Inf, 
 #                label = paste(n)),
-#            hjust = 0.5, vjust = 1.5, size = 3, show.legend = FALSE) 
-ggsave(paste0("reports/figures/Volcano_group_", anal, "_", comp, "_formula", form, "_ProteinGOterms_col.pdf"), 
-       width = 8, height = 6, units = "cm")
+#            hjust = 0.5, vjust = 1.5, size = 3, show.legend = FALSE)
+
+pp + lp + tp
+
+ggsave(paste0("reports/figures/Volcano_group_", anal, "_", comp, "_formula", form, "_ALLLLGOterms_col.pdf"), 
+       width = 7, height = 2, units = "in")
 
 
 
@@ -248,7 +251,7 @@ fgsea <- fgsea(pathways = GO_term_list,
               select(GO_term, name),
             by = c("pathway" = "GO_term"))
 
-fwrite(fgsea, paste0("data/processed/fgsea_AnalysisGroup1_PASCnoPASC_", omea, "_limitedGOterms.csv"))
+fwrite(fgsea, paste0("data/processed/fgsea_AnalysisGroup1_PASCnoPASC_", omea, "_allGOterms.csv"))
 
 
 ##plot:GSEA ----
@@ -823,4 +826,418 @@ ggplot(enrichment_df_plot_combined, aes(x = neglog10, y = name, fill = as.factor
 ggsave("reports/figures/AnalysisGroup1_4methodoverlap_2clusters_pvalues.pdf", 
        width = 16, height = 8, units = "cm")
 
+
+
+
+
+
+
+
+## Dial into specific pathways that are enriched ----
+# find a pathway, find proteins, and plot log2fc for both PASCnoPASC and Acute/Healthy
+
+pathway <- "GO:0015629"
+
+pathway_bms <- GO_term_list[[pathway]]
+
+# organize dataframes
+fc_barplots <- volc_plot %>%
+  filter(biomolecule_id %in% pathway_bms) %>%
+  filter(q_value < 0.05) %>%
+  left_join(biomolecules_metadata %>%
+              select(-metadata_id) %>%
+              filter(metadata_type %in% c("Entry_name", "gene_symbol")) %>%
+              select(biomolecule_id, metadata_value),
+            by = "biomolecule_id")
+
+ggplot(fc_barplots, aes(reorder(metadata_value.y, q_value), effect_size, fill = ome)) + 
+  geom_col(position = position_dodge(),
+           width = 0.6) + 
+  geom_hline(yintercept = 0,
+             size = 0.2) +
+  scale_fill_manual(values = c(col[1], col[3])) +
+  labs(x = NULL,
+       y = "Effect Size",
+       title = paste(pathway)) +
+  scale_y_continuous(expand = c(0,0), limits = c(min(fc_barplots$effect_size) * 1.1, 
+                                                 max(fc_barplots$effect_size) * 1.1)) +
+  #scale_x_continuous(expand = c(0,1)) +
+  guides(fill = guide_legend(title = 'Biomolecule')) +
+  theme_classic() +
+  theme(panel.border = element_blank(), 
+        panel.grid.major = element_blank(), 
+        axis.text.x = element_text(size = 6, angle = 45, hjust = 1, vjust = 1),
+        axis.text.y = element_text(size = 6),
+        axis.title = element_text(size = 6),
+        axis.line = element_line(size = 0.2),
+        axis.ticks = element_line(size = 0.2),
+        legend.position = c(0.9, 0.9), 
+        legend.justification = c("right", "top"),
+        legend.margin = margin(2, 2, 2, 2),
+        legend.title = element_text(size = 6),
+        legend.text = element_text(size = 6),
+        legend.key.size = unit(0.2, "cm")
+  ) 
+ggsave(paste0('reports/figures/PASCnoPASC_Biomolecules_All_GO0015629_effectsizes.pdf'), 
+       width = 16, height = 6, units = 'cm')
+
+
+
+ggplot(fc_barplots, aes(-log10(q_value), effect_size, color = ome)) + 
+  geom_point() + 
+  geom_text_repel(aes(label = metadata_value.y),
+                  size = 2) +
+  scale_color_manual(values = c(col[1], col[3])) +
+  labs(y = "Effect Size",
+       x = "-log10(q value)",
+       title = paste(pathway)) +
+  scale_y_continuous(expand = c(0,0), limits = c(min(fc_barplots$effect_size) * 1.1, 
+                                                 max(fc_barplots$effect_size) * 1.1)) +
+  scale_x_continuous(expand = c(0,1)) +
+  guides(fill = guide_legend(title = 'Biomolecule')) +
+  theme_classic() +
+  theme(panel.border = element_blank(), 
+        panel.grid.major = element_blank(), 
+        axis.text.x = element_text(size = 7, angle = 45),
+        axis.text.y = element_text(size = 7),
+        axis.title = element_text(size = 7),
+        axis.line = element_line(size = 0.2),
+        axis.ticks = element_line(size = 0.2),
+        legend.position = c(0.9, 0.1), 
+        legend.margin = margin(2, 2, 2, 2),
+        legend.title = element_text(size = 7),
+        legend.text = element_text(size = 7),
+        legend.key.size = unit(0.2, "cm")
+  ) 
+ggsave(paste0('reports/figures/PASCnoPASC_Biomolecules_All_GO0015629_effectsizes.pdf'), 
+       width = 12, height = 6, units = 'cm')
+
+
+
+
+
+
+## Lipid Enrichment Analysis ----
+# options:
+# analysis_group (1, 2, 3, 0)
+anal <- 1
+# comparison (Age, Sex, QoL, BMI)
+comp <- "PASC_noPASC"
+# formula (1, 2, 3, etc.)
+form <- 35
+# ome
+omea <- "lipid"
+
+
+volc_plot <- pvalues %>%
+  filter(analysis_group == anal) %>%
+  filter(comparison == comp) %>%
+  filter(formula == form) %>%
+  inner_join(biomolecules %>%
+               select(biomolecule_id, standardized_name, omics_id),
+             by = "biomolecule_id") %>%
+  mutate(neglogpvalue = -log10(p_value)) %>%
+  mutate(diffexp = case_when(
+    q_value <= 0.05 ~ "YES",
+    T ~ "NO"
+  )) %>% 
+  mutate(ome = case_when(
+    omics_id == 1 ~ "protein",
+    omics_id == 2 ~ "lipid",
+    omics_id == 3 ~ "transcript"
+  )) %>%
+  select(-omics_id)
+
+
+# choose a lipid metadata to use to filter ("Unsaturation_Level", "Lipid_Category", "Lipid_Class", 
+# "Main_Class", "NumFattyAcylCarbons", "NumFattyAcylUnsaturations", "Sub_Class")
+opt <- "Main_Class"
+# set up Lipid term list
+biomolecules_metadata_lipid <- biomolecules_metadata %>%
+  filter(metadata_type == opt) %>%
+  group_by(metadata_value) %>%
+  summarize(GO_terms = unique(biomolecule_id)) 
+#%>% filter(metadata_value %in% GO_set$GO_term)
+
+lipid_term_list <- split(biomolecules_metadata_lipid$GO_terms,
+                      biomolecules_metadata_lipid$metadata_value)
+
+# Rank of biomolecules by effect size and pvalue
+# only do proteins or transcripts one at a time
+gene_list <- volc_plot %>%
+  filter(ome == omea)
+
+gene_list <- gene_list %>%
+  mutate(rank = effect_size * neglogpvalue)
+
+gene_list <- setNames(gene_list$rank,
+                      gene_list$biomolecule_id)
+
+
+# do enrichment
+fgsea <- fgsea(pathways = lipid_term_list, 
+               stats    = gene_list,
+               minSize  = 5,
+               maxSize  = 1000) 
+
+fwrite(fgsea, paste0("data/processed/fgsea_AnalysisGroup1_PASCnoPASC_", omea, "_", opt, ".csv"))
+
+
+
+# color by lipids stuff
+opti <- c("Ceramides", "Phosphosphingolipids") # lipid
+
+biomolecules_metadata_lipid <- biomolecules_metadata %>%
+  filter(metadata_type == opt) %>%
+  group_by(metadata_value) %>%
+  summarize(GO_terms = unique(biomolecule_id)) %>%
+  filter(metadata_value %in% opti)
+
+
+volc_plot <- volc_plot %>%
+  left_join(biomolecules_metadata_lipid, by = c("biomolecule_id" = "GO_terms")) %>% 
+  mutate(metadata_value = ifelse(is.na(metadata_value), "NO", metadata_value))
+
+
+lp <- ggplot(volc_plot %>%
+         filter(metadata_value == "NO") %>%
+         filter(ome != omea), 
+       aes(effect_size, neglogpvalue)) + 
+  geom_point(aes(size = diffexp),
+             shape = 21,
+             color = "black",
+             fill = "lightgray",
+             alpha = 0.05,
+             stroke = 0.2) +
+  geom_point(data = volc_plot %>%
+               filter(metadata_value == "NO") %>%
+               filter(ome == omea), 
+             mapping = aes(size = diffexp),
+             shape = 21,
+             color = "black",
+             fill = "lightgray",
+             alpha = 0.5,
+             stroke = 0.2) +
+  geom_point(data = volc_plot %>%
+               filter(metadata_value != "NO") %>%
+               filter(ome == omea), 
+             mapping = aes(effect_size, neglogpvalue,
+                           fill = metadata_value,
+                           size = diffexp),
+             shape = 21,
+             color = "black",
+             stroke = 0.2,
+             alpha = 1) +
+  scale_fill_manual(values = lighter_shades) +
+  scale_size_manual(values = c(0.5, 2), guide = "none") +
+  #geom_vline(xintercept = c(-0.263, 0.263), 
+  #          col = "black",
+  #           size = 0.2) +
+  #geom_hline(yintercept = -log10(0.05), 
+  #           col="black",
+  #           size = 0.2) +
+  scale_x_continuous(limits = c(-max(abs(volc_plot$effect_size)), max(abs(volc_plot$effect_size)))) +
+  #geom_text_repel(data = subset(volc_plot, diffexp != "NO"), aes(label = gene), size = 2) +
+  xlab(paste("Effect Size", comp)) +
+  ylab("-Log10 Adjusted P-Value") +
+  #xlim(-2, 2) +
+  theme_classic() +
+  theme(panel.border = element_blank(), 
+        panel.grid.major = element_blank(),
+        panel.spacing = unit(0.5, "lines"), 
+        axis.text.x = element_text(size = 5),
+        axis.text.y = element_text(size = 5),
+        axis.title = element_text(size = 5),
+        axis.line = element_line(linewidth = 0.2),
+        axis.ticks = element_line(linewidth = 0.2),
+        strip.text = element_blank(),
+        legend.position = "inside",
+        legend.margin = margin(0, 0, 0, 0),
+        legend.title = element_text(size = 5),
+        legend.text = element_text(size = 5),
+        legend.spacing.y = unit(0.1, "cm"),
+        legend.key.size = unit(0.25, "cm")) 
+#+
+#  geom_text(data = counts[counts$diffexp == "YES",], 
+#            aes(x = -0.001, y = Inf, 
+#                label = paste(n)),
+#            hjust = 1.1, vjust = 1.5, size = 3, show.legend = FALSE) +
+#  geom_text(data = counts[counts$diffexp == "NO",], 
+#            aes(x = 0.001, y = Inf, 
+#                label = paste(n)),
+#            hjust = 0.5, vjust = 1.5, size = 3, show.legend = FALSE) 
+lp
+ggsave(paste0("reports/figures/Volcano_group_", anal, "_", comp, "_formula", form, "_LipidUnsaturationterms_col.pdf"), 
+       width = 7, height = 6, units = "cm")
+
+geom_only_lp <- lp +
+  theme_void() +  
+  theme(
+    plot.margin = margin(0, 0, 0, 0),
+    legend.position = "none"
+  )
+geom_only_lp
+ggsave(paste0("reports/figures/Volcano_group_", anal, "_", comp, "_formula", form, "_LipidUnsaturationterms_col_geom.png"), 
+       width = 7, height = 6, dpi = 300, units = "cm")
+
+
+## plot:combined fgsea results all omes ----
+
+lipid_gsea <- fread("P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Lipidomics/Data_Analysis/Enrichment/AnalysisGp1/PASC_noPASC/GSEA_enrichment_summary_analysisGroup1_noBatch1_PASC_noPASC_v2.csv")
+protein_gsea <- fread("data/processed/fgsea_AnalysisGroup1_PASCnoPASC_protein_allGOterms.csv")
+transcript_gsea <- fread("data/processed/fgsea_AnalysisGroup1_PASCnoPASC_transcript_allGOterms.csv")
+
+# split between positive NES/negative NES, and filter for <0.05 qvalue
+lipid_gsea <- lipid_gsea %>%
+  filter(`FDR q-val` < 0.05) %>%
+  filter(Comparison == "PASC_noPASC") %>%
+  rename(name = Term,
+         pval = `NOM p-val`,
+         padj = `FDR q-val`,
+         log2err = `FWER p-val`,
+         leadingEdge = Lead_genes,
+         pathway = Name) %>%
+  select(-`Tag %`, -`Gene %`, -Comparison) %>%
+  mutate(size = 1,
+         ome = "l")
+
+protein_gsea <- protein_gsea %>%
+  filter(padj < 0.05) %>%
+  mutate(ome = "p")
+
+transcript_gsea <- transcript_gsea %>%
+  filter(padj < 0.05) %>%
+  mutate(ome = "t")
+
+
+
+all_gsea <- lipid_gsea %>%
+  bind_rows(protein_gsea) %>%
+  bind_rows(transcript_gsea)
+
+# find ones that are in both protein and transcript
+all_gsea_shared <- all_gsea %>%
+  filter(duplicated(pathway)| duplicated(pathway, fromLast = TRUE))
+
+
+# # exclude small sets wholly encompassed by a larger leading edge
+# # 1: Convert each string to a list of values
+# leading_lists <- str_split(all_gsea$leadingEdge, "\\|")
+# 
+# # 2: Convert to a list of sets for easy comparison
+# leading_sets <- map(leading_lists, ~ unique(.x))  
+# 
+# # Step 3: Create a logical vector marking which rows are *not* subsets of any other row
+# keep <- sapply(seq_along(leading_sets), function(i) {
+#   current <- leading_sets[[i]]
+#   others <- leading_sets[-i]
+#   is_subset <- sapply(others, function(x) all(current %in% x))
+#  !any(is_subset)
+#})
+
+# Step 4: Filter the original dataframe
+#filtered_all_gsea <- all_gsea[keep, ]
+
+
+## Keep specific interesting sets to plot
+keep <- c("GO:0005615", "GO:0030545", "GO:0005539", "GO:0005198", "GO:0005509", "GO:0004175", "GO:0006955",
+              "GO:0030246", "GO:0008233", "GO:0035639", "GO:0035556", "GO:0008092", "GO:0140993", "GO:0007017",
+          "GO:0060589", "GO:0006959", "GO:0180051", "GO:0005788", "GO:0005539", "GO:0032993", "GO:0015629")
+filtered_all_gsea <- all_gsea %>%
+  filter(ome %in% c("l", "t") | (ome == "p" & pathway %in% keep))
+
+
+plo <- filtered_all_gsea %>%
+  mutate(signif = case_when(
+    padj <= 0.05 & padj > 0.01 ~ "*",
+    padj <= 0.01 & padj > 0.0001 ~ "**",
+    padj <= 0.0001 & padj > 0.000001 ~ "***",
+    padj <= 0.000001 ~ "****"
+  ))
+
+p_plot <- ggplot(plo %>%
+                   filter(ome == "p"), aes(x = NES, y = reorder(name, NES, decreasing = T), fill = ome)) +
+  geom_col(size = 1.5,
+           alpha = 0.8,
+           orientation = "y") +
+  scale_fill_manual(values = c(col[1])) +
+  geom_text(aes(label = signif, x = -0.1), hjust = 1.2, size = 3) +
+  labs(x = "NES", 
+       y = NULL) +
+  theme_classic() +
+  theme(plot.margin = margin(0, 0, 0, 0),
+        panel.border = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.spacing = unit(0.5, "lines"), 
+        axis.text.x = element_text(size = 5),
+        axis.text.y = element_text(size = 5),
+        axis.title = element_text(size = 5),
+        axis.line = element_line(linewidth = 0.2),
+        axis.ticks = element_line(linewidth = 0.2),
+        strip.text = element_blank(),
+        legend.position = "none",
+        legend.margin = margin(1, 1, 1, 1),
+        legend.title = element_text(size = 5),
+        legend.text = element_text(size = 5),
+        legend.spacing.y = unit(0.1, "cm"),
+        legend.key.size = unit(0.25, "cm")) 
+
+l_plot <- ggplot(plo %>%
+                   filter(ome == "l"), aes(x = NES, y = reorder(name, NES, decreasing = T), fill = ome)) +
+  geom_col(size = 1.5,
+           alpha = 0.8,
+           orientation = "y") +
+  scale_fill_manual(values = c(col[2])) +
+  geom_text(aes(label = signif, x = -0.1), hjust = 1.2, size = 3) +
+  labs(x = "NES", 
+       y = NULL) +
+  theme_classic() +
+  theme(plot.margin = margin(0, 0, 0, 0),
+        panel.border = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.spacing = unit(0.5, "lines"), 
+        axis.text.x = element_text(size = 5),
+        axis.text.y = element_text(size = 5),
+        axis.title = element_text(size = 5),
+        axis.line = element_line(linewidth = 0.2),
+        axis.ticks = element_line(linewidth = 0.2),
+        strip.text = element_blank(),
+        legend.position = "none",
+        legend.margin = margin(1, 1, 1, 1),
+        legend.title = element_text(size = 5),
+        legend.text = element_text(size = 5),
+        legend.spacing.y = unit(0.1, "cm"),
+        legend.key.size = unit(0.25, "cm")) 
+
+t_plot <- ggplot(plo %>%
+                   filter(ome == "t"), aes(x = NES, y = reorder(name, NES, decreasing = T), fill = ome)) +
+  geom_col(size = 1.5,
+           alpha = 0.8,
+           orientation = "y") +
+  scale_fill_manual(values = c(col[3])) +
+  geom_text(aes(label = signif, x = -0.1), hjust = 1.2, size = 3) +
+  labs(x = "NES", 
+       y = NULL) +
+  theme_classic() +
+  theme(plot.margin = margin(0, 0, 0, 0),
+        panel.border = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.spacing = unit(0.5, "lines"), 
+        axis.text.x = element_text(size = 5),
+        axis.text.y = element_text(size = 5),
+        axis.title = element_text(size = 5),
+        axis.line = element_line(linewidth = 0.2),
+        axis.ticks = element_line(linewidth = 0.2),
+        strip.text = element_blank(),
+        legend.position = "none",
+        legend.margin = margin(1, 1, 1, 1),
+        legend.title = element_text(size = 5),
+        legend.text = element_text(size = 5),
+        legend.spacing.y = unit(0.1, "cm"),
+        legend.key.size = unit(0.25, "cm")) 
+
+p_plot + l_plot + t_plot
+
+ggsave("reports/figures/PASCnoPASC_Enrichment_allomes_barplot_filtered_separate.pdf", 
+       width = 7, height = 2, units = "in")
 

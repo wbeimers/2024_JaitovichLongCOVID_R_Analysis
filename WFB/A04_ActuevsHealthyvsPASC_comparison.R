@@ -16,6 +16,8 @@ library(ggrepel)
 library(data.table)
 library(ROTS)
 library(patchwork)
+library(pheatmap)
+library(broom)
 
 
 # Colors #
@@ -127,7 +129,11 @@ filtered_df_pl <- filtered_df_p %>%
   mutate(ome = "p") %>%
   bind_rows(filtered_df_l %>%
               mutate(ome = "l")) %>%
-  filter(batch != 1) # remove samples from Batch 1
+  filter(batch != 1) %>% # remove samples from Batch 1
+  mutate(PASCnoPASC = case_when(
+    Cohort %in% c("Acute") ~ "Acute_COVID",
+    Cohort %in% c("Healthy", "Acute_fu") ~ "No_COVID",
+    Cohort %in% c("PASC", "PASC_fu") ~ "Long_COVID")) 
 
 
 ## FILTER OUT LIPID BATCH 1 SAMPLES????
@@ -297,11 +303,11 @@ volc_plot_PASC <- pvalues %>%
 
 # options:
 # analysis_group (1, 2, 3, 0)
-anal <- 4
+anal <- 6
 # comparison (Age, Sex, QoL, BMI)
-comp <- "Acute_Healthy"
+comp <- "Acute_nonAcute"
 # formula (1, 2, 3, etc.)
-form <- 43
+form <- 53
 
 volc_plot_Acute <- pvalues %>%
   filter(analysis_group == anal) %>%
@@ -436,6 +442,14 @@ for (i in unique(comparison_df_pl$standardized_name)) {
 
 ##* GO:terms Proteins ----
 
+# select limited GO_set
+#GO_set <- fread("data/metadata/GOtermset_HealthyAcutePASCnoPASC_Proteins_BPonly_5to100_95coverage_20overlap_UP.csv")
+
+# select only one of the GO types
+#GO_set <- GO_terms %>%
+#  filter(namespace == "biological_process")
+
+
 ## Acute PASC Overlap
 # Set up GO term
 con <- dbConnect(RSQLite::SQLite(), dbname = 'P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Database/Long Covid Study DB.sqlite')
@@ -445,15 +459,6 @@ GO_terms <- dbGetQuery(con, 'SELECT *
                              FROM GO_terms')
 dbDisconnect(con)
 
-biomolecule_metadata_GO <- biomolecules_metadata %>%
-  filter(metadata_type == "GO_terms") %>%
-  separate_rows(metadata_value, sep = ";") %>%
-  group_by(metadata_value) %>%
-  summarize(GO_terms = unique(biomolecule_id), .groups = "drop") %>%
-  filter(metadata_value %in% GO_set$GO_term)
-
-GO_term_list <- split(biomolecule_metadata_GO$GO_terms,
-                      biomolecule_metadata_GO$metadata_value)
 
 # Make background list of all proteins in our study
 background_list <- filtered_df_p %>%
@@ -506,6 +511,19 @@ enrichment <- function(set, reference_sets, background){
 } 
 
 ## UP GENES
+# GO term list
+GO_set <- fread("data/metadata/GOtermset_HealthyAcutePASCnoPASC_Proteins_BPonly_3to50_95coverage_10overlap_UP.csv")
+
+biomolecule_metadata_GO <- biomolecules_metadata %>%
+  filter(metadata_type == "GO_terms") %>%
+  separate_rows(metadata_value, sep = ";") %>%
+  group_by(metadata_value) %>%
+  summarize(GO_terms = unique(biomolecule_id), .groups = "drop") #%>% 
+  #filter(metadata_value %in% GO_set$GO_term)
+
+GO_term_list <- split(biomolecule_metadata_GO$GO_terms,
+                      biomolecule_metadata_GO$metadata_value)
+
 # Gene list
 gene_list <- UP_DOWN_together %>%
   filter(diffexp.x == "UP") %>%
@@ -514,10 +532,24 @@ gene_list <- UP_DOWN_together %>%
 
 # Enrichment
 enrichment_df_UP <- enrichment(gene_list, GO_term_list, background_list) %>%
-  left_join(GO_terms, by = c("reference" = "GO_term"))
+  left_join(GO_terms, by = c("reference" = "GO_term")) %>%
+  mutate(rank = enrichment_ratio * -log10(pvalue))
 
 
 ## DOWN GENES
+# GO term list
+GO_set <- fread("data/metadata/GOtermset_HealthyAcutePASCnoPASC_Proteins_BPonly_3to50_95coverage_10overlap_DOWN.csv")
+
+biomolecule_metadata_GO <- biomolecules_metadata %>%
+  filter(metadata_type == "GO_terms") %>%
+  separate_rows(metadata_value, sep = ";") %>%
+  group_by(metadata_value) %>%
+  summarize(GO_terms = unique(biomolecule_id), .groups = "drop") #%>% 
+  #filter(metadata_value %in% GO_set$GO_term)
+
+GO_term_list <- split(biomolecule_metadata_GO$GO_terms,
+                      biomolecule_metadata_GO$metadata_value)
+
 # Gene list
 gene_list <- UP_DOWN_together %>%
   filter(diffexp.x == "DOWN") %>%
@@ -526,19 +558,20 @@ gene_list <- UP_DOWN_together %>%
 
 # Enrichment
 enrichment_df_DOWN <- enrichment(gene_list, GO_term_list, background_list) %>%
-  left_join(GO_terms, by = c("reference" = "GO_term"))
+  left_join(GO_terms, by = c("reference" = "GO_term")) %>%
+  mutate(rank = enrichment_ratio * -log10(pvalue))
 
 
 
 ## ALL
 # Gene list
-gene_list <- UP_DOWN_together %>%
-  filter(ome.x == "protein") %>%
-  pull(biomolecule_id)
+#gene_list <- UP_DOWN_together %>%
+#  filter(ome.x == "protein") %>%
+#  pull(biomolecule_id)
 
 # Enrichment
-enrichment_df_ALL <- enrichment(gene_list, GO_term_list, background_list) %>%
-  left_join(GO_terms, by = c("reference" = "GO_term"))
+#enrichment_df_ALL <- enrichment(gene_list, GO_term_list, background_list) %>%
+#  left_join(GO_terms, by = c("reference" = "GO_term"))
 
 
 
@@ -550,23 +583,29 @@ enrichment_df_ALL <- enrichment(gene_list, GO_term_list, background_list) %>%
 enrichment_df_UP_plot <- enrichment_df_UP %>%
   mutate(neglog10 = -log10(fdr_pvalue)) %>%
   filter(neglog10 >= 1.301) %>%
-  mutate(cluster = 1)
+  mutate(direction = "UP")
 
 enrichment_df_DOWN_plot <- enrichment_df_DOWN %>%
   mutate(neglog10 = -log10(fdr_pvalue)) %>%
   filter(neglog10 >= 1.301) %>%
-  mutate(cluster = 2)
+  mutate(direction = "DOWN")
 
 enrichment_df_plot_combined <- enrichment_df_UP_plot %>%
   bind_rows(enrichment_df_DOWN_plot) %>%
+  mutate(signif = case_when(
+    fdr_pvalue <= 0.05 & fdr_pvalue > 0.01 ~ "*",
+    fdr_pvalue <= 0.01 & fdr_pvalue > 0.001 ~ "**",
+    fdr_pvalue <= 0.001 & fdr_pvalue > 0.00001 ~ "***",
+    fdr_pvalue <= 0.00001 ~ "****"
+  )) %>%
   arrange(desc(neglog10))
 
-ggplot(enrichment_df_plot_combined, aes(x = enrichment_ratio, y = reorder(name, enrichment_ratio), fill = as.factor(cluster))) +
+ggplot(enrichment_df_plot_combined, aes(x = enrichment_ratio, y = reorder(name, enrichment_ratio), fill = direction)) +
   geom_col(size = 1.5,
            alpha = 0.8,
            orientation = "y") +
-  scale_fill_manual(values = c(pal1[3], pal1[4])) +
-  #geom_text(aes(label = cluster, x = -0.1), hjust = 1.2, size = 2) +
+  scale_fill_manual(values = c(col[4], col[5])) +
+  geom_text(aes(label = signif, x = 0.1), size = 4) +
   labs(x = "Enrichment Ratio", 
        y = NULL) +
   theme_classic() +
@@ -585,9 +624,8 @@ ggplot(enrichment_df_plot_combined, aes(x = enrichment_ratio, y = reorder(name, 
         legend.text = element_text(size = 7),
         legend.spacing.y = unit(0.1, "cm"),
         legend.key.size = unit(0.25, "cm"))
-ggsave("reports/figures/AcutePASC_overlap_UPDOWN_pvalues.pdf", 
-       width = 8, height = 16, units = "cm")
-
+ggsave("reports/figures/AC_LC_nC_overlap_UPDOWN_pvalues.pdf", 
+       width = 6, height = 8, units = "cm")
 
 
 ##* Volcano Plots - Colored by Overlap ----
@@ -615,12 +653,12 @@ ggplot(volc_plot_Acute_plot, aes(effect_size, neglogpvalue)) +
   #geom_hline(yintercept = -log10(0.05), 
   #           col="black",
   #           size = 0.2) +
-  scale_fill_manual(values = c(col[5], "lightgray", col[5])) +
+  scale_fill_manual(values = c(col[4], "lightgray", col[5])) +
   scale_size_manual(values = c(1.5, 0.5, 1.5), guide = "none") +
   scale_alpha_manual(values = c(0.8, 0.2, 0.8), guide = "none") +
   scale_x_continuous(limits = c(-max(abs(volc_plot_Acute_plot$effect_size)), max(abs(volc_plot_Acute_plot$effect_size)))) +
   #geom_text_repel(data = subset(volc_plot, diffexp != "NO"), aes(label = gene), size = 2) +
-  xlab("Log2(FC)") +
+  xlab("Effect Size") +
   ylab("-Log10 Adjusted P-Value") +
   #xlim(-2, 2) +
   theme_classic() +
@@ -640,16 +678,15 @@ ggplot(volc_plot_Acute_plot, aes(effect_size, neglogpvalue)) +
         legend.spacing.y = unit(0.1, "cm"),
         legend.key.size = unit(0.25, "cm")) +
   geom_text(data = counts[counts$shared == "UP",], 
-            aes(x = -0.001, y = Inf, 
+            aes(x = 1, y = Inf, 
                 label = paste(n)),
             hjust = 1.1, vjust = 1.5, size = 3, show.legend = FALSE) +
   geom_text(data = counts[counts$shared  == "DOWN",], 
-            aes(x = 0.001, y = Inf, 
+            aes(x = -1, y = Inf, 
                 label = paste(n)),
             hjust = 0.5, vjust = 1.5, size = 3, show.legend = FALSE) 
-ggsave("reports/figures/ProteinLipid_LRM_Acute_Healthy_Volcano_small_sharedPASC_nobatch1.pdf", 
+ggsave("reports/figures/ProteinLipid_LRM_Acute_noAcute_Volcano_small_sharedPASC_nobatch1.pdf", 
        width = 8, height = 6, units = "cm")
-
 
 
 volc_plot_PASC_plot <- volc_plot_PASC %>%
@@ -675,7 +712,7 @@ ggplot(volc_plot_PASC_plot, aes(effect_size, neglogpvalue)) +
   #geom_hline(yintercept = -log10(0.05), 
   #           col="black",
   #           size = 0.2) +
-  scale_fill_manual(values = c(col[5], "lightgray", col[5])) +
+  scale_fill_manual(values = c(col[4], "lightgray", col[5])) +
   scale_size_manual(values = c(1.5, 0.5, 1.5), guide = "none") +
   scale_alpha_manual(values = c(0.8, 0.2, 0.8), guide = "none") +
   scale_x_continuous(limits = c(-max(abs(volc_plot_PASC_plot$effect_size)), max(abs(volc_plot_PASC_plot$effect_size)))) +
@@ -700,14 +737,14 @@ ggplot(volc_plot_PASC_plot, aes(effect_size, neglogpvalue)) +
         legend.spacing.y = unit(0.1, "cm"),
         legend.key.size = unit(0.25, "cm")) +
   geom_text(data = counts[counts$shared == "UP",], 
-            aes(x = -0.001, y = Inf, 
+            aes(x = 1, y = Inf, 
                 label = paste(n)),
             hjust = 1.1, vjust = 1.5, size = 3, show.legend = FALSE) +
   geom_text(data = counts[counts$shared  == "DOWN",], 
-            aes(x = 0.001, y = Inf, 
+            aes(x = -1, y = Inf, 
                 label = paste(n)),
             hjust = 0.5, vjust = 1.5, size = 3, show.legend = FALSE) 
-ggsave("reports/figures/ProteinLipid_LRM_PASC_noPASC_Volcano_small_sharedPASC_nobatch1.pdf", 
+ggsave("reports/figures/ProteinLipid_LRM_LC_noLC_Volcano_small_sharedPASC_nobatch1.pdf", 
        width = 8, height = 6, units = "cm")
 
 
@@ -779,8 +816,8 @@ pheat <- pheatmap(expression_matrix,
                   annotation_colors = list(Cohort = c(Acute = pal[1], Healthy = pal[4], PASC = pal[5]),
                                            Ome = c(protein = col[1], lipid = col[2], transcript = col[3])),
                   filename = paste0("reports/figures/Heatmap_plots/Heatmap_AcutePASCoverlaptogether_biomolecules.png"),
-                  width = 4,
-                  height = 6)
+                  width = 6,
+                  height = 7.5)
 
 cluster_assignments <- cutree(pheat$tree_row, k = k)
 fwrite(as.data.frame(cluster_assignments) %>%
@@ -793,7 +830,7 @@ fwrite(as.data.frame(cluster_assignments) %>%
 # take normalized abundance values for PCA
 pca_set <- filtered_df_pl %>%
   filter(biomolecule_id %in% UP_DOWN_together$biomolecule_id) %>%
-  filter(Cohort %in% c("Healthy", "Acute", "PASC")) %>%
+  filter(PASCnoPASC %in% c("Acute_COVID", "No_COVID", "Long_COVID")) %>%
   filter(PG_change_collection_cutoff == 0) %>%
   dplyr::select(biomolecule_id, normalized_abundance, sample_id) %>%
   pivot_wider(names_from = sample_id, values_from = normalized_abundance) %>%
@@ -825,7 +862,7 @@ variance <- data.frame(proportion = explained_variance,
 scores <- as.data.frame(pca_score$x) %>%
   mutate(sample_id = t_pca_set$sample_id) %>%
   left_join(filtered_df_pl %>% 
-              select(sample_id, Cohort, Age, Sex, BMI, unique_patient_id, Collection_date) %>%
+              select(sample_id, Cohort, PASCnoPASC, Age, Sex, BMI, unique_patient_id, Collection_date) %>%
               distinct(), 
             by = "sample_id")
 
@@ -835,18 +872,20 @@ loadings <- pca_score$rotation %>%
   tibble::rownames_to_column(var = 'biomolecule_id')
 
 # pca plot
-p <- ggplot(scores, aes(PC1, PC2, fill = Cohort)) + 
+p <- ggplot(scores, aes(PC1, PC2, fill = PASCnoPASC)) + 
   geom_point(shape = 21,
              size = 1.5,
              alpha = 0.9,
              color = "black",
              stroke = 0.1) +
-  stat_ellipse(aes(color = Cohort), 
+  stat_ellipse(aes(color = PASCnoPASC), 
                geom = "path", 
                show.legend = FALSE,
                linewidth = 0.2) +
   #geom_text_repel(aes(label = Sample), size = 2) +
-  scale_fill_manual(values = pal) +
+  #scale_fill_manual(values = pal) +
+  scale_fill_viridis(discrete = T, option = "rocket", begin = 0.25, end = 0.75) +
+  scale_color_viridis(discrete = T, option = "rocket", begin = 0.25, end = 0.75) +
   xlab(paste("PC1", round(variance$proportion[1]*100, 2))) +
   ylab(paste("PC2", round(variance$proportion[2]*100, 2))) +
   theme_classic() +
@@ -869,8 +908,8 @@ p <- ggplot(scores, aes(PC1, PC2, fill = Cohort)) +
   )
 
 p
-ggsave(paste0("reports/figures/PCA_plots/PCA_AcutePASC_OverlapBiomolecules_proteinlipid_nobatch1_pretube.pdf"), 
-       width = 12, height = 8, units = "cm")
+ggsave(paste0("reports/figures/PCA_plots/PCA_AC_LC_nC_OverlapBiomolecules_proteinlipid_nobatch1_pretube.pdf"), 
+       width = 10, height = 6, units = "cm")
 
 # loadings plot
 loadings_1 <- loadings %>%
@@ -907,7 +946,7 @@ p1 <- ggplot(loadings_1, aes(PC1, PC2)) +
   )
 
 p1
-ggsave("reports/figures/PCA_plots/Loadings_AcutePASC_OverlapBiomolecules_proteinlipid_nobatch1_pretube.pdf", 
+ggsave("reports/figures/PCA_plots/Loadings_AC_LC_nC_OverlapBiomolecules_proteinlipid_nobatch1_pretube.pdf", 
        width = 8, height = 6, units = "cm")
 
 
@@ -915,7 +954,7 @@ ggsave("reports/figures/PCA_plots/Loadings_AcutePASC_OverlapBiomolecules_protein
 ## Dial into specific pathways that are enriched ----
 # find a pathway, find proteins, and plot log2fc for both PASCnoPASC and Acute/Healthy
 
-pathway <- "GO:0004672"
+pathway <- "GO:0002252"
 
 pathway_bms <- GO_term_list[[pathway]]
 
@@ -947,31 +986,33 @@ fc_barplots <- fc_barplots %>%
             by = "biomolecule_id")
 
 
-ggplot(fc_barplots, aes(reorder(standardized_name, q_value), effect_size, fill = comparison)) + 
+ggplot(fc_barplots, aes(reorder(metadata_value, q_value), effect_size, fill = comparison)) + 
   geom_col(position = position_dodge(),
            width = 0.8) + 
+  geom_hline(yintercept = 0,
+             linewidth = 0.2) +
   scale_fill_manual(values = c(pal1[5], pal1[3])) +
-  xlab('biomolecule') +
-  ylab('log2(FC)') +
+  labs(x = NULL,
+       y = 'Effect Size') +
   scale_y_continuous(expand = c(0,0)) +
   #scale_x_continuous(expand = c(0,1)) +
   guides(fill = guide_legend(title = 'Comparison')) +
   theme_classic() +
   theme(panel.border = element_blank(), 
         panel.grid.major = element_blank(), 
-        axis.text.x = element_text(size = 7),
-        axis.text.y = element_text(size = 7),
-        axis.title = element_text(size = 7),
+        axis.text.x = element_text(size = 6, angle = 45, hjust = 1, vjust = 1),
+        axis.text.y = element_text(size = 6),
+        axis.title = element_text(size = 6),
         axis.line = element_line(size = 0.2),
         axis.ticks = element_line(size = 0.2),
-        legend.position = c(0.9, 0.9), 
+        legend.position = c(0.95, 0.95), 
         legend.justification = c("right", "top"),
-        legend.margin = margin(2, 2, 2, 2),
-        legend.title = element_text(size = 7),
-        legend.text = element_text(size = 7),
-        legend.key.size = unit(0.2, "in")
+        legend.margin = margin(1, 1, 1, 1),
+        legend.title = element_text(size = 6),
+        legend.text = element_text(size = 6),
+        legend.key.size = unit(0.2, "cm")
   ) 
-ggsave(paste0('reports/figures/AcutePASC_OverlapBiomolecules_proteinlipid_GO0004672_foldchanges.pdf'), 
+ggsave(paste0('reports/figures/AcutePASC_OverlapBiomolecules_proteinlipid_GO0006325_foldchanges.pdf'), 
        width = 16, height = 6, units = 'cm')
 
 
@@ -979,12 +1020,16 @@ ggsave(paste0('reports/figures/AcutePASC_OverlapBiomolecules_proteinlipid_GO0004
 
 ## Network Analysis ----
 
+path_name <- GO_terms %>%
+  filter(GO_term == pathway) %>%
+  pull(name)
+
 genenames <- fc_barplots %>%
   select(metadata_value) %>%
   distinct() %>%
   pull(metadata_value)
 
-writeLines(genenames, "data/processed/GOsignificantnames.txt")
+writeLines(genenames, paste0("data/processed/GOsignificantnames", path_name, ".txt"))
 
 
 
@@ -1072,6 +1117,169 @@ for (i in unique(comparison_df_pl$standardized_name)) {
 
 
 
+#### Acute -> PASC -> Acute_fu -> Healthy Differences ----
+##* ANOVA ----
+# start with filtered_df_pl for only proteins and lipids (due to acute), also no batch 1
+
+# means
+APAH_means <- filtered_df_pl %>%
+  filter(Cohort %in% c("Acute", "PASC", "Acute_fu", "Healthy")) %>%
+  filter(PG_change_collection_cutoff == 0) %>%
+  group_by(biomolecule_id, Cohort) %>%
+  summarise(mean_value = mean(normalized_abundance), .groups = "drop")
+
+# anova and post-hoc tukey hsd for each biomolecule/comparison
+APAH_comparison <- filtered_df_pl %>%
+  filter(Cohort %in% c("Acute", "PASC", "Acute_fu", "Healthy")) %>%
+  filter(PG_change_collection_cutoff == 0) %>%
+  group_by(biomolecule_id) %>%
+  do({
+    model <- aov(normalized_abundance ~ Cohort, data = .)
+    tidy_result <- tidy(model)
+    tukey <- TukeyHSD(model)
+    tukey_df <- as.data.frame(tukey$Cohort)
+    tukey_df$comparison <- rownames(tukey_df)
+    tukey_df$biomolecule_id <- unique(.$biomolecule_id)
+    tukey_df
+  }) %>%
+  ungroup()
+
+
+anova_results <- filtered_df_pl %>%
+  filter(Cohort %in% c("Acute", "PASC", "Acute_fu", "Healthy")) %>%
+  filter(PG_change_collection_cutoff == 0) %>%
+  group_by(biomolecule_id) %>%
+  do(tidy(aov(normalized_abundance ~ Cohort, data = .))) %>%
+  filter(term == "Cohort") 
 
 
 
+# find the proportion of significant biomolecules for each comparison
+
+APAH_signif <- APAH_comparison %>%
+  group_by(comparison) %>%
+  summarise(
+    n_significant = sum(`p adj` < 0.05, na.rm = TRUE),
+    n_total = n(),
+    proportion_significant = n_significant / n_total
+  ) %>%
+  arrange(desc(proportion_significant))
+
+
+##* Healthy vs Acute_fu ttest----
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#### Rank-based AC, no LC, LC comparison
+# take the 522 (or however) differentially expressed proteins and still rank them by -log10(p)*effectsize
+# use AC vs no LC and LC vs no LC and add ranks together to get total rank
+
+UP_rank <- UP_df %>%
+  mutate(rank = ((effect_size.x * neglogpvalue.x) + (effect_size.y * neglogpvalue.y)))
+  
+DOWN_rank <- DOWN_df %>%
+  mutate(rank = ((effect_size.x * neglogpvalue.x) + (effect_size.y * neglogpvalue.y)))
+
+UP_DOWN_rank <- UP_rank %>%
+  select(biomolecule_id, ome.x, diffexp.x, rank) %>%
+  bind_rows(DOWN_rank %>%
+              select(biomolecule_id, ome.x, diffexp.x, rank))
+
+UP_DOWN_list <- setNames(UP_DOWN_rank$rank,
+                         UP_DOWN_rank$biomolecule_id)
+
+
+# do enrichment
+fgsea <- fgsea(pathways = GO_term_list, 
+               stats    = UP_DOWN_list,
+               minSize  = 5,
+               maxSize  = 1000) %>%
+  left_join(GO_terms %>%
+              select(GO_term, name),
+            by = c("pathway" = "GO_term"))
+
+fwrite(fgsea, paste0("data/processed/fgsea_AnalysisGroup2_AC_noLC_LC_allGOterms.csv"))
+
+
+plo <- fgsea %>%
+  filter(padj < 0.05) %>%
+  mutate(signif = case_when(
+    padj <= 0.05 & padj > 0.01 ~ "*",
+    padj <= 0.01 & padj > 0.0001 ~ "**",
+    padj <= 0.0001 & padj > 0.000001 ~ "***",
+    padj <= 0.000001 ~ "****"
+  ))
+
+ # exclude small sets wholly encompassed by a larger leading edge
+ # 1: Convert each string to a list of values
+ leading_lists <- str_split(plo$leadingEdge, "\\|")
+ 
+ # 2: Convert to a list of sets for easy comparison
+ leading_sets <- map(leading_lists, ~ unique(.x))  
+
+ # Step 3: Create a logical vector marking which rows are *not* subsets of any other row
+ keep <- sapply(seq_along(leading_sets), function(i) {
+   current <- leading_sets[[i]]
+   others <- leading_sets[-i]
+   is_subset <- sapply(others, function(x) all(current %in% x))
+  !any(is_subset)
+})
+
+ #Step 4: Filter the original dataframe
+filtered_plo <- plo[keep, ]
+
+
+# Now do manual checking to exclude redundant go terms
+stay <- c("GO:0060589", "GO:0004674", "GO:0005096", "GO:0032271", "GO:0019902", 
+          "GO:0006325", "GO:0006397", "GO:0002252", "GO:1990904", "GO:0051093", "GO:0045087"
+          )
+
+filtered_plo <- filtered_plo %>%
+  filter(pathway %in% stay)
+
+
+
+ggplot(filtered_plo, aes(x = NES, y = reorder(name, NES, decreasing = T))) +
+  geom_col(size = 1.5,
+           alpha = 0.8,
+           orientation = "y") +
+  #scale_fill_manual(values = c(col[2], col[1], col[3])) +
+  geom_text(aes(label = signif, x = -0.1), hjust = 1.2, size = 3) +
+  labs(x = "NES", 
+       y = NULL) +
+  theme_classic() +
+  theme(panel.border = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.spacing = unit(0.5, "lines"), 
+        axis.text.x = element_text(size = 5),
+        axis.text.y = element_text(size = 5),
+        axis.title = element_text(size = 5),
+        axis.line = element_line(linewidth = 0.2),
+        axis.ticks = element_line(linewidth = 0.2),
+        strip.text = element_blank(),
+        legend.position = "none",
+        legend.margin = margin(1, 1, 1, 1),
+        legend.title = element_text(size = 5),
+        legend.text = element_text(size = 5),
+        legend.spacing.y = unit(0.1, "cm"),
+        legend.key.size = unit(0.25, "cm"))
+ggsave("reports/figures/AnalysisGroup2_AC_noLC_LC_fgseaenrichment_barplot_filtered.pdf", 
+       width = 8, height = 8, units = "cm")

@@ -14,6 +14,7 @@ library(viridis)
 library(RSQLite)
 library(ggrepel)
 library(data.table)
+library(ggpubr)
 
 
 # Colors #
@@ -44,6 +45,17 @@ pal <- c("Acute" = "#E78AC3",
          "Healthy" = '#229100', 
          "PASC" = '#66CCEE', 
          "PASC_fu" = '#4477AA')
+
+tab <- c("#1f77b4",
+         "#ff7f0e",
+         "#2ca02c",
+         "#d62728",
+         "#9467bd",
+         "#8c564b",
+         "#e377c2",
+         "#7f7f7f",
+         "#bcbd22",
+         "#17becf")
 
 
 
@@ -205,7 +217,7 @@ counts <- metadata %>%
     label = paste0(Cohort, "\n", count)  
   )
 
-ggplot(counts, aes(x = Cohort, y = count, fill = Cohort)) +
+ggplot(counts, aes(x = reorder(Cohort, desc(count)), y = count, fill = Cohort)) +
   geom_bar(stat = "identity", 
            width = 0.9) + 
   #coord_polar(theta = "y") + 
@@ -220,16 +232,93 @@ ggplot(counts, aes(x = Cohort, y = count, fill = Cohort)) +
   theme(panel.border = element_blank(),
         legend.position = "none",
               panel.grid.major = element_blank(), 
-              axis.text.x = element_text(size = 7),
-              axis.text.y = element_text(size = 7),
+              axis.text.x = element_text(size = 6),
+              axis.text.y = element_text(size = 6),
               plot.title = element_blank(), 
-              axis.title = element_text(size = 7),
-              legend.title = element_text(size = 7),
-              legend.text = element_text(size = 7),
+              axis.title = element_text(size = 6),
+              legend.title = element_text(size = 6),
+              legend.text = element_text(size = 6),
               axis.line = element_line(linewidth = 0.2),
               axis.ticks = element_line(linewidth = 0.2))
 ggsave(paste0("reports/figures/bar_allsamples.pdf"), 
-       width = 8, height = 4, units = "cm")
+       width = 6, height = 4, units = "cm")
+
+
+## plot:bar - Analysis Group 1 ----
+counts <- metadata %>%
+  count(Cohort, analysis_group_1) %>%
+  group_by(Cohort) %>%
+  mutate(
+    total = sum(n), 
+    ypos = cumsum(n) - n / 2
+  )
+
+ggplot(counts, aes(x = reorder(Cohort, desc(total)), y = n, fill = Cohort, alpha = as.factor(analysis_group_1))) +
+  geom_bar(stat = "identity",
+           position = "stack", 
+           width = 0.9) + 
+  #coord_polar(theta = "y") + 
+  scale_fill_manual(values = pal) +
+  scale_alpha_manual(values = c(0.2, 1)) +
+  geom_text(aes(y = ypos, label = n), 
+            color = "black", 
+            size = 2, 
+            nudge_y = -10) +
+  labs(y = "Samples") +
+  scale_y_continuous(expand = c(0,0), limits = c(0,200)) +
+  theme_classic() +
+  theme(panel.border = element_blank(),
+        legend.position = "none",
+        panel.grid.major = element_blank(), 
+        axis.text.x = element_text(size = 6),
+        axis.text.y = element_text(size = 6),
+        plot.title = element_blank(), 
+        axis.title = element_text(size = 6),
+        legend.title = element_text(size = 6),
+        legend.text = element_text(size = 6),
+        axis.line = element_line(linewidth = 0.2),
+        axis.ticks = element_line(linewidth = 0.2))
+ggsave(paste0("reports/figures/bar_analysisgroup1.pdf"), 
+       width = 6, height = 4, units = "cm")
+
+
+## plot:bar - Analysis Group 2 ----
+counts <- metadata %>%
+  count(Cohort, analysis_group_4) %>%
+  group_by(Cohort) %>%
+  mutate(
+    total = sum(n), 
+    ypos = cumsum(n) - n / 2
+  )
+
+ggplot(counts, aes(x = reorder(Cohort, desc(total)), y = n, fill = Cohort, alpha = as.factor(analysis_group_4))) +
+  geom_bar(stat = "identity",
+           position = "stack", 
+           width = 0.9) + 
+  #coord_polar(theta = "y") + 
+  scale_fill_manual(values = pal) +
+  scale_alpha_manual(values = c(0.2, 1)) +
+  geom_text(aes(y = ypos, label = n), 
+            color = "black", 
+            size = 2, 
+            nudge_y = -10) +
+  labs(y = "Samples") +
+  scale_y_continuous(expand = c(0,0), limits = c(0,200)) +
+  theme_classic() +
+  theme(panel.border = element_blank(),
+        legend.position = "none",
+        panel.grid.major = element_blank(), 
+        axis.text.x = element_text(size = 6),
+        axis.text.y = element_text(size = 6),
+        plot.title = element_blank(), 
+        axis.title = element_text(size = 6),
+        legend.title = element_text(size = 6),
+        legend.text = element_text(size = 6),
+        axis.line = element_line(linewidth = 0.2),
+        axis.ticks = element_line(linewidth = 0.2))
+ggsave(paste0("reports/figures/bar_analysisgroup4.pdf"), 
+       width = 6, height = 4, units = "cm")
+
 
 
 ## plot:bmi boxplot - all samples ----
@@ -341,7 +430,7 @@ ggsave(paste0("reports/figures/bar_sex_allsamples.pdf"),
 
 
 
-## plot:age boxplot - all samples ----
+## plot:qol boxplot - all samples ----
 ggplot(metadata, aes(x = "", y = SF.36.QOL.Score)) +
   geom_violin(alpha = 0.5, 
               width = 0.8, 
@@ -413,9 +502,6 @@ biomolecules_p <- biomolecules %>%
 filtered_df_p <- df_p %>%
   filter(biomolecule_id %in% biomolecules_p)
 
-# THINK ABOUT FILTERING OUT POST-TUBE CHANGE SAMPLES
-
-
 # lipidomics
 rawfiles_l <- rawfiles %>%
   filter(ome_id == 2) %>%
@@ -473,7 +559,7 @@ filtered_df_a <- filtered_df_p %>%
 
 
 
-## Plot:bar - biomolecule overview
+## Plot:bar - biomolecule overview ----
 bm_counts <- df_a %>%
   group_by(ome) %>%
   summarise(biomolecules = n_distinct(standardized_name)) %>%
@@ -520,8 +606,46 @@ ggplot(bm_counts_all, aes(x = ome, y = biomolecules, alpha = filtered, fill = om
         legend.text = element_text(size = 6),
         legend.key.size = unit(0.25, "cm"))
 ggsave(paste0("reports/figures/bar_biomoleculeIDS_allsamples.pdf"), 
-       width = 8, height = 4, units = "cm")
+       width = 6, height = 4, units = "cm")
 
+
+## Plot:pie - biomolecule filtered ----
+
+bm_counts_filtered <- filtered_df_a %>%
+  group_by(ome) %>%
+  summarise(biomolecules = n_distinct(standardized_name)) %>%
+  mutate(filtered = "Y") %>%
+  arrange(desc(biomolecules)) %>%
+  mutate(
+    proportion = biomolecules / sum(biomolecules),
+    ypos = cumsum(proportion) - 0.5 * proportion,
+    label = paste0(ome, ": ", biomolecules)
+  )
+
+ggplot(bm_counts_filtered, aes(x = "", y = proportion, fill = ome)) +
+  geom_bar(stat = "identity", 
+           width = 1,
+           color = "white") + 
+  coord_polar("y") + 
+  scale_fill_manual(values = c(col[2], col[1], col[3])) +
+  guides(fill = "none") +
+  geom_text(aes(y = ypos, label = biomolecules), 
+            color = "black", 
+            size = 2) +
+  labs(y = NULL,
+       x = NULL) +
+  theme_void() +
+  theme(panel.border = element_blank(),
+        panel.grid.major = element_blank(), 
+        plot.title = element_blank(), 
+        legend.position = c(0.05, 0.95), 
+        legend.justification = c("left", "top"),
+        legend.margin = margin(2, 2, 2, 2),
+        legend.title = element_text(size = 7),
+        legend.text = element_text(size = 6),
+        legend.key.size = unit(0.25, "cm"))
+ggsave(paste0("reports/figures/pie_biomoleculeIDS_filtered.pdf"), 
+       width = 3, height = 3, units = "cm")
 
 
 ## Plot:connection plot - QoL Paired ----
@@ -581,3 +705,376 @@ ggplot(paired_metadata1, aes(x = Cohort, y = SF.36.QOL.Score, group = unique_pat
         axis.ticks = element_line(linewidth = 0.2))
 ggsave(paste0("reports/figures/point_QoL_change_paired_allsamples.pdf"), 
        width = 6, height = 4, units = "cm")
+
+
+
+## plot:bmi boxplot - analysis group 1 ----
+
+ggplot(metadata %>%
+         filter(analysis_group_1 == 1) %>%
+         mutate(PASCnoPASC = case_when(
+           Cohort %in% c("PASC", "PASC_fu") ~ "Long_COVID",
+           Cohort %in% c("Healthy", "Acute_fu") ~ "No_Long_COVID")) %>%
+         distinct(unique_patient_id, .keep_all = T), 
+       aes(x = PASCnoPASC, y = BMI, fill = PASCnoPASC, color = PASCnoPASC)) +
+  geom_jitter(alpha = 0.5, 
+              width = 0.1, 
+              size = 0.2) +
+  geom_boxplot(width = 0.4, 
+               alpha = 0.25, 
+               outliers = F,
+               size = 0.2) +
+  stat_compare_means(
+    method = "t.test",      
+    label = "p.format"        
+  ) +
+  scale_fill_manual(values = c("darkgray", "lightgray")) +
+  scale_color_manual(values = c("darkgray", "lightgray")) +
+  labs(y = "BMI",
+       x = NULL) +
+  theme_classic() +
+  theme(panel.border = element_blank(),
+        legend.position = "none",
+        panel.grid.major = element_blank(), 
+        axis.text.x = element_text(size = 5),
+        axis.text.y = element_text(size = 5),
+        plot.title = element_blank(), 
+        axis.title = element_text(size = 5),
+        legend.title = element_text(size = 5),
+        legend.text = element_text(size = 5),
+        axis.line = element_line(linewidth = 0.2),
+        axis.ticks = element_line(linewidth = 0.2))
+ggsave(paste0("reports/figures/bmi_boxplot_analysiscohort1.pdf"), 
+       width = 3.5, height = 3.5, units = "cm")
+
+
+
+## plot:age boxplot - analysis group 1 ----
+
+ggplot(metadata %>%
+         filter(analysis_group_1 == 1) %>%
+         mutate(PASCnoPASC = case_when(
+           Cohort %in% c("PASC", "PASC_fu") ~ "Long_COVID",
+           Cohort %in% c("Healthy", "Acute_fu") ~ "No_Long_COVID")) %>%
+         distinct(unique_patient_id, .keep_all = T), 
+       aes(x = PASCnoPASC, y = Age, fill = PASCnoPASC, color = PASCnoPASC)) +
+  geom_jitter(alpha = 0.5, 
+              width = 0.1, 
+              size = 0.2) +
+  geom_boxplot(width = 0.4, 
+               alpha = 0.25, 
+               outliers = F,
+               size = 0.2) +
+  stat_compare_means(
+    method = "t.test",      
+    label = "p.format"        
+  ) +
+  scale_fill_manual(values = c("darkgray", "lightgray")) +
+  scale_color_manual(values = c("darkgray", "lightgray")) +
+  labs(y = "Age",
+       x = NULL) +
+  theme_classic() +
+  theme(panel.border = element_blank(),
+        legend.position = "none",
+        panel.grid.major = element_blank(), 
+        axis.text.x = element_text(size = 5),
+        axis.text.y = element_text(size = 5),
+        plot.title = element_blank(), 
+        axis.title = element_text(size = 5),
+        legend.title = element_text(size = 5),
+        legend.text = element_text(size = 5),
+        axis.line = element_line(linewidth = 0.2),
+        axis.ticks = element_line(linewidth = 0.2))
+ggsave(paste0("reports/figures/age_boxplot_analysiscohort1.pdf"), 
+       width = 3.5, height = 3.5, units = "cm")
+
+
+
+## plot:sex bar - analysis group 1 ----
+counts <- metadata %>%
+  filter(analysis_group_1 == 1) %>%
+  mutate(PASCnoPASC = case_when(
+    Cohort %in% c("PASC", "PASC_fu") ~ "Long_COVID",
+    Cohort %in% c("Healthy", "Acute_fu") ~ "No_Long_COVID")) %>%
+  distinct(unique_patient_id, .keep_all = T) %>%
+  group_by(PASCnoPASC) %>%
+  count(Sex, name = "count") %>%
+  mutate(
+    total = sum(count), 
+    perc = count / total,
+    ypos = total - count / 2
+  )
+
+ggplot(counts, aes(x = PASCnoPASC, y = count, color = Sex, fill = PASCnoPASC)) +
+  geom_bar(stat = "identity",
+           position = "stack",
+           width = 0.7,
+           size = 0.2) + 
+  #coord_polar(theta = "y") + 
+  #scale_fill_manual(values = col) +
+  geom_text(aes(y = count, label = paste0(count, "\n", round(perc * 100, 1))), 
+            color = "black", 
+            size = 2, 
+            nudge_y = -10) +
+  scale_fill_manual(values = c("darkgray", "lightgray")) +
+  scale_color_manual(values = c(tab[4], tab[1])) +
+  labs(y = "Samples",
+       x = NULL) +
+  scale_y_continuous(expand = c(0,0), limits = c(0,200)) +
+  theme_classic() +
+  theme(panel.border = element_blank(),
+        legend.position = "inside",
+        panel.grid.major = element_blank(), 
+        axis.text.x = element_text(size = 5),
+        axis.text.y = element_text(size = 5),
+        plot.title = element_blank(), 
+        axis.title = element_text(size = 5),
+        legend.title = element_text(size = 5),
+        legend.text = element_text(size = 5),
+        axis.line = element_line(linewidth = 0.2),
+        axis.ticks = element_line(linewidth = 0.2),
+        legend.margin = margin(1, 1, 1, 1),
+        legend.spacing.y = unit(0.1, "cm"),
+        legend.key.size = unit(0.25, "cm"))
+ggsave(paste0("reports/figures/bar_sex_analysisgroup1.pdf"), 
+       width = 3.5, height = 3.5, units = "cm")
+
+
+
+## plot:bmi boxplot - analysis group 2 ----
+
+ggplot(metadata %>%
+         filter(analysis_group_6 == 1) %>%
+         mutate(PASCnoPASC = case_when(
+           Cohort %in% c("Acute") ~ "Acute_COVID",
+           Cohort %in% c("Healthy", "Acute_fu") ~ "No_COVID")), 
+       aes(x = PASCnoPASC, y = BMI, fill = PASCnoPASC, color = PASCnoPASC)) +
+  geom_jitter(alpha = 0.5, 
+              width = 0.1, 
+              size = 0.2) +
+  geom_boxplot(width = 0.4, 
+               alpha = 0.25, 
+               outliers = F,
+               size = 0.2) +
+  stat_compare_means(
+    method = "t.test",      
+    label = "p.format"        
+  ) +
+  scale_fill_manual(values = c("darkgray", "lightgray")) +
+  scale_color_manual(values = c("darkgray", "lightgray")) +
+  labs(y = "BMI",
+       x = NULL) +
+  theme_classic() +
+  theme(panel.border = element_blank(),
+        legend.position = "none",
+        panel.grid.major = element_blank(), 
+        axis.text.x = element_text(size = 5),
+        axis.text.y = element_text(size = 5),
+        plot.title = element_blank(), 
+        axis.title = element_text(size = 5),
+        legend.title = element_text(size = 5),
+        legend.text = element_text(size = 5),
+        axis.line = element_line(linewidth = 0.2),
+        axis.ticks = element_line(linewidth = 0.2))
+ggsave(paste0("reports/figures/bmi_boxplot_analysiscohort2.pdf"), 
+       width = 3.5, height = 3.5, units = "cm")
+
+
+
+## plot:age boxplot - analysis group 2 ----
+
+ggplot(metadata %>%
+         filter(analysis_group_6 == 1) %>%
+         mutate(PASCnoPASC = case_when(
+           Cohort %in% c("Acute") ~ "Acute_COVID",
+           Cohort %in% c("Healthy", "Acute_fu") ~ "No_COVID")), 
+       aes(x = PASCnoPASC, y = Age, fill = PASCnoPASC, color = PASCnoPASC)) +
+  geom_jitter(alpha = 0.5, 
+              width = 0.1, 
+              size = 0.2) +
+  geom_boxplot(width = 0.4, 
+               alpha = 0.25, 
+               outliers = F,
+               size = 0.2) +
+  stat_compare_means(
+    method = "t.test",      
+    label = "p.format"        
+  ) +
+  scale_fill_manual(values = c("darkgray", "lightgray")) +
+  scale_color_manual(values = c("darkgray", "lightgray")) +
+  labs(y = "Age",
+       x = NULL) +
+  theme_classic() +
+  theme(panel.border = element_blank(),
+        legend.position = "none",
+        panel.grid.major = element_blank(), 
+        axis.text.x = element_text(size = 5),
+        axis.text.y = element_text(size = 5),
+        plot.title = element_blank(), 
+        axis.title = element_text(size = 5),
+        legend.title = element_text(size = 5),
+        legend.text = element_text(size = 5),
+        axis.line = element_line(linewidth = 0.2),
+        axis.ticks = element_line(linewidth = 0.2))
+ggsave(paste0("reports/figures/age_boxplot_analysiscohort2.pdf"), 
+       width = 3.5, height = 3.5, units = "cm")
+
+
+
+## plot:sex bar - analysis group 2 ----
+counts <- metadata %>%
+  filter(analysis_group_6 == 1) %>%
+  mutate(PASCnoPASC = case_when(
+    Cohort %in% c("Acute") ~ "Acute_COVID",
+    Cohort %in% c("Healthy", "Acute_fu") ~ "No_COVID")) %>%
+  group_by(PASCnoPASC) %>%
+  count(Sex, name = "count") %>%
+  mutate(
+    total = sum(count), 
+    perc = count / total,
+    ypos = total - count / 2
+  )
+
+ggplot(counts, aes(x = PASCnoPASC, y = count, color = Sex, fill = PASCnoPASC)) +
+  geom_bar(stat = "identity",
+           position = "stack",
+           width = 0.7,
+           size = 0.2) + 
+  #coord_polar(theta = "y") + 
+  #scale_fill_manual(values = col) +
+  geom_text(aes(y = count, label = paste0(count, "\n", round(perc * 100, 1))), 
+            color = "black", 
+            size = 2, 
+            nudge_y = -10) +
+  scale_fill_manual(values = c("darkgray", "lightgray")) +
+  scale_color_manual(values = c(tab[4], tab[1])) +
+  labs(y = "Samples",
+       x = NULL) +
+  scale_y_continuous(expand = c(0,0), limits = c(0,120)) +
+  theme_classic() +
+  theme(panel.border = element_blank(),
+        legend.position = "inside",
+        panel.grid.major = element_blank(), 
+        axis.text.x = element_text(size = 5),
+        axis.text.y = element_text(size = 5),
+        plot.title = element_blank(), 
+        axis.title = element_text(size = 5),
+        legend.title = element_text(size = 5),
+        legend.text = element_text(size = 5),
+        axis.line = element_line(linewidth = 0.2),
+        axis.ticks = element_line(linewidth = 0.2),
+        legend.margin = margin(1, 1, 1, 1),
+        legend.spacing.y = unit(0.1, "cm"),
+        legend.key.size = unit(0.25, "cm"))
+ggsave(paste0("reports/figures/bar_sex_analysisgroup2.pdf"), 
+       width = 3.5, height = 3.5, units = "cm")
+
+
+
+
+asdfasdf <- metadata %>%
+  filter(analysis_group_6 == 1) %>%
+  mutate(PASCnoPASC = case_when(
+    Cohort %in% c("Acute") ~ "Acute_COVID",
+    Cohort %in% c("Healthy", "Acute_fu") ~ "No_COVID"))
+table(asdfasdf$Cohort)
+
+
+asdfasdfasdf <- metadata %>%
+  filter(Cohort == "Acute")
+table(asdfasdfasdf$Sex)
+
+
+
+
+
+
+
+
+
+## 2020 vs 2024 COVID Biomolecules ----
+# 2020
+samples_2020 <- 128
+p_2020 <- 517
+l_2020 <- 646
+t_2020 <- 13263
+
+df_2020 <- data.frame(p = p_2020,
+                      l = l_2020,
+                      t = t_2020) %>%
+  pivot_longer(cols = everything(),
+               names_to = "ome",
+               values_to = "count") %>%
+  mutate(year = "2020")
+
+# 2024
+samples_2024 <- 380
+p_2024 <- 6972
+l_2024 <- 1729
+t_2024 <- 16167
+
+df_2024 <- data.frame(p = p_2024,
+                      l = l_2024,
+                      t = t_2024) %>%
+  pivot_longer(cols = everything(),
+               names_to = "ome",
+               values_to = "count") %>%
+  mutate(year = "2024")
+
+df_both <- df_2020 %>%
+  bind_rows(df_2024) %>%
+  group_by(year) %>%
+  mutate(total = sum(count),
+         proportion = count / total,
+         ypos = cumsum(proportion) - 0.5 * proportion) %>%
+  arrange(desc(count))
+
+
+## plot:pie - biomolecule 2020 vs 2024 ----
+
+ggplot(df_both, aes(x = year, y = proportion, fill = ome)) +
+  geom_bar(stat = "identity", 
+           width = 1,
+           color = "white") + 
+  coord_polar("y") + 
+  scale_fill_manual(values = c(col[2], col[1], col[3])) +
+  guides(fill = "none") +
+  geom_text(aes(y = proportion, label = count), 
+            color = "black", 
+            size = 2) +
+  labs(y = NULL,
+       x = NULL) +
+  theme_void() +
+  theme(panel.border = element_blank(),
+        panel.grid.major = element_blank(), 
+        plot.title = element_blank(), 
+        legend.position = c(0.05, 0.95), 
+        legend.justification = c("left", "top"),
+        legend.margin = margin(2, 2, 2, 2),
+        legend.title = element_text(size = 7),
+        legend.text = element_text(size = 6),
+        legend.key.size = unit(0.25, "cm")) + 
+  facet_wrap( ~ year)
+ggsave(paste0("reports/figures/pie_biomoleculeIDS_filtered_2020vs2024.pdf"), 
+       width = 6, height = 3, units = "cm")
+
+
+## plot:pie - sample 2020 vs 2024 ----
+
+df_samplenum <- data.frame(
+  year = c("2020", "2024"),
+  value = c(samples_2020, samples_2024)
+)
+
+ggplot(df_samplenum, aes(x = year, y = 1, size = value)) +
+  geom_point(shape = 21, fill = "skyblue") +
+  scale_size_area(max_size = 30) +  # size area = true proportional scaling
+  theme_void() +
+  theme(panel.border = element_blank(),
+        panel.grid.major = element_blank(),
+        axis.title = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank())
+ggsave(paste0("reports/figures/pie_samples_filtered_2020vs2024.pdf"), 
+       width = 6, height = 3, units = "cm")
+

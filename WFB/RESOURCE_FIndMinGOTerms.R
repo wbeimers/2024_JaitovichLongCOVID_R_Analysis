@@ -44,11 +44,17 @@ GO_terms <- dbGetQuery(con, 'SELECT *
 dbDisconnect(con)
 
 
+## Choose Gene Set ----
+se <- UP_DOWN_together %>%
+  filter(ome.x == "protein") %>%
+  pull(biomolecule_id)
+
+
 # features_to_go_terms
 f_t_g_t <- biomolecules_metadata %>%
   filter(metadata_type == "GO_terms") %>%
   select(biomolecule_id, metadata_value) %>%
-  filter(biomolecule_id %in% biomolecules_p) # Change how many items to search here
+  filter(biomolecule_id %in% se) # choose proteins
 f_t_g_t <- split(f_t_g_t$metadata_value, f_t_g_t$biomolecule_id)
   
 # go_term_ontology
@@ -170,12 +176,13 @@ find_minimum_set_of_go_terms <- function(
 ## run function
 min_go_terms <- find_minimum_set_of_go_terms(
   features_to_go_terms = f_t_g_t,
-  min_features = 5,
-  max_features = 50,
-  target_coverage = 0.9,
-  max_overlap = 5,
+  min_features = 2,
+  max_features = 10,
+  target_coverage = 0.95,
+  max_overlap = 2,
   go_term_ontology = g_t_o,
-  include_cc = FALSE
+  include_cc = FALSE,
+  include_mf = FALSE
 )
 
 
@@ -184,4 +191,71 @@ GO_set <- GO_terms %>%
   
 
 fwrite(GO_set,
-       "data/metadata/GOtermset_PASCnoPASC_Proteins_5to50_90coverage_5overlap.csv")
+       "data/metadata/GOtermset_HealthyAcutePASCnoPASC_Proteins_BPonly_3to50_95coverage_10overlap_ALL.csv")
+
+
+
+
+
+
+
+
+## ChatGPT Generated Version ----
+# function
+select_minimal_go_terms <- function(go_terms, significant_features, max_term_size = Inf) {
+  # Filter out GO terms that are too broad
+  go_terms <- go_terms[sapply(go_terms, length) <= max_term_size]
+  
+  selected_terms <- character()
+  covered_features <- character()
+  significant_features <- unique(significant_features)
+  
+  while (length(setdiff(significant_features, covered_features)) > 0) {
+    best_term <- NULL
+    best_new_coverage <- 0
+    
+    for (term in names(go_terms)) {
+      new_features <- setdiff(go_terms[[term]], covered_features)
+      n_new <- length(intersect(new_features, significant_features))
+      
+      if (n_new > best_new_coverage) {
+        best_new_coverage <- n_new
+        best_term <- term
+      }
+    }
+    
+    if (is.null(best_term)) {
+      warning("No GO term adds any new significant features. Ending.")
+      break
+    }
+    
+    selected_terms <- c(selected_terms, best_term)
+    covered_features <- union(covered_features, go_terms[[best_term]])
+  }
+  
+  return(selected_terms)
+}
+
+# set up function inputs
+biomolecule_metadata_GO <- biomolecules_metadata %>%
+  filter(metadata_type == "GO_terms") %>%
+  separate_rows(metadata_value, sep = ";") %>%
+  group_by(metadata_value) %>%
+  summarize(GO_terms = unique(biomolecule_id), .groups = "drop")
+
+# go terms
+GO_term_list <- split(biomolecule_metadata_GO$GO_terms,
+                      biomolecule_metadata_GO$metadata_value)
+
+# proteins
+prot_list <- se
+
+
+## run function
+selected <- select_minimal_go_terms(GO_term_list, prot_list, max_term_size = 100)
+
+
+
+
+
+
