@@ -49,12 +49,13 @@ pal <- c("Acute" = "#E78AC3",
          "PASC" = '#66CCEE', 
          "PASC_fu" = '#4477AA')
 
+col1 <- viridis_pal(option = "mako")(100)[round(c(0.25, 0.5, 0.75) * 100)]
 
 
 # plot colors
 pie(rep(1, length(col)), col = col , main="") 
 
-color_to_adjust <- col[3]
+color_to_adjust <- col[2]
 lighter_shades <- lighten(color_to_adjust, amount = c(0, 0.4))
 
 
@@ -77,13 +78,13 @@ dbDisconnect(con)
 ## Volcano Plot Preparation ----
 # options:
 # analysis_group (1, 2, 3, 0)
-anal <- 1
+anal <- 7
 # comparison (Age, Sex, QoL, BMI)
-comp <- "PASC_noPASC"
+comp <- "group7_PASCnoPASC"
 # formula (1, 2, 3, etc.)
-form <- 35
+form <- 57
 # ome
-omea <- "transcript"
+omea <- "protein"
 
 
 volc_plot <- pvalues %>%
@@ -111,9 +112,11 @@ counts <- volc_plot %>%
 
 # Color Based on GO TERM
 GO_colors <- c(
-  "GO:0000786", "GO:0015629" # transcript
+  "GO:0030527", "GO:0015629" # transcript
   #"GO:0060589", "GO:0006959" # protein
                )
+
+table(volc_plot$ome[volc_plot$diffexp == "YES"])
 
 con <- dbConnect(RSQLite::SQLite(), dbname = 'P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Database/Long Covid Study DB.sqlite')
 biomolecules_metadata <- dbGetQuery(con, 'SELECT *
@@ -251,7 +254,7 @@ fgsea <- fgsea(pathways = GO_term_list,
               select(GO_term, name),
             by = c("pathway" = "GO_term"))
 
-fwrite(fgsea, paste0("data/processed/fgsea_AnalysisGroup1_PASCnoPASC_", omea, "_allGOterms.csv"))
+fwrite(fgsea, paste0("data/processed/fgsea_AnalysisGroup7_PASCnoPASC_", omea, "_allGOterms.csv"))
 
 
 ##plot:GSEA ----
@@ -605,13 +608,21 @@ filtered_df_a <- filtered_df_p %>%
   select(-rawfile_id, -rawfile_name, -run_type, -ome_id) %>%
   bind_rows(filtered_df_t %>%
               rename(raw_abundance = Counts) %>%
-              mutate(ome = "t"))
+              mutate(ome = "t")) %>%
+  filter(Cohort %in% c("Healthy", "Acute_fu", "PASC")) %>%
+  mutate(PASCnoPASC = case_when(
+    Cohort %in% c("Healthy", "Acute_fu") ~ "No_COVID",
+    Cohort %in% c("PASC") ~ "Long_COVID")) 
 
 ## Filter for analysis_group_1 samples, and overlapping biomolecules
-## plot:boxplots - shared biomolecules ----
+## plot:boxplots - significant biomolecules PASCnoPASC ----
+signif_feat <- volc_plot %>%
+  filter(diffexp == "YES") %>%
+  pull(biomolecule_id)
+
 comparison_df_a <- filtered_df_a %>%
   filter(analysis_group_1 == 1) %>%
-  filter(biomolecule_id %in% common_df$biomolecule_id)
+  filter(biomolecule_id %in% signif_feat)
 
 for (i in unique(comparison_df_a$standardized_name)) {
   
@@ -622,7 +633,7 @@ for (i in unique(comparison_df_a$standardized_name)) {
   
   om <- unique(single_feat_df$ome)
   
-  ggplot(single_feat_df, aes(Cohort, normalized_abundance, fill = Cohort, color = Cohort)) + 
+  ggplot(single_feat_df, aes(PASCnoPASC, normalized_abundance, fill = PASCnoPASC, color = PASCnoPASC)) + 
     geom_jitter(alpha = 0.5, 
                 width = 0.1, 
                 size = 0.2) +
@@ -630,8 +641,8 @@ for (i in unique(comparison_df_a$standardized_name)) {
                  alpha = 0.25, 
                  outliers = F,
                  size = 0.2) +
-    scale_fill_manual(values = pal) +
-    scale_color_manual(values = pal) +
+    scale_fill_manual(values = col1) +
+    scale_color_manual(values = col1) +
     ggtitle(paste(poi, "Abundance")) +
     labs(x = NULL,
          y = "Log2 Abundance") +
@@ -651,9 +662,13 @@ for (i in unique(comparison_df_a$standardized_name)) {
           legend.position = "none"
     )
   
-  ggsave(paste0('reports/figures/SingleProteinPlots/', om, '_AnalysisGroup1_PreTube_singleprotein_', poi, '_distribution_Cohort.pdf'), 
+  ggsave(paste0('reports/figures/SingleProteinPlots/', om, '_AnalysisGroup7_PreTube_singlebiomolecule_', poi, '_distribution_PASCnoPASC.pdf'), 
          width = 8, height = 6, units = "cm")
 }
+
+ggsave(paste0('reports/figures/SingleProteinPlots/', om, '_AnalysisGroup1_PreTube_singleprotein_POTEJ_distribution_Cohort.pdf'), 
+       width = 6, height = 4, units = "cm")
+
 
 ## plot:pointplots - QoL shared biomolecules ----
 comparison_df_a_1 <- comparison_df_a %>%
@@ -836,21 +851,26 @@ ggsave("reports/figures/AnalysisGroup1_4methodoverlap_2clusters_pvalues.pdf",
 ## Dial into specific pathways that are enriched ----
 # find a pathway, find proteins, and plot log2fc for both PASCnoPASC and Acute/Healthy
 
-pathway <- "GO:0015629"
+pathway <- "GO:0060589"
 
 pathway_bms <- GO_term_list[[pathway]]
+
+bmol_genes <- biomolecules_metadata %>%
+  select(-metadata_id) %>%
+  filter(metadata_type %in% c("gene_name", "gene_symbol")) %>%
+  group_by(biomolecule_id) %>%
+  filter(n() == 1 | metadata_type == "gene_symbol") %>%
+  ungroup() %>%
+  select(biomolecule_id, metadata_value)
 
 # organize dataframes
 fc_barplots <- volc_plot %>%
   filter(biomolecule_id %in% pathway_bms) %>%
   filter(q_value < 0.05) %>%
-  left_join(biomolecules_metadata %>%
-              select(-metadata_id) %>%
-              filter(metadata_type %in% c("Entry_name", "gene_symbol")) %>%
-              select(biomolecule_id, metadata_value),
+  left_join(bmol_genes,
             by = "biomolecule_id")
 
-ggplot(fc_barplots, aes(reorder(metadata_value.y, q_value), effect_size, fill = ome)) + 
+ggplot(fc_barplots, aes(reorder(metadata_value, q_value), effect_size, fill = ome)) + 
   geom_col(position = position_dodge(),
            width = 0.6) + 
   geom_hline(yintercept = 0,
@@ -920,11 +940,11 @@ ggsave(paste0('reports/figures/PASCnoPASC_Biomolecules_All_GO0015629_effectsizes
 ## Lipid Enrichment Analysis ----
 # options:
 # analysis_group (1, 2, 3, 0)
-anal <- 1
+anal <- 7
 # comparison (Age, Sex, QoL, BMI)
-comp <- "PASC_noPASC"
+comp <- "group7_PASCnoPASC"
 # formula (1, 2, 3, etc.)
-form <- 35
+form <- 57
 # ome
 omea <- "lipid"
 
@@ -980,12 +1000,12 @@ fgsea <- fgsea(pathways = lipid_term_list,
                minSize  = 5,
                maxSize  = 1000) 
 
-fwrite(fgsea, paste0("data/processed/fgsea_AnalysisGroup1_PASCnoPASC_", omea, "_", opt, ".csv"))
+fwrite(fgsea, paste0("data/processed/fgsea_AnalysisGroup7_PASCnoPASC_", omea, "_", opt, ".csv"))
 
 
 
 # color by lipids stuff
-opti <- c("Ceramides", "Phosphosphingolipids") # lipid
+opti <- c("Glycerophosphocholines", "Phosphosphingolipids") # lipid
 
 biomolecules_metadata_lipid <- biomolecules_metadata %>%
   filter(metadata_type == opt) %>%
@@ -1084,8 +1104,8 @@ ggsave(paste0("reports/figures/Volcano_group_", anal, "_", comp, "_formula", for
 ## plot:combined fgsea results all omes ----
 
 lipid_gsea <- fread("P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Lipidomics/Data_Analysis/Enrichment/AnalysisGp1/PASC_noPASC/GSEA_enrichment_summary_analysisGroup1_noBatch1_PASC_noPASC_v2.csv")
-protein_gsea <- fread("data/processed/fgsea_AnalysisGroup1_PASCnoPASC_protein_allGOterms.csv")
-transcript_gsea <- fread("data/processed/fgsea_AnalysisGroup1_PASCnoPASC_transcript_allGOterms.csv")
+protein_gsea <- fread("data/processed/fgsea_AnalysisGroup7_PASCnoPASC_protein_allGOterms.csv")
+transcript_gsea <- fread("data/processed/fgsea_AnalysisGroup7_PASCnoPASC_transcript_allGOterms.csv")
 
 # split between positive NES/negative NES, and filter for <0.05 qvalue
 lipid_gsea <- lipid_gsea %>%
@@ -1238,6 +1258,319 @@ t_plot <- ggplot(plo %>%
 
 p_plot + l_plot + t_plot
 
-ggsave("reports/figures/PASCnoPASC_Enrichment_allomes_barplot_filtered_separate.pdf", 
+ggsave("reports/figures/PASCnoPASC_Enrichment_allomes_barplot_filtered_separate_7.pdf", 
        width = 7, height = 2, units = "in")
+
+
+
+
+
+##* STRING Network Analysis ----
+library(STRINGdb)
+library(igraph)
+library(ggraph)
+library(tidygraph)
+
+
+
+## Make list of genenames in pathway
+path_name <- GO_terms %>%
+  filter(GO_term == pathway) %>%
+  pull(name)
+genenames <- fc_barplots %>%
+  mutate(gene_map = str_extract(metadata_value, "^[^_]+")) %>%
+  select(gene_map) %>%
+  distinct() %>%
+  pull(gene_map)
+writeLines(genenames, paste0("data/processed/GOsignificantnames", path_name, "_PASCnoPASC.txt"))
+
+
+
+
+
+string_db <- STRINGdb$new(version = "11.5", species = 9606, score_threshold = 400)
+
+mapped_genes <- string_db$map(fc_barplots, 
+                              "metadata_value", 
+                              removeUnmappedRows = TRUE)
+
+# Get STRING interaction network for those proteins
+interactions <- string_db$get_interactions(mapped_genes$STRING_id)
+
+# Create a graph object
+graph <- graph_from_data_frame(interactions, directed = FALSE)
+
+# Add attributes
+V(graph)$gene <- mapped_genes$metadata_value[match(V(graph)$name, mapped_genes$STRING_id)]
+V(graph)$ome <- mapped_genes$ome[match(V(graph)$name, mapped_genes$STRING_id)]
+V(graph)$effect_size <- mapped_genes$effect_size[match(V(graph)$name, mapped_genes$STRING_id)]
+V(graph)$neglogpvalue <- mapped_genes$neglogpvalue[match(V(graph)$name, mapped_genes$STRING_id)]
+
+# Convert to tidygraph format
+graph_tbl <- as_tbl_graph(graph)
+
+# Plot with ggraph
+set.seed(202)
+ggraph(graph_tbl, layout = "fr") +  # "fr" is Fruchterman-Reingold layout
+  geom_edge_link(alpha = 0.25, color = "gray60", edge_width = 0.2) +
+  geom_node_point(aes(fill = effect_size, size = neglogpvalue ), 
+                  shape = 21, 
+                  color = "black", 
+                  stroke = 0.2) +
+  geom_node_text(aes(label = gene), 
+                 repel = TRUE, 
+                 size = 1.75,
+                 lineheight = 0.2) +
+  scale_fill_gradient2(low = "blue", mid = "white", high = "red", midpoint = 0, 
+                       name = "Effect Size") +
+  scale_size_continuous(name = "-log10(p value)", range = c(1, 4)) +
+  theme_void() +
+  theme(legend.margin = margin(1, 1, 1, 1),
+        legend.title = element_text(size = 5),
+        legend.position = "inside",
+        legend.justification = c("left", "top"),
+        legend.text = element_text(size = 5),
+        legend.key.size = unit(0.2, "cm"),
+        plot.title = element_text(size = 7)
+  ) +
+  ggtitle(direc)
+ggsave(paste0('reports/figures/noLC_LC_STRINGnetwork_', path_name, "_", direc, '.pdf'), 
+       width = 16, height = 8, units = 'cm')
+
+
+
+##* POTEE, POTEI, POTEJ Interactors ----
+pote_int <- read_lines("data/processed/POTEE_POTEI_POTEJ_string_interactions_50interactors.txt")
+
+bmol_genes <- biomolecules_metadata %>%
+  select(-metadata_id) %>%
+  filter(metadata_type %in% c("gene_name", "gene_symbol")) %>%
+  group_by(biomolecule_id) %>%
+  filter(n() == 1 | metadata_type == "gene_symbol") %>%
+  ungroup() %>%
+  select(biomolecule_id, metadata_value)
+
+# organize dataframe
+string_plots <- volc_plot %>%
+  filter(q_value < 0.05) %>%
+  left_join(bmol_genes,
+            by = "biomolecule_id") %>%
+  filter(metadata_value %in% pote_int)
+
+
+# string mapping
+string_db <- STRINGdb$new(version = "11.5", species = 9606, score_threshold = 400)
+
+mapped_genes <- string_db$map(string_plots, 
+                              "metadata_value", 
+                              removeUnmappedRows = TRUE)
+
+# Get STRING interaction network for those proteins
+interactions <- string_db$get_interactions(mapped_genes$STRING_id)
+
+# Create a graph object
+graph <- graph_from_data_frame(interactions, directed = FALSE)
+
+# Add attributes
+V(graph)$gene <- mapped_genes$metadata_value[match(V(graph)$name, mapped_genes$STRING_id)]
+V(graph)$ome <- mapped_genes$ome[match(V(graph)$name, mapped_genes$STRING_id)]
+V(graph)$effect_size <- mapped_genes$effect_size[match(V(graph)$name, mapped_genes$STRING_id)]
+V(graph)$neglogpvalue <- mapped_genes$neglogpvalue[match(V(graph)$name, mapped_genes$STRING_id)]
+
+# Convert to tidygraph format
+graph_tbl <- as_tbl_graph(graph)
+
+# Plot with ggraph
+set.seed(202)
+ggraph(graph_tbl, layout = "fr") +  # "fr" is Fruchterman-Reingold layout
+  geom_edge_link(alpha = 0.25, color = "gray60", edge_width = 0.2) +
+  geom_node_point(aes(fill = effect_size, size = neglogpvalue ), 
+                  shape = 21, 
+                  color = "black", 
+                  stroke = 0.2) +
+  geom_node_text(aes(label = gene), 
+                 repel = TRUE, 
+                 size = 1.75,
+                 lineheight = 0.2) +
+  scale_fill_gradient2(low = "blue", mid = "white", high = "red", midpoint = 0, 
+                       name = "Effect Size") +
+  scale_size_continuous(name = "-log10(p value)", range = c(1, 4)) +
+  theme_void() +
+  theme(legend.margin = margin(1, 1, 1, 1),
+        legend.title = element_text(size = 5),
+        legend.position = "inside",
+        legend.justification = c("left", "top"),
+        legend.text = element_text(size = 5),
+        legend.key.size = unit(0.2, "cm"),
+        plot.title = element_text(size = 7)
+  ) +
+  ggtitle(direc)
+ggsave('reports/figures/noLC_LC_STRINGnetwork_POTEEPOTEIPOTEJ_50interactions.pdf', 
+       width = 10, height = 6, units = 'cm')
+
+
+
+
+## RNAseq cell cycle ----
+s_phase_genes <- c("MCM2", "MCM3", "MCM4", "MCM5", "MCM6", "MCM7", 
+                   "PCNA", "TYMS", "RRM1", "RRM2", "CDK2", "CCNE1", 
+                   "CCNE2", "CHEK1")
+
+bmol_genes <- biomolecules_metadata %>%
+  select(-metadata_id) %>%
+  filter(metadata_type %in% c("gene_name", "gene_symbol")) %>%
+  group_by(biomolecule_id) %>%
+  filter(n() == 1 | metadata_type == "gene_symbol") %>%
+  ungroup() %>%
+  select(biomolecule_id, metadata_value)
+
+
+# transcript volc_plot with gene names
+cell_cycle_transcripts <- volc_plot %>%
+  filter(ome == "transcript") %>%
+  left_join(bmol_genes,
+            by = "biomolecule_id") %>%
+  filter(metadata_value %in% s_phase_genes)
+
+# volc plot
+ggplot(cell_cycle_transcripts, 
+             aes(effect_size, neglogpvalue)) + 
+  geom_point(shape = 21,
+             color = "black",
+             fill = "lightgray",
+             alpha = 1,
+             stroke = 0.2) +
+  #geom_vline(xintercept = c(-0.263, 0.263), 
+  #          col = "black",
+  #           size = 0.2) +
+  #geom_hline(yintercept = -log10(0.05), 
+  #           col="black",
+  #           size = 0.2) +
+  scale_x_continuous(limits = c(-max(abs(cell_cycle_transcripts$effect_size)), max(abs(cell_cycle_transcripts$effect_size)))) +
+  geom_text_repel(data = cell_cycle_transcripts, aes(label = metadata_value), size = 2) +
+  xlab(paste("Effect Size", comp)) +
+  ylab("-Log10 Adjusted P-Value") +
+  #xlim(-2, 2) +
+  theme_classic() +
+  theme(panel.border = element_blank(), 
+        panel.grid.major = element_blank(),
+        panel.spacing = unit(0.5, "lines"), 
+        axis.text.x = element_text(size = 5),
+        axis.text.y = element_text(size = 5),
+        axis.title = element_text(size = 5),
+        axis.line = element_line(linewidth = 0.2),
+        axis.ticks = element_line(linewidth = 0.2),
+        strip.text = element_blank(),
+        legend.position = "inside",
+        legend.margin = margin(0, 0, 0, 0),
+        legend.title = element_text(size = 5),
+        legend.text = element_text(size = 5),
+        legend.spacing.y = unit(0.1, "cm"),
+        legend.key.size = unit(0.25, "cm")) 
+ggsave(paste0("reports/figures/Volcano_group1_protein_cellcyclemarkers_col.pdf"), 
+       width = 4, height = 3, units = "in")
+
+
+
+
+## RNAseq leukocyte populations ----
+library(immunedeconv)
+
+bmol_genes <- biomolecules_metadata %>%
+  select(-metadata_id) %>%
+  filter(metadata_type %in% c("gene_name", "gene_symbol")) %>%
+  group_by(biomolecule_id) %>%
+  filter(n() == 1 | metadata_type == "gene_symbol") %>%
+  ungroup() %>%
+  select(biomolecule_id, metadata_value)
+
+rnaseq_matrix <- filtered_df_t %>%
+  left_join(bmol_genes, by = "biomolecule_id") %>%
+  select(sample_id, metadata_value, Counts) %>%
+  filter(!is.na(metadata_value)) %>%
+  pivot_wider(names_from = sample_id,
+              values_from = Counts) %>%
+  column_to_rownames(var = "metadata_value")
+  
+
+##* calculate TPM for RNAseq data ----
+# get gene lengths
+library(biomaRt)
+
+mart <- useEnsembl(biomart = "genes", dataset = "hsapiens_gene_ensembl")
+transcript_lengths <- getBM(attributes = c("hgnc_symbol", "start_position", "end_position"), mart = mart) %>%
+  mutate(length_kb = ((end_position - start_position) / 1000)) %>% 
+  filter(if_all(everything(), ~ . != "")) %>%
+  filter(hgnc_symbol %in% rownames(rnaseq_matrix)) %>%
+  group_by(hgnc_symbol) %>%
+  slice_max(length_kb, with_ties = FALSE) %>%
+  ungroup()
+
+gene_lengths <- setNames(transcript_lengths$length_kb, 
+                         transcript_lengths$hgnc_symbol)
+
+# get rnaseq matrix organized
+rnaseq_matrix1 <- rnaseq_matrix %>%
+  rownames_to_column(var = "ID") %>%
+  filter(ID %in% transcript_lengths$hgnc_symbol) %>%
+  column_to_rownames(var = "ID")
+
+# do TPM calc
+calculate_tpm <- function(counts, gene_lengths) {
+  # Compute RPK
+  rpk <- sweep(counts, 1, gene_lengths, "/")
+  
+  # Compute per-sample scaling factor
+  scaling_factors <- colSums(rpk)
+  
+  # Compute TPM
+  tpm <- sweep(rpk, 2, scaling_factors, "/") * 1e6
+  return(tpm)
+}
+
+tpm_matrix <- calculate_tpm(counts = rnaseq_matrix1, 
+                            gene_lengths = gene_lengths)
+
+##* Plot cell types ----
+
+immune_cell_types <- deconvolute(tpm_matrix, "quantiseq") %>%
+  pivot_longer(cols = -cell_type,
+               names_to = "sample_id",
+               values_to = "proportion") %>%
+  mutate(sample_id = as.integer(sample_id)) %>%
+  left_join(metadata, by = "sample_id") %>% 
+  mutate(PASCnoPASC = case_when(
+    Cohort %in% c("Healthy", "Acute_fu") ~ "No_COVID",
+    Cohort %in% c("PASC", "PASC_fu") ~ "Long_COVID")) 
+
+ggplot(immune_cell_types, aes(proportion, factor(sample_id), fill = cell_type)) + 
+  geom_col(position = "stack",
+           width = 0.6) + 
+  scale_fill_manual(values = brewer.pal(11, "Set3")) +
+  labs(x = "proportion",
+       y = "sample_id") +
+  #scale_y_continuous(expand = c(0,0)) +
+  scale_x_continuous(expand = c(0,0)) +
+  guides(fill = guide_legend(title = 'Biomolecule')) +
+  theme_classic() +
+  theme(panel.border = element_blank(), 
+        panel.grid.major = element_blank(), 
+        axis.text.x = element_text(size = 6),
+        axis.text.y = element_text(size = 6),
+        axis.title = element_text(size = 6),
+        axis.line = element_line(size = 0.2),
+        axis.ticks = element_line(size = 0.2),
+        legend.position = "right", 
+        legend.justification = c("right", "top"),
+        legend.margin = margin(2, 2, 2, 2),
+        legend.title = element_text(size = 6),
+        legend.text = element_text(size = 6),
+        legend.key.size = unit(0.2, "cm")
+  ) +
+  facet_wrap(PASCnoPASC ~ ., scales = "free_y")
+ggsave(paste0('reports/figures/PASCnoPASC_Transcript_ImmuneCellTypes.pdf'), 
+       width = 12, height = 24, units = 'cm')
+
+
+
 
