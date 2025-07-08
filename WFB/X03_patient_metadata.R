@@ -325,3 +325,146 @@ dbWriteTable(con, "patient_metadata", patient_metadata3, append = F, overwrite =
 
 dbDisconnect(con)
 
+
+
+## Add Analysis Groups 5 ----
+
+con <- dbConnect(RSQLite::SQLite(), dbname = "P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Database/Long Covid Study DB.sqlite")
+patient_metadata <- dbGetQuery(con, "SELECT *
+           FROM patient_metadata
+           ")
+dbDisconnect(con)
+
+# Group 5
+patient_metadata5 <- patient_metadata %>%
+  mutate(analysis_group_5 = case_when(
+    PG_change_collection_cutoff == 0 & Cohort %in% c("PASC_fu", "PASC") ~ 1,
+    T ~ 0
+  ))
+
+
+con <- dbConnect(RSQLite::SQLite(), dbname = "P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Database/Long Covid Study DB.sqlite")
+
+# drop old patient metadata table before adding new one
+dbExecute(con, "DROP TABLE IF EXISTS patient_metadata")
+
+# Write the new patient_metadata table to the database
+dbWriteTable(con, "patient_metadata", patient_metadata5, append = F, overwrite = T)
+
+dbDisconnect(con)
+
+
+
+## Drop old pvalues ----
+
+con <- dbConnect(RSQLite::SQLite(), dbname = 'P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Database/Long Covid Study DB.sqlite')
+
+pvalues <- dbGetQuery(con, 'SELECT *
+                            FROM pvalues')
+
+dbDisconnect(con)
+
+pvalues1 <- pvalues %>%
+  filter(!formula %in% c(47,48,49,50))
+
+
+con <- dbConnect(RSQLite::SQLite(), dbname = "P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Database/Long Covid Study DB.sqlite")
+
+# drop old patient metadata table before adding new one
+dbExecute(con, "DROP TABLE IF EXISTS pvalues")
+
+# Write the new patient_metadata table to the database
+dbWriteTable(con, "pvalues", pvalues1, append = F, overwrite = T)
+
+dbDisconnect(con)
+
+
+
+
+
+## Add Analysis Groups 6 ----
+
+con <- dbConnect(RSQLite::SQLite(), dbname = "P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Database/Long Covid Study DB.sqlite")
+patient_metadata <- dbGetQuery(con, "SELECT *
+           FROM patient_metadata
+           ")
+dbDisconnect(con)
+
+# Group 5
+patient_metadata6 <- patient_metadata %>%
+  mutate(analysis_group_6 = case_when(
+    PG_change_collection_cutoff == 0 & Cohort %in% c("Acute", "Healthy", "Acute_fu") ~ 1,
+    T ~ 0
+  ))
+
+
+con <- dbConnect(RSQLite::SQLite(), dbname = "P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Database/Long Covid Study DB.sqlite")
+
+# drop old patient metadata table before adding new one
+dbExecute(con, "DROP TABLE IF EXISTS patient_metadata")
+
+# Write the new patient_metadata table to the database
+dbWriteTable(con, "patient_metadata", patient_metadata6, append = F, overwrite = T)
+
+dbDisconnect(con)
+
+
+
+
+
+## Add Analysis Groups 7 ----
+## PASC (no PASC f/u) vs Acute_fu+Healthy 
+
+con <- dbConnect(RSQLite::SQLite(), dbname = "P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Database/Long Covid Study DB.sqlite")
+patient_metadata <- dbGetQuery(con, "SELECT *
+           FROM patient_metadata
+           ")
+dbDisconnect(con)
+
+# Group 7
+patient_metadata7 <- patient_metadata %>%
+  mutate(analysis_group_7 = case_when(
+    PG_change_collection_cutoff == 0 & Cohort %in% c("PASC", "Healthy", "Acute_fu") ~ 1,
+    T ~ 0
+  ))
+
+
+con <- dbConnect(RSQLite::SQLite(), dbname = "P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Database/Long Covid Study DB.sqlite")
+
+# drop old patient metadata table before adding new one
+dbExecute(con, "DROP TABLE IF EXISTS patient_metadata")
+
+# Write the new patient_metadata table to the database
+dbWriteTable(con, "patient_metadata", patient_metadata7, append = F, overwrite = T)
+
+dbDisconnect(con)
+
+
+
+## Add Analysis Groups 7 ----
+## PASC (no PASC f/u) vs Acute_fu+Healthy 
+
+con <- dbConnect(RSQLite::SQLite(), dbname = "P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Database/Long Covid Study DB.sqlite")
+patient_metadata <- dbGetQuery(con, "SELECT *
+           FROM patient_metadata
+           ")
+dbDisconnect(con)
+
+# Group 7
+patient_metadata7 <- patient_metadata %>%
+  mutate(group7_PASCnoPASC = case_when(
+    PG_change_collection_cutoff == 0 & Cohort %in% c("Healthy", "Acute_fu") ~ "noPASC",
+    PG_change_collection_cutoff == 0 & Cohort %in% c("PASC") ~ "PASC",
+    T ~ NA
+  ))
+
+
+con <- dbConnect(RSQLite::SQLite(), dbname = "P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Database/Long Covid Study DB.sqlite")
+
+# drop old patient metadata table before adding new one
+dbExecute(con, "DROP TABLE IF EXISTS patient_metadata")
+
+# Write the new patient_metadata table to the database
+dbWriteTable(con, "patient_metadata", patient_metadata7, append = F, overwrite = T)
+
+dbDisconnect(con)
