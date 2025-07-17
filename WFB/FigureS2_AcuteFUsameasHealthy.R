@@ -254,6 +254,74 @@ ggsave('reports/figures/AllPlates_AcuteHealthy_comparison_pvalue_hist.pdf',
 
 
 
+## Heatmap Equivalence ----
+library(pheatmap)
+
+
+expression_matrix <- filtered_df_a %>%
+  filter(Cohort %in% c("Acute_fu", "Healthy")) %>%
+  filter(PG_change_collection_cutoff == 0) %>%
+  dplyr::select(biomolecule_id, normalized_abundance, sample_id) %>%
+  pivot_wider(names_from = sample_id, values_from = normalized_abundance) %>%
+  tibble::column_to_rownames(var = "biomolecule_id") %>%
+  select(where(~ !any(is.na(.))))
+
+sample_annot <- filtered_df_a %>%
+  ungroup() %>%
+  select(sample_id, 
+         Cohort, 
+         #Age, 
+         #Sex, 
+         #BMI, 
+         #SF.36.QOL.Score, 
+         #PASC_Cohort, 
+         #PG_change_collection_cutoff
+  ) %>%
+  distinct() %>%
+  tibble::column_to_rownames(var = "sample_id") 
+
+dat <- filtered_df_a %>%
+  select(ome, biomolecule_id) %>%
+  distinct()
+
+row_annot <- data.frame(ome = dat$ome,
+                        row.names = dat$biomolecule_id) %>%
+  mutate(ome1 = case_when(
+    ome == "p" ~ "protein",
+    ome == "l" ~ "lipid",
+    ome == "t" ~ "transcript"
+  )) %>%
+  select(-ome) %>%
+  rename(Ome = ome1)
+
+k <- 2
+
+pheat <- pheatmap(t(expression_matrix),
+                  #color = viridis(24, direction = 1, option = "plasma"),
+                  color = rev(colorRampPalette(brewer.pal(11, "RdBu"))(15)),
+                  breaks = c(-4, -3, -2.5, -2, -1.5, -1, -0.5, 0, 0.5, 1, 1.5, 2, 2.5, 3, 4),
+                  cluster_rows = T,
+                  #cutree_rows = k, 
+                  #gaps_row = T,
+                  cluster_cols = T,
+                  treeheight_row = 10,
+                  treeheight_col = 0,
+                  show_rownames = F,
+                  show_colnames = F,
+                  border_color = NA,
+                  scale = "column",
+                  annotation_row = sample_annot,
+                  annotation_col = row_annot,
+                  annotation_legend = F,
+                  legend = F,
+                  annotation_colors = list(Cohort = c(Acute_fu = pal[2], Healthy = pal[4]),
+                                           Ome = c(protein = col[1], lipid = col[2], transcript = col[3])),
+                  fontsize = 5,
+                  fontsize_col = 5,
+                  fontsize_row = 5,
+                  filename = paste0("reports/figures/Heatmap_plots/Heatmap_AllOmes_AcutevsHealthy.png"),
+                  width = 4.72,
+                  height = 1.18)
 
 
 

@@ -533,10 +533,18 @@ gene_list <- UP_DOWN_together %>%
   filter(ome.x == "protein") %>%
   pull(biomolecule_id)
 
+# gene_list <- HighOpposite_together %>%
+#   filter(ome.x == "protein") %>%
+#   pull(biomolecule_id)
+
 # Enrichment
 enrichment_df_UP <- enrichment(gene_list, GO_term_list, background_list) %>%
   left_join(GO_terms, by = c("reference" = "GO_term")) %>%
   mutate(rank = enrichment_ratio * -log10(pvalue))
+
+# enrichment_df_opposite <- enrichment(gene_list, GO_term_list, background_list) %>%
+#   left_join(GO_terms, by = c("reference" = "GO_term")) %>%
+#   mutate(rank = enrichment_ratio * -log10(pvalue))
 
 
 ## DOWN GENES
@@ -963,7 +971,7 @@ ggsave("reports/figures/PCA_plots/Loadings_AC_LC_nC_OverlapBiomolecules_proteinl
 ## Dial into specific pathways that are enriched ----
 # find a pathway, find proteins, and plot log2fc for both PASCnoPASC and Acute/Healthy
 
-pathway <- "GO:0006325"
+pathway <- "GO:0003676"
 
 pathway_bms <- GO_term_list[[pathway]]
 
@@ -978,7 +986,8 @@ volc_plot_PASC_1 <- volc_plot_PASC %>%
 
 
 fc_barplots <- volc_plot_Acute_1 %>%
-  bind_rows(volc_plot_PASC_1)
+  bind_rows(volc_plot_PASC_1) %>%
+  filter(ome == "protein")
 # filter by shared biomolecules
 shared_ids <- fc_barplots %>%
   distinct(comparison, biomolecule_id) %>%
@@ -990,7 +999,7 @@ fc_barplots <- fc_barplots %>%
   filter(biomolecule_id %in% shared_ids) %>%
   left_join(biomolecules_metadata %>%
               select(-metadata_id) %>%
-              filter(metadata_type == "gene_name") %>%
+              filter(metadata_type == "Protein_names") %>%
               select(biomolecule_id, metadata_value),
             by = "biomolecule_id")
 
@@ -1021,7 +1030,7 @@ ggplot(fc_barplots, aes(reorder(metadata_value, q_value), effect_size, fill = co
         legend.text = element_text(size = 6),
         legend.key.size = unit(0.2, "cm")
   ) 
-ggsave(paste0('reports/figures/AcutePASC_OverlapBiomolecules_proteinlipid_GO0006397_foldchanges.pdf'), 
+ggsave(paste0('reports/figures/AcutePASC_OppositeBiomolecules_proteinlipid_GO0007219_foldchanges.pdf'), 
        width = 16, height = 6, units = 'cm')
 
 
@@ -1194,19 +1203,19 @@ ggsave(paste0('reports/figures/AC_noLC_LC_STRINGnetwork_ALLSHAREDGENES_', direc,
 HighPASC_df <- volc_plot_PASC %>%
   filter(diffexp == "UP") %>%
   inner_join(volc_plot_Acute %>%
-               filter(diffexp == "UP"),
+               filter(diffexp == "DOWN"),
              by = "biomolecule_id")
 
 HighAcute_df <- volc_plot_PASC %>%
   filter(diffexp == "DOWN") %>%
   inner_join(volc_plot_Acute %>%
-               filter(diffexp == "DOWN"),
+               filter(diffexp == "UP"),
              by = "biomolecule_id")
 
 HighOpposite_together <- HighPASC_df %>%
-  select(biomolecule_id, ome.x, diffexp.x) %>%
+  select(biomolecule_id, ome.x, diffexp.x, diffexp.y) %>%
   bind_rows(HighAcute_df %>%
-              select(biomolecule_id, ome.x, diffexp.x))
+              select(biomolecule_id, ome.x, diffexp.x, diffexp.y))
 
 
 ## SingleBiomoleculePlots-AC->LC->noLC ----
@@ -1261,7 +1270,7 @@ for (i in unique(comparison_df_pl$standardized_name)) {
 
 
 ## Figure 3, 4 boxplots ----
-bimol <- c("Q86TL0", "Q9H7J1", "Q8WVC0", "Q8N7H5")
+bimol <- c("Q86TL0", "P35626", "Q8WVC0", "Q8N7H5")
 
 
 for (i in bimol) {
@@ -1308,7 +1317,7 @@ for (i in bimol) {
   
 }
 
-Q86TL0_p + Q9H7J1_p + Q8WVC0_p + Q8N7H5_p + plot_layout(ncol = 4)
+Q86TL0_p + P35626_p + Q8WVC0_p + Q8N7H5_p + plot_layout(ncol = 4)
 
 ggsave(paste0('reports/figures/SingleProteinPlots/', om, '_AC_LC_noLC_comparison_PreTube_singlebiomolecule_', poi, '_distribution_figure3_v2.pdf'), 
        width = 18, height = 4, units = "cm")
