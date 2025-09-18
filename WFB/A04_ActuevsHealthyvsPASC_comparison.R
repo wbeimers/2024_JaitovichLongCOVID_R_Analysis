@@ -1113,12 +1113,7 @@ ggsave(paste0('reports/figures/AC_noLC_LC_STRINGnetwork_', path_name, "_", direc
 direc <- "Acute_nonAcute"
 
 # find shared
-UPDOWN_genes <- UP_DOWN_together %>%
-  left_join(biomolecules_metadata %>%
-              select(-metadata_id) %>%
-              filter(metadata_type == "gene_name") %>%
-              select(biomolecule_id, metadata_value),
-            by = "biomolecule_id") %>%
+UPDOWN_genes <- UP_DOWN_together 
   pull(metadata_value)
 UPDOWN_genes <- UPDOWN_genes[!is.na(UPDOWN_genes)]
 
