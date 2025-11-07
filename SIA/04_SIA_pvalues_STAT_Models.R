@@ -34,7 +34,7 @@ query_data <- function(con, table) {
 
 
 
-#interaction terms fixed model
+#Multiple Linear Regression - No Random Effect
 
 perform_lrt <- function(data, formula_null, formula_test, predictor, return = 'both') {
   results <- lapply(unique(data$biomolecule_id), function(biomolecule_id) {
@@ -94,7 +94,8 @@ perform_lrt <- function(data, formula_null, formula_test, predictor, return = 'b
 }
 
 
-#no_r2 not bootstrapping
+                        
+#Multiple Linear Regression - With Random Effect
 perform_lrt_mixed <- function(data, formula_null, formula_test, predictor) {
   results <- lapply(unique(data$biomolecule_id), function(biomolecule_id) {
     
@@ -2116,5 +2117,6 @@ plot_bmi7_1 <- ggplot(df_pvalues_bmi7_1, aes(p_value)) +
 pdf("P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Lipidomics/Data_Analysis/Linear Regression/Combined_Pvalues_Histograms_Group7_PASCnoPASC_noBatch1Lipids.pdf", width = 12, height = 10)
 grid.arrange(plot_PAScnoPASC, plot_age7_1, plot_sex7_1, plot_bmi7_1, ncol = 2)
 dev.off()
+
 
 
