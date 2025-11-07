@@ -468,3 +468,33 @@ dbExecute(con, "DROP TABLE IF EXISTS patient_metadata")
 dbWriteTable(con, "patient_metadata", patient_metadata7, append = F, overwrite = T)
 
 dbDisconnect(con)
+
+
+## Add Columns for the date since infection and ever admitted ----
+con <- dbConnect(RSQLite::SQLite(), dbname = "P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Database/Long Covid Study DB.sqlite")
+patient_metadata <- dbGetQuery(con, "SELECT *
+           FROM patient_metadata
+           ")
+dbDisconnect(con)
+
+# load in extra metadata sheet
+extra_meta <- read_csv("data/metadata/PASC_additional_metadata.csv")
+
+
+# Extra Columns
+patient_metadata8 <- patient_metadata %>%
+  left_join(extra_meta %>%
+              select(Sample, delta_time_infection_enrollment, ever_admitted, Ethnicity) %>%
+              mutate(Sample = as.character(Sample)),
+            by = "Sample")
+
+
+con <- dbConnect(RSQLite::SQLite(), dbname = "P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Database/Long Covid Study DB.sqlite")
+
+# drop old patient metadata table before adding new one
+dbExecute(con, "DROP TABLE IF EXISTS patient_metadata")
+
+# Write the new patient_metadata table to the database
+dbWriteTable(con, "patient_metadata", patient_metadata8, append = F, overwrite = T)
+
+dbDisconnect(con)

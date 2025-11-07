@@ -1,0 +1,4779 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1761.557860" height="1716.830343"
+xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg"
+xmlns:xlink="http://www.w3.org/1999/xlink"
+>
+<metadata id="metadata7">image/svg+xml</metadata>
+
+
+
+<rect
+width="441.597293"
+height="361.180766"
+rx="20.000000"
+ry="20.000000"
+x="100.000000"
+y="285.559808"
+id="cytosol"
+style="fill:white;fill-opacity:1.000000;stroke:black;stroke-width:6.000000;stroke-opacity:1.000000" />
+
+
+<text
+x="320.798647"
+y="277.559808"
+id="cytosol"
+style="font-size:28.800000px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+cytosol</text>
+
+
+
+<path
+d="M 981.872782166091 570.877402682473 981.872782166091 703.377402682473 989.872782166091 711.377402682473 1054.87278216609 711.377402682473 1062.87278216609 703.377402682473 1062.87278216609 570.877402682473 1054.87278216609 562.877402682473 989.872782166091 562.877402682473 Z"
+id="Complex_a7be542427beccd11754a2824656a71a"
+style="fill:white;fill-opacity:0.600000;stroke-width:3.000000;stroke:black;stroke-opacity:1.000000"
+transform = "rotate(0.000000 0.000000 0.000000)"
+/>
+
+
+<text
+x="1022.372782"
+y="554.877403"
+id="Complex_a7be542427beccd11754a2824656a71a"
+style="font-size:19.800000px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+</text>
+
+
+<path
+d="M 1232.35528755264 350.800092318965 1232.35528755264 434.550092318965 1240.35528755264 442.550092318965 1305.35528755264 442.550092318965 1313.35528755264 434.550092318965 1313.35528755264 350.800092318965 1305.35528755264 342.800092318965 1240.35528755264 342.800092318965 Z"
+id="Complex_8a6dbdf718a6f79ded3f367e85ae7dbd"
+style="fill:white;fill-opacity:0.600000;stroke-width:3.000000;stroke:black;stroke-opacity:1.000000"
+transform = "rotate(0.000000 0.000000 0.000000)"
+/>
+
+
+<text
+x="1272.855288"
+y="334.800092"
+id="Complex_8a6dbdf718a6f79ded3f367e85ae7dbd"
+style="font-size:19.800000px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+</text>
+
+
+<path
+d="M 1298.05144847353 1134.58344335685 1298.05144847353 1218.33344335685 1306.05144847353 1226.33344335685 1371.05144847353 1226.33344335685 1379.05144847353 1218.33344335685 1379.05144847353 1134.58344335685 1371.05144847353 1126.58344335685 1306.05144847353 1126.58344335685 Z"
+id="Complex_7109c4d0e8a5a433e55812beb7c7e229"
+style="fill:white;fill-opacity:0.600000;stroke-width:3.000000;stroke:black;stroke-opacity:1.000000"
+transform = "rotate(0.000000 0.000000 0.000000)"
+/>
+
+
+<text
+x="1338.551448"
+y="1118.583443"
+id="Complex_7109c4d0e8a5a433e55812beb7c7e229"
+style="font-size:19.800000px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+</text>
+
+
+<path
+d="M 320.311083025194 1003.46784668953 320.311083025194 1087.21784668953 328.311083025194 1095.21784668953 472.061083025194 1095.21784668953 480.061083025194 1087.21784668953 480.061083025194 1003.46784668953 472.061083025194 995.467846689534 328.311083025194 995.467846689534 Z"
+id="Complex_a8d29a707573fd0639d5b84f1283de6c"
+style="fill:white;fill-opacity:0.600000;stroke-width:3.000000;stroke:black;stroke-opacity:1.000000"
+transform = "rotate(0.000000 0.000000 0.000000)"
+/>
+
+
+<text
+x="400.186083"
+y="987.467847"
+id="Complex_a8d29a707573fd0639d5b84f1283de6c"
+style="font-size:19.800000px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+</text>
+
+
+<path
+d="M 230.825931066392 856.493039346994 230.825931066392 940.243039346994 238.825931066392 948.243039346994 303.825931066392 948.243039346994 311.825931066392 940.243039346994 311.825931066392 856.493039346994 303.825931066392 848.493039346994 238.825931066392 848.493039346994 Z"
+id="Complex_f5e909308c0a7c7b8fffea01934be1b4"
+style="fill:white;fill-opacity:0.600000;stroke-width:3.000000;stroke:black;stroke-opacity:1.000000"
+transform = "rotate(0.000000 0.000000 0.000000)"
+/>
+
+
+<text
+x="271.325931"
+y="840.493039"
+id="Complex_f5e909308c0a7c7b8fffea01934be1b4"
+style="font-size:19.800000px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+</text>
+
+
+<path
+d="M 576.296270505394 347.292060320765 576.296270505394 431.042060320765 584.296270505394 439.042060320765 728.046270505394 439.042060320765 736.046270505394 431.042060320765 736.046270505394 347.292060320765 728.046270505394 339.292060320765 584.296270505394 339.292060320765 Z"
+id="Complex_8bc5c271607ec51667c96d5016b53b1e"
+style="fill:white;fill-opacity:0.600000;stroke-width:3.000000;stroke:black;stroke-opacity:1.000000"
+transform = "rotate(0.000000 0.000000 0.000000)"
+/>
+
+
+<text
+x="656.171271"
+y="331.292060"
+id="Complex_8bc5c271607ec51667c96d5016b53b1e"
+style="font-size:19.800000px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+</text>
+
+
+<path
+d="M 677.054254326571 713.484848579899 677.054254326571 845.984848579899 685.054254326571 853.984848579899 750.054254326571 853.984848579899 758.054254326571 845.984848579899 758.054254326571 713.484848579899 750.054254326571 705.484848579899 685.054254326571 705.484848579899 Z"
+id="Complex_a03f754e8298980dc29b09736c23ff5f"
+style="fill:white;fill-opacity:0.600000;stroke-width:3.000000;stroke:black;stroke-opacity:1.000000"
+transform = "rotate(0.000000 0.000000 0.000000)"
+/>
+
+
+<text
+x="717.554254"
+y="697.484849"
+id="Complex_a03f754e8298980dc29b09736c23ff5f"
+style="font-size:19.800000px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+</text>
+
+
+
+<rect
+width="26.666667"
+height="26.666667"
+rx="0.000000"
+ry="0.000000"
+x="994.486564"
+y="1393.190814"
+id="TransportWithBiochemicalReaction_8135510299e449f34bd3ce53835db675_LEFT_TO_RIGHT"
+style="fill:white;fill-opacity:0.600000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+
+<text
+x="1007.819898"
+y="1407.524147"
+id="TransportWithBiochemicalReaction_8135510299e449f34bd3ce53835db675_LEFT_TO_RIGHT"
+style="font-size:3.000000px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+</text>
+
+
+<rect
+width="26.666667"
+height="26.666667"
+rx="0.000000"
+ry="0.000000"
+x="644.357384"
+y="935.746547"
+id="ComplexAssembly_7773c7c205e10df7f37f9aa7fd9061e8_LEFT_TO_RIGHT"
+style="fill:white;fill-opacity:0.600000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+
+<text
+x="657.690718"
+y="950.079881"
+id="ComplexAssembly_7773c7c205e10df7f37f9aa7fd9061e8_LEFT_TO_RIGHT"
+style="font-size:3.000000px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+</text>
+
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="1195.914434"
+y="1148.791471"
+id="Protein_6a887dffef95a46421e8210bd2a55e6b"
+style="fill:#ADC4AD;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="1213.414434"
+y="1175.648614"
+id="Protein_6a887dffef95a46421e8210bd2a55e6b"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="1230.914434"
+y="1148.791471"
+id="Protein_6a887dffef95a46421e8210bd2a55e6b"
+style="fill:#ADC4AD;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="1248.414434"
+y="1175.648614"
+id="Protein_6a887dffef95a46421e8210bd2a55e6b"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+<rect
+width="70.000000"
+height="40.000000"
+rx="4.000000"
+ry="4.000000"
+x="1195.914434"
+y="1148.791471"
+id="Protein_6a887dffef95a46421e8210bd2a55e6b"
+style="fill:#ADC4AD;fill-opacity:0.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+<text
+x="1230.914434"
+y="1175.648614"
+id="Protein_6a887dffef95a46421e8210bd2a55e6b"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+MMP1</text>
+
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="1071.679018"
+y="362.320116"
+id="Protein_e7d16d8f65540c96514c9cadf797f4eb"
+style="fill:#D08B8B;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="1089.179018"
+y="389.177259"
+id="Protein_e7d16d8f65540c96514c9cadf797f4eb"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="1106.679018"
+y="362.320116"
+id="Protein_e7d16d8f65540c96514c9cadf797f4eb"
+style="fill:#D08B8B;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="1124.179018"
+y="389.177259"
+id="Protein_e7d16d8f65540c96514c9cadf797f4eb"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+<rect
+width="70.000000"
+height="40.000000"
+rx="4.000000"
+ry="4.000000"
+x="1071.679018"
+y="362.320116"
+id="Protein_e7d16d8f65540c96514c9cadf797f4eb"
+style="fill:#D08B8B;fill-opacity:0.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+<text
+x="1106.679018"
+y="389.177259"
+id="Protein_e7d16d8f65540c96514c9cadf797f4eb"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+PLAU</text>
+
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="1402.668647"
+y="1365.216841"
+id="Protein_36f72d0287ce952e1d7ded6d590f683d"
+style="fill:#ADC4AD;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="1420.168647"
+y="1392.073984"
+id="Protein_36f72d0287ce952e1d7ded6d590f683d"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="1437.668647"
+y="1365.216841"
+id="Protein_36f72d0287ce952e1d7ded6d590f683d"
+style="fill:#ADC4AD;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="1455.168647"
+y="1392.073984"
+id="Protein_36f72d0287ce952e1d7ded6d590f683d"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+<rect
+width="70.000000"
+height="40.000000"
+rx="4.000000"
+ry="4.000000"
+x="1402.668647"
+y="1365.216841"
+id="Protein_36f72d0287ce952e1d7ded6d590f683d"
+style="fill:#ADC4AD;fill-opacity:0.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+<text
+x="1437.668647"
+y="1392.073984"
+id="Protein_36f72d0287ce952e1d7ded6d590f683d"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+MMP1</text>
+
+
+<rect
+width="26.666667"
+height="26.666667"
+rx="0.000000"
+ry="0.000000"
+x="956.281000"
+y="783.846692"
+id="BiochemicalReaction_f988bac0a7eb6b3461a8b5e67c85bb8c_LEFT_TO_RIGHT"
+style="fill:white;fill-opacity:0.600000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+
+<text
+x="969.614333"
+y="798.180025"
+id="BiochemicalReaction_f988bac0a7eb6b3461a8b5e67c85bb8c_LEFT_TO_RIGHT"
+style="font-size:3.000000px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+</text>
+
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="1245.478063"
+y="1007.063673"
+id="Protein_097cf95cb8db1ff2be09fa9e20df605a"
+style="fill:#ADC4AD;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="1262.978063"
+y="1033.920816"
+id="Protein_097cf95cb8db1ff2be09fa9e20df605a"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="1280.478063"
+y="1007.063673"
+id="Protein_097cf95cb8db1ff2be09fa9e20df605a"
+style="fill:#ADC4AD;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="1297.978063"
+y="1033.920816"
+id="Protein_097cf95cb8db1ff2be09fa9e20df605a"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+<rect
+width="70.000000"
+height="40.000000"
+rx="4.000000"
+ry="4.000000"
+x="1245.478063"
+y="1007.063673"
+id="Protein_097cf95cb8db1ff2be09fa9e20df605a"
+style="fill:#ADC4AD;fill-opacity:0.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+<text
+x="1280.478063"
+y="1033.920816"
+id="Protein_097cf95cb8db1ff2be09fa9e20df605a"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+MMP1</text>
+
+
+<rect
+width="26.666667"
+height="26.666667"
+rx="0.000000"
+ry="0.000000"
+x="1091.546287"
+y="830.960547"
+id="BiochemicalReaction_92f9a82a4bc538a710c322154ad248fa_LEFT_TO_RIGHT"
+style="fill:white;fill-opacity:0.600000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+
+<text
+x="1104.879620"
+y="845.293881"
+id="BiochemicalReaction_92f9a82a4bc538a710c322154ad248fa_LEFT_TO_RIGHT"
+style="font-size:3.000000px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+</text>
+
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="967.084770"
+y="1237.457149"
+id="Protein_9b5fd63f1c2b5f66f63097c6b0832b7e"
+style="fill:#CE9090;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="984.584770"
+y="1264.314292"
+id="Protein_9b5fd63f1c2b5f66f63097c6b0832b7e"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="1002.084770"
+y="1237.457149"
+id="Protein_9b5fd63f1c2b5f66f63097c6b0832b7e"
+style="fill:#CE9090;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="1019.584770"
+y="1264.314292"
+id="Protein_9b5fd63f1c2b5f66f63097c6b0832b7e"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+<rect
+width="70.000000"
+height="40.000000"
+rx="4.000000"
+ry="4.000000"
+x="967.084770"
+y="1237.457149"
+id="Protein_9b5fd63f1c2b5f66f63097c6b0832b7e"
+style="fill:#CE9090;fill-opacity:0.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+<text
+x="1002.084770"
+y="1264.314292"
+id="Protein_9b5fd63f1c2b5f66f63097c6b0832b7e"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+pro-MMP-13</text>
+
+
+<rect
+width="26.666667"
+height="26.666667"
+rx="0.000000"
+ry="0.000000"
+x="1305.695417"
+y="1261.863810"
+id="TransportWithBiochemicalReaction_4063428e118d1a8cc48ff0cc26357d79_LEFT_TO_RIGHT"
+style="fill:white;fill-opacity:0.600000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+
+<text
+x="1319.028750"
+y="1276.197143"
+id="TransportWithBiochemicalReaction_4063428e118d1a8cc48ff0cc26357d79_LEFT_TO_RIGHT"
+style="font-size:3.000000px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+</text>
+
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="1008.435825"
+y="1526.629150"
+id="Protein_711dda0be38f315f722c20dd461876cd"
+style="fill:#CE9090;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="1025.935825"
+y="1553.486293"
+id="Protein_711dda0be38f315f722c20dd461876cd"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="1043.435825"
+y="1526.629150"
+id="Protein_711dda0be38f315f722c20dd461876cd"
+style="fill:#CE9090;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="1060.935825"
+y="1553.486293"
+id="Protein_711dda0be38f315f722c20dd461876cd"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+<rect
+width="70.000000"
+height="40.000000"
+rx="4.000000"
+ry="4.000000"
+x="1008.435825"
+y="1526.629150"
+id="Protein_711dda0be38f315f722c20dd461876cd"
+style="fill:#CE9090;fill-opacity:0.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+<text
+x="1043.435825"
+y="1553.486293"
+id="Protein_711dda0be38f315f722c20dd461876cd"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+pro-MMP-13</text>
+
+
+
+<rect
+width="70.000000"
+height="40.000000"
+rx="4.000000"
+ry="4.000000"
+x="816.294466"
+y="485.486070"
+id="Protein_50c1e9aecfa6b89bb6d758dc3c619d9b"
+style="fill:white;fill-opacity:1.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+<text
+x="851.294466"
+y="512.343212"
+id="Protein_50c1e9aecfa6b89bb6d758dc3c619d9b"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+SERPINB2</text>
+
+
+
+<ellipse
+rx="35.000000"
+ry="20.000000"
+cx="909.576208"
+cy="1206.682925"
+id="PhysicalEntity_bb50faef5a028403e1636f97ad01d449"
+style="fill:white;fill-opacity:1.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+
+<text
+x="909.576208"
+y="1192.968639"
+id="PhysicalEntity_bb50faef5a028403e1636f97ad01d449"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+Thrombus </text>
+
+
+<text
+x="909.576208"
+y="1213.540068"
+id="PhysicalEntity_bb50faef5a028403e1636f97ad01d449"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+(fibrin </text>
+
+
+<text
+x="909.576208"
+y="1234.111496"
+id="PhysicalEntity_bb50faef5a028403e1636f97ad01d449"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+clot)</text>
+
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="1100.471888"
+y="1110.147266"
+id="Protein_d4f2351c2f3c542d904d1a329ca18b56"
+style="fill:#D97070;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="1117.971888"
+y="1137.004409"
+id="Protein_d4f2351c2f3c542d904d1a329ca18b56"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="1135.471888"
+y="1110.147266"
+id="Protein_d4f2351c2f3c542d904d1a329ca18b56"
+style="fill:#D97070;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="1152.971888"
+y="1137.004409"
+id="Protein_d4f2351c2f3c542d904d1a329ca18b56"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+<rect
+width="70.000000"
+height="40.000000"
+rx="4.000000"
+ry="4.000000"
+x="1100.471888"
+y="1110.147266"
+id="Protein_d4f2351c2f3c542d904d1a329ca18b56"
+style="fill:#D97070;fill-opacity:0.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+<text
+x="1135.471888"
+y="1137.004409"
+id="Protein_d4f2351c2f3c542d904d1a329ca18b56"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+SERPINF2</text>
+
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="575.863476"
+y="1271.439523"
+id="Protein_2172e3ab76985abf78c06f04fe718590"
+style="fill:#CB9898;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="593.363476"
+y="1298.296666"
+id="Protein_2172e3ab76985abf78c06f04fe718590"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="610.863476"
+y="1271.439523"
+id="Protein_2172e3ab76985abf78c06f04fe718590"
+style="fill:#CB9898;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="628.363476"
+y="1298.296666"
+id="Protein_2172e3ab76985abf78c06f04fe718590"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+<rect
+width="70.000000"
+height="40.000000"
+rx="4.000000"
+ry="4.000000"
+x="575.863476"
+y="1271.439523"
+id="Protein_2172e3ab76985abf78c06f04fe718590"
+style="fill:#CB9898;fill-opacity:0.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+<text
+x="610.863476"
+y="1298.296666"
+id="Protein_2172e3ab76985abf78c06f04fe718590"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+FGA</text>
+
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="1598.279648"
+y="903.819973"
+id="Protein_26614d92c4d60aeb847d031e941d3ad9"
+style="fill:#DA6D6D;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="1615.779648"
+y="930.677115"
+id="Protein_26614d92c4d60aeb847d031e941d3ad9"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="1633.279648"
+y="903.819973"
+id="Protein_26614d92c4d60aeb847d031e941d3ad9"
+style="fill:#DA6D6D;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="1650.779648"
+y="930.677115"
+id="Protein_26614d92c4d60aeb847d031e941d3ad9"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+<rect
+width="70.000000"
+height="40.000000"
+rx="4.000000"
+ry="4.000000"
+x="1598.279648"
+y="903.819973"
+id="Protein_26614d92c4d60aeb847d031e941d3ad9"
+style="fill:#DA6D6D;fill-opacity:0.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+<text
+x="1633.279648"
+y="930.677115"
+id="Protein_26614d92c4d60aeb847d031e941d3ad9"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+MMP9</text>
+
+
+<rect
+width="26.666667"
+height="26.666667"
+rx="0.000000"
+ry="0.000000"
+x="547.568155"
+y="812.494038"
+id="ComplexAssembly_f68c6c732e522e41949b34ae1e5b24f7_LEFT_TO_RIGHT"
+style="fill:white;fill-opacity:0.600000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+
+<text
+x="560.901489"
+y="826.827371"
+id="ComplexAssembly_f68c6c732e522e41949b34ae1e5b24f7_LEFT_TO_RIGHT"
+style="font-size:3.000000px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+</text>
+
+
+<rect
+width="26.666667"
+height="26.666667"
+rx="0.000000"
+ry="0.000000"
+x="1388.991298"
+y="696.073145"
+id="TransportWithBiochemicalReaction_8688b7a61f4f4cc4f9b3a0d5f5034cb4_LEFT_TO_RIGHT"
+style="fill:white;fill-opacity:0.600000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+
+<text
+x="1402.324632"
+y="710.406478"
+id="TransportWithBiochemicalReaction_8688b7a61f4f4cc4f9b3a0d5f5034cb4_LEFT_TO_RIGHT"
+style="font-size:3.000000px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+</text>
+
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="668.316882"
+y="1323.297140"
+id="Protein_915f90d248cccbcf9a58a716865e1ec3"
+style="fill:#E15757;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="685.816882"
+y="1350.154283"
+id="Protein_915f90d248cccbcf9a58a716865e1ec3"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="703.316882"
+y="1323.297140"
+id="Protein_915f90d248cccbcf9a58a716865e1ec3"
+style="fill:#E15757;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="720.816882"
+y="1350.154283"
+id="Protein_915f90d248cccbcf9a58a716865e1ec3"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+<rect
+width="70.000000"
+height="40.000000"
+rx="4.000000"
+ry="4.000000"
+x="668.316882"
+y="1323.297140"
+id="Protein_915f90d248cccbcf9a58a716865e1ec3"
+style="fill:#E15757;fill-opacity:0.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+<text
+x="703.316882"
+y="1350.154283"
+id="Protein_915f90d248cccbcf9a58a716865e1ec3"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+CPB2</text>
+
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="1301.395046"
+y="793.790328"
+id="Protein_56e5330c188f306002fe7fcc83bbb212"
+style="fill:#DA6D6D;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="1318.895046"
+y="820.647470"
+id="Protein_56e5330c188f306002fe7fcc83bbb212"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="1336.395046"
+y="793.790328"
+id="Protein_56e5330c188f306002fe7fcc83bbb212"
+style="fill:#DA6D6D;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="1353.895046"
+y="820.647470"
+id="Protein_56e5330c188f306002fe7fcc83bbb212"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+<rect
+width="70.000000"
+height="40.000000"
+rx="4.000000"
+ry="4.000000"
+x="1301.395046"
+y="793.790328"
+id="Protein_56e5330c188f306002fe7fcc83bbb212"
+style="fill:#DA6D6D;fill-opacity:0.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+<text
+x="1336.395046"
+y="820.647470"
+id="Protein_56e5330c188f306002fe7fcc83bbb212"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+MMP9</text>
+
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="771.276894"
+y="1032.373414"
+id="Protein_dae0ca7fc13673fee059200699ebf552"
+style="fill:#E64A4A;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="788.776894"
+y="1059.230556"
+id="Protein_dae0ca7fc13673fee059200699ebf552"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="806.276894"
+y="1032.373414"
+id="Protein_dae0ca7fc13673fee059200699ebf552"
+style="fill:#E64A4A;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="823.776894"
+y="1059.230556"
+id="Protein_dae0ca7fc13673fee059200699ebf552"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+<rect
+width="70.000000"
+height="40.000000"
+rx="4.000000"
+ry="4.000000"
+x="771.276894"
+y="1032.373414"
+id="Protein_dae0ca7fc13673fee059200699ebf552"
+style="fill:#E64A4A;fill-opacity:0.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+<text
+x="806.276894"
+y="1059.230556"
+id="Protein_dae0ca7fc13673fee059200699ebf552"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+Fibrin</text>
+
+
+<rect
+width="26.666667"
+height="26.666667"
+rx="0.000000"
+ry="0.000000"
+x="905.863956"
+y="1031.084449"
+id="BiochemicalReaction_3caebe40c1322cf4db92eb6f9794710b_LEFT_TO_RIGHT"
+style="fill:white;fill-opacity:0.600000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+
+<text
+x="919.197289"
+y="1045.417783"
+id="BiochemicalReaction_3caebe40c1322cf4db92eb6f9794710b_LEFT_TO_RIGHT"
+style="font-size:3.000000px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+</text>
+
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="1097.662903"
+y="1190.336631"
+id="Protein_6f5867345982383fc8781d6868732f5b"
+style="fill:#CE9090;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="1115.162903"
+y="1217.193774"
+id="Protein_6f5867345982383fc8781d6868732f5b"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="1132.662903"
+y="1190.336631"
+id="Protein_6f5867345982383fc8781d6868732f5b"
+style="fill:#CE9090;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="1150.162903"
+y="1217.193774"
+id="Protein_6f5867345982383fc8781d6868732f5b"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+<rect
+width="70.000000"
+height="40.000000"
+rx="4.000000"
+ry="4.000000"
+x="1097.662903"
+y="1190.336631"
+id="Protein_6f5867345982383fc8781d6868732f5b"
+style="fill:#CE9090;fill-opacity:0.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+<text
+x="1132.662903"
+y="1217.193774"
+id="Protein_6f5867345982383fc8781d6868732f5b"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+MMP-13</text>
+
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="999.447824"
+y="932.817151"
+id="Protein_5bd032f3350fbdb3cf7e757ff28f0bfd"
+style="fill:#CC9595;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="1016.947824"
+y="959.674294"
+id="Protein_5bd032f3350fbdb3cf7e757ff28f0bfd"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="1034.447824"
+y="932.817151"
+id="Protein_5bd032f3350fbdb3cf7e757ff28f0bfd"
+style="fill:#CC9595;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="1051.947824"
+y="959.674294"
+id="Protein_5bd032f3350fbdb3cf7e757ff28f0bfd"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+<rect
+width="70.000000"
+height="40.000000"
+rx="4.000000"
+ry="4.000000"
+x="999.447824"
+y="932.817151"
+id="Protein_5bd032f3350fbdb3cf7e757ff28f0bfd"
+style="fill:#CC9595;fill-opacity:0.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+<text
+x="1034.447824"
+y="959.674294"
+id="Protein_5bd032f3350fbdb3cf7e757ff28f0bfd"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+Plasmin</text>
+
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="1518.663373"
+y="645.074088"
+id="Protein_d64a8bf8553a8e46e0cd35fd64e9b998"
+style="fill:#CC9494;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="1536.163373"
+y="671.931231"
+id="Protein_d64a8bf8553a8e46e0cd35fd64e9b998"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="1553.663373"
+y="645.074088"
+id="Protein_d64a8bf8553a8e46e0cd35fd64e9b998"
+style="fill:#CC9494;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="1571.163373"
+y="671.931231"
+id="Protein_d64a8bf8553a8e46e0cd35fd64e9b998"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+<rect
+width="70.000000"
+height="40.000000"
+rx="4.000000"
+ry="4.000000"
+x="1518.663373"
+y="645.074088"
+id="Protein_d64a8bf8553a8e46e0cd35fd64e9b998"
+style="fill:#CC9494;fill-opacity:0.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+<text
+x="1553.663373"
+y="671.931231"
+id="Protein_d64a8bf8553a8e46e0cd35fd64e9b998"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+MMP3</text>
+
+
+<rect
+width="26.666667"
+height="26.666667"
+rx="0.000000"
+ry="0.000000"
+x="1077.705485"
+y="1045.548991"
+id="ComplexAssembly_e052d1fa72439238b141482514da3382_LEFT_TO_RIGHT"
+style="fill:white;fill-opacity:0.600000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+
+<text
+x="1091.038819"
+y="1059.882325"
+id="ComplexAssembly_e052d1fa72439238b141482514da3382_LEFT_TO_RIGHT"
+style="font-size:3.000000px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+</text>
+
+
+<rect
+width="26.666667"
+height="26.666667"
+rx="0.000000"
+ry="0.000000"
+x="1103.839876"
+y="992.188936"
+id="BiochemicalReaction_6a5c5ff0a66879d6d6fd6a4b38d03761_LEFT_TO_RIGHT"
+style="fill:white;fill-opacity:0.600000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+
+<text
+x="1117.173209"
+y="1006.522270"
+id="BiochemicalReaction_6a5c5ff0a66879d6d6fd6a4b38d03761_LEFT_TO_RIGHT"
+style="font-size:3.000000px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+</text>
+
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="772.297317"
+y="943.799750"
+id="Protein_5ddcf7825d407a621924d2e728040c58"
+style="fill:#CC9595;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="789.797317"
+y="970.656893"
+id="Protein_5ddcf7825d407a621924d2e728040c58"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="807.297317"
+y="943.799750"
+id="Protein_5ddcf7825d407a621924d2e728040c58"
+style="fill:#CC9595;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="824.797317"
+y="970.656893"
+id="Protein_5ddcf7825d407a621924d2e728040c58"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+<rect
+width="70.000000"
+height="40.000000"
+rx="4.000000"
+ry="4.000000"
+x="772.297317"
+y="943.799750"
+id="Protein_5ddcf7825d407a621924d2e728040c58"
+style="fill:#CC9595;fill-opacity:0.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+<text
+x="807.297317"
+y="970.656893"
+id="Protein_5ddcf7825d407a621924d2e728040c58"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+Plasminogen</text>
+
+
+
+<ellipse
+rx="20.000000"
+ry="20.000000"
+cx="1007.372782"
+cy="588.377403"
+id="SmallMolecule_7296b13f764f383e276e6af33e91ff24_Complex_a7be542427beccd11754a2824656a71a"
+style="fill:white;fill-opacity:0.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+
+<text
+x="1007.372782"
+y="584.948831"
+id="SmallMolecule_7296b13f764f383e276e6af33e91ff24_Complex_a7be542427beccd11754a2824656a71a"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+GPI </text>
+
+
+<text
+x="1007.372782"
+y="605.520260"
+id="SmallMolecule_7296b13f764f383e276e6af33e91ff24_Complex_a7be542427beccd11754a2824656a71a"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+linker</text>
+
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="987.372782"
+y="617.127403"
+id="Protein_d0ae3ed52fe96b4aba922a6f9f737425_Complex_a7be542427beccd11754a2824656a71a"
+style="fill:#BABFBA;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="1004.872782"
+y="643.984546"
+id="Protein_d0ae3ed52fe96b4aba922a6f9f737425_Complex_a7be542427beccd11754a2824656a71a"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="1022.372782"
+y="617.127403"
+id="Protein_d0ae3ed52fe96b4aba922a6f9f737425_Complex_a7be542427beccd11754a2824656a71a"
+style="fill:#BABFBA;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="1039.872782"
+y="643.984546"
+id="Protein_d0ae3ed52fe96b4aba922a6f9f737425_Complex_a7be542427beccd11754a2824656a71a"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+<rect
+width="70.000000"
+height="40.000000"
+rx="4.000000"
+ry="4.000000"
+x="987.372782"
+y="617.127403"
+id="Protein_d0ae3ed52fe96b4aba922a6f9f737425_Complex_a7be542427beccd11754a2824656a71a"
+style="fill:#BABFBA;fill-opacity:0.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+<text
+x="1022.372782"
+y="643.984546"
+id="Protein_d0ae3ed52fe96b4aba922a6f9f737425_Complex_a7be542427beccd11754a2824656a71a"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+PLAUR</text>
+
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="987.372782"
+y="665.877403"
+id="Protein_b3d65e0a936c284860b4bf0b31414583_Complex_a7be542427beccd11754a2824656a71a"
+style="fill:#D08B8B;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="1004.872782"
+y="692.734546"
+id="Protein_b3d65e0a936c284860b4bf0b31414583_Complex_a7be542427beccd11754a2824656a71a"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="1022.372782"
+y="665.877403"
+id="Protein_b3d65e0a936c284860b4bf0b31414583_Complex_a7be542427beccd11754a2824656a71a"
+style="fill:#D08B8B;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="1039.872782"
+y="692.734546"
+id="Protein_b3d65e0a936c284860b4bf0b31414583_Complex_a7be542427beccd11754a2824656a71a"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+<rect
+width="70.000000"
+height="40.000000"
+rx="4.000000"
+ry="4.000000"
+x="987.372782"
+y="665.877403"
+id="Protein_b3d65e0a936c284860b4bf0b31414583_Complex_a7be542427beccd11754a2824656a71a"
+style="fill:#D08B8B;fill-opacity:0.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+<text
+x="1022.372782"
+y="692.734546"
+id="Protein_b3d65e0a936c284860b4bf0b31414583_Complex_a7be542427beccd11754a2824656a71a"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+PLAU</text>
+
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="1163.503004"
+y="650.971009"
+id="Protein_0087a9853f946ac4fd0b3668b54cd772"
+style="fill:#CC9494;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="1181.003004"
+y="677.828152"
+id="Protein_0087a9853f946ac4fd0b3668b54cd772"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="1198.503004"
+y="650.971009"
+id="Protein_0087a9853f946ac4fd0b3668b54cd772"
+style="fill:#CC9494;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="1216.003004"
+y="677.828152"
+id="Protein_0087a9853f946ac4fd0b3668b54cd772"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+<rect
+width="70.000000"
+height="40.000000"
+rx="4.000000"
+ry="4.000000"
+x="1163.503004"
+y="650.971009"
+id="Protein_0087a9853f946ac4fd0b3668b54cd772"
+style="fill:#CC9494;fill-opacity:0.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+<text
+x="1198.503004"
+y="677.828152"
+id="Protein_0087a9853f946ac4fd0b3668b54cd772"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+MMP3</text>
+
+
+<rect
+width="26.666667"
+height="26.666667"
+rx="0.000000"
+ry="0.000000"
+x="767.784714"
+y="596.715377"
+id="ComplexAssembly_b2c97f54c92e22cde5145ef87a2bd854_LEFT_TO_RIGHT"
+style="fill:white;fill-opacity:0.600000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+
+<text
+x="781.118047"
+y="611.048710"
+id="ComplexAssembly_b2c97f54c92e22cde5145ef87a2bd854_LEFT_TO_RIGHT"
+style="font-size:3.000000px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+</text>
+
+
+<rect
+width="26.666667"
+height="26.666667"
+rx="0.000000"
+ry="0.000000"
+x="1126.735491"
+y="900.517840"
+id="BiochemicalReaction_54f9e3e75f83fc4faa5b7413aa01fa61_LEFT_TO_RIGHT"
+style="fill:white;fill-opacity:0.600000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+
+<text
+x="1140.068824"
+y="914.851173"
+id="BiochemicalReaction_54f9e3e75f83fc4faa5b7413aa01fa61_LEFT_TO_RIGHT"
+style="font-size:3.000000px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+</text>
+
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="535.980661"
+y="745.039769"
+id="Protein_47f715a7885c5afcd43c193c5fc08646"
+style="fill:#E94040;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="553.480661"
+y="771.896911"
+id="Protein_47f715a7885c5afcd43c193c5fc08646"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="570.980661"
+y="745.039769"
+id="Protein_47f715a7885c5afcd43c193c5fc08646"
+style="fill:#E94040;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="588.480661"
+y="771.896911"
+id="Protein_47f715a7885c5afcd43c193c5fc08646"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+<rect
+width="70.000000"
+height="40.000000"
+rx="4.000000"
+ry="4.000000"
+x="535.980661"
+y="745.039769"
+id="Protein_47f715a7885c5afcd43c193c5fc08646"
+style="fill:#E94040;fill-opacity:0.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+<text
+x="570.980661"
+y="771.896911"
+id="Protein_47f715a7885c5afcd43c193c5fc08646"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+PLAT</text>
+
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="1237.855288"
+y="348.300092"
+id="Protein_b6d86a82d81f328462d85bfbf90a414b_Complex_8a6dbdf718a6f79ded3f367e85ae7dbd"
+style="fill:#BABFBA;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="1255.355288"
+y="375.157235"
+id="Protein_b6d86a82d81f328462d85bfbf90a414b_Complex_8a6dbdf718a6f79ded3f367e85ae7dbd"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="1272.855288"
+y="348.300092"
+id="Protein_b6d86a82d81f328462d85bfbf90a414b_Complex_8a6dbdf718a6f79ded3f367e85ae7dbd"
+style="fill:#BABFBA;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="1290.355288"
+y="375.157235"
+id="Protein_b6d86a82d81f328462d85bfbf90a414b_Complex_8a6dbdf718a6f79ded3f367e85ae7dbd"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+<rect
+width="70.000000"
+height="40.000000"
+rx="4.000000"
+ry="4.000000"
+x="1237.855288"
+y="348.300092"
+id="Protein_b6d86a82d81f328462d85bfbf90a414b_Complex_8a6dbdf718a6f79ded3f367e85ae7dbd"
+style="fill:#BABFBA;fill-opacity:0.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+<text
+x="1272.855288"
+y="375.157235"
+id="Protein_b6d86a82d81f328462d85bfbf90a414b_Complex_8a6dbdf718a6f79ded3f367e85ae7dbd"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+PLAUR</text>
+
+
+
+<ellipse
+rx="20.000000"
+ry="20.000000"
+cx="1257.855288"
+cy="417.050092"
+id="SmallMolecule_c7bb7ae7cd28df72ecb3f25f3072f6bb_Complex_8a6dbdf718a6f79ded3f367e85ae7dbd"
+style="fill:white;fill-opacity:0.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+
+<text
+x="1257.855288"
+y="413.621521"
+id="SmallMolecule_c7bb7ae7cd28df72ecb3f25f3072f6bb_Complex_8a6dbdf718a6f79ded3f367e85ae7dbd"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+GPI </text>
+
+
+<text
+x="1257.855288"
+y="434.192949"
+id="SmallMolecule_c7bb7ae7cd28df72ecb3f25f3072f6bb_Complex_8a6dbdf718a6f79ded3f367e85ae7dbd"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+linker</text>
+
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="1170.787374"
+y="769.444104"
+id="Protein_d708005ba372947d89754ec377ad207b"
+style="fill:#CC9494;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="1188.287374"
+y="796.301247"
+id="Protein_d708005ba372947d89754ec377ad207b"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="1205.787374"
+y="769.444104"
+id="Protein_d708005ba372947d89754ec377ad207b"
+style="fill:#CC9494;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="1223.287374"
+y="796.301247"
+id="Protein_d708005ba372947d89754ec377ad207b"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+<rect
+width="70.000000"
+height="40.000000"
+rx="4.000000"
+ry="4.000000"
+x="1170.787374"
+y="769.444104"
+id="Protein_d708005ba372947d89754ec377ad207b"
+style="fill:#CC9494;fill-opacity:0.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+<text
+x="1205.787374"
+y="796.301247"
+id="Protein_d708005ba372947d89754ec377ad207b"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+MMP3</text>
+
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="1303.551448"
+y="1132.083443"
+id="Protein_eba2c8c3d925c8814aa21553ae85592a_Complex_7109c4d0e8a5a433e55812beb7c7e229"
+style="fill:#CC9595;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="1321.051448"
+y="1158.940586"
+id="Protein_eba2c8c3d925c8814aa21553ae85592a_Complex_7109c4d0e8a5a433e55812beb7c7e229"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="1338.551448"
+y="1132.083443"
+id="Protein_eba2c8c3d925c8814aa21553ae85592a_Complex_7109c4d0e8a5a433e55812beb7c7e229"
+style="fill:#CC9595;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="1356.051448"
+y="1158.940586"
+id="Protein_eba2c8c3d925c8814aa21553ae85592a_Complex_7109c4d0e8a5a433e55812beb7c7e229"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+<rect
+width="70.000000"
+height="40.000000"
+rx="4.000000"
+ry="4.000000"
+x="1303.551448"
+y="1132.083443"
+id="Protein_eba2c8c3d925c8814aa21553ae85592a_Complex_7109c4d0e8a5a433e55812beb7c7e229"
+style="fill:#CC9595;fill-opacity:0.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+<text
+x="1338.551448"
+y="1158.940586"
+id="Protein_eba2c8c3d925c8814aa21553ae85592a_Complex_7109c4d0e8a5a433e55812beb7c7e229"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+Plasmin</text>
+
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="1303.551448"
+y="1180.833443"
+id="Protein_2aa09200d2cb43abf306f5c7df46575b_Complex_7109c4d0e8a5a433e55812beb7c7e229"
+style="fill:#D97070;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="1321.051448"
+y="1207.690586"
+id="Protein_2aa09200d2cb43abf306f5c7df46575b_Complex_7109c4d0e8a5a433e55812beb7c7e229"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="1338.551448"
+y="1180.833443"
+id="Protein_2aa09200d2cb43abf306f5c7df46575b_Complex_7109c4d0e8a5a433e55812beb7c7e229"
+style="fill:#D97070;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="1356.051448"
+y="1207.690586"
+id="Protein_2aa09200d2cb43abf306f5c7df46575b_Complex_7109c4d0e8a5a433e55812beb7c7e229"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+<rect
+width="70.000000"
+height="40.000000"
+rx="4.000000"
+ry="4.000000"
+x="1303.551448"
+y="1180.833443"
+id="Protein_2aa09200d2cb43abf306f5c7df46575b_Complex_7109c4d0e8a5a433e55812beb7c7e229"
+style="fill:#D97070;fill-opacity:0.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+<text
+x="1338.551448"
+y="1207.690586"
+id="Protein_2aa09200d2cb43abf306f5c7df46575b_Complex_7109c4d0e8a5a433e55812beb7c7e229"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+SERPINF2</text>
+
+
+<rect
+width="26.666667"
+height="26.666667"
+rx="0.000000"
+ry="0.000000"
+x="1157.884846"
+y="502.310935"
+id="ComplexAssembly_04fb3b51b052e794ab8da936024bee00_LEFT_TO_RIGHT"
+style="fill:white;fill-opacity:0.600000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+
+<text
+x="1171.218180"
+y="516.644268"
+id="ComplexAssembly_04fb3b51b052e794ab8da936024bee00_LEFT_TO_RIGHT"
+style="font-size:3.000000px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+</text>
+
+
+
+<rect
+width="70.000000"
+height="40.000000"
+rx="4.000000"
+ry="4.000000"
+x="1237.114950"
+y="896.904975"
+id="Protein_fe4f0b172e9a28e9c33bf44eedb1e9e1"
+style="fill:white;fill-opacity:1.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+<text
+x="1272.114950"
+y="923.762118"
+id="Protein_fe4f0b172e9a28e9c33bf44eedb1e9e1"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+?</text>
+
+
+<rect
+width="26.666667"
+height="26.666667"
+rx="0.000000"
+ry="0.000000"
+x="983.338849"
+y="1060.545606"
+id="BiochemicalReaction_9d4e97689f147d8cca65c9d68d5d8c63_LEFT_TO_RIGHT"
+style="fill:white;fill-opacity:0.600000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+
+<text
+x="996.672183"
+y="1074.878940"
+id="BiochemicalReaction_9d4e97689f147d8cca65c9d68d5d8c63_LEFT_TO_RIGHT"
+style="font-size:3.000000px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+</text>
+
+
+<rect
+width="26.666667"
+height="26.666667"
+rx="0.000000"
+ry="0.000000"
+x="1455.087075"
+y="894.045254"
+id="TransportWithBiochemicalReaction_754aff44869483de45727d5b9632e1af_LEFT_TO_RIGHT"
+style="fill:white;fill-opacity:0.600000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+
+<text
+x="1468.420408"
+y="908.378587"
+id="TransportWithBiochemicalReaction_754aff44869483de45727d5b9632e1af_LEFT_TO_RIGHT"
+style="font-size:3.000000px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+</text>
+
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="404.561083"
+y="1000.967847"
+id="Protein_160f33dc5d1bf645e8b3967569577428_Complex_a8d29a707573fd0639d5b84f1283de6c"
+style="fill:#C5A9A9;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="422.061083"
+y="1027.824990"
+id="Protein_160f33dc5d1bf645e8b3967569577428_Complex_a8d29a707573fd0639d5b84f1283de6c"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="439.561083"
+y="1000.967847"
+id="Protein_160f33dc5d1bf645e8b3967569577428_Complex_a8d29a707573fd0639d5b84f1283de6c"
+style="fill:#C5A9A9;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="457.061083"
+y="1027.824990"
+id="Protein_160f33dc5d1bf645e8b3967569577428_Complex_a8d29a707573fd0639d5b84f1283de6c"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+<rect
+width="70.000000"
+height="40.000000"
+rx="4.000000"
+ry="4.000000"
+x="404.561083"
+y="1000.967847"
+id="Protein_160f33dc5d1bf645e8b3967569577428_Complex_a8d29a707573fd0639d5b84f1283de6c"
+style="fill:#C5A9A9;fill-opacity:0.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+<text
+x="439.561083"
+y="1027.824990"
+id="Protein_160f33dc5d1bf645e8b3967569577428_Complex_a8d29a707573fd0639d5b84f1283de6c"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+PAI-1</text>
+
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="325.811083"
+y="1000.967847"
+id="Protein_39b689ea1c04870af2a9ecb0372cb4d8_Complex_a8d29a707573fd0639d5b84f1283de6c"
+style="fill:#D08B8B;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="343.311083"
+y="1027.824990"
+id="Protein_39b689ea1c04870af2a9ecb0372cb4d8_Complex_a8d29a707573fd0639d5b84f1283de6c"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="360.811083"
+y="1000.967847"
+id="Protein_39b689ea1c04870af2a9ecb0372cb4d8_Complex_a8d29a707573fd0639d5b84f1283de6c"
+style="fill:#D08B8B;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="378.311083"
+y="1027.824990"
+id="Protein_39b689ea1c04870af2a9ecb0372cb4d8_Complex_a8d29a707573fd0639d5b84f1283de6c"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+<rect
+width="70.000000"
+height="40.000000"
+rx="4.000000"
+ry="4.000000"
+x="325.811083"
+y="1000.967847"
+id="Protein_39b689ea1c04870af2a9ecb0372cb4d8_Complex_a8d29a707573fd0639d5b84f1283de6c"
+style="fill:#D08B8B;fill-opacity:0.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+<text
+x="360.811083"
+y="1027.824990"
+id="Protein_39b689ea1c04870af2a9ecb0372cb4d8_Complex_a8d29a707573fd0639d5b84f1283de6c"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+PLAU</text>
+
+
+
+<ellipse
+rx="20.000000"
+ry="20.000000"
+cx="424.561083"
+cy="1069.717847"
+id="SmallMolecule_1cc50474fe2a72e3d48efa744ffe5e7e_Complex_a8d29a707573fd0639d5b84f1283de6c"
+style="fill:white;fill-opacity:0.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+
+<text
+x="424.561083"
+y="1066.289275"
+id="SmallMolecule_1cc50474fe2a72e3d48efa744ffe5e7e_Complex_a8d29a707573fd0639d5b84f1283de6c"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+GPI </text>
+
+
+<text
+x="424.561083"
+y="1086.860704"
+id="SmallMolecule_1cc50474fe2a72e3d48efa744ffe5e7e_Complex_a8d29a707573fd0639d5b84f1283de6c"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+linker</text>
+
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="325.811083"
+y="1049.717847"
+id="Protein_eb912f523b3af1df03a9b35a210dd6e4_Complex_a8d29a707573fd0639d5b84f1283de6c"
+style="fill:#BABFBA;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="343.311083"
+y="1076.574990"
+id="Protein_eb912f523b3af1df03a9b35a210dd6e4_Complex_a8d29a707573fd0639d5b84f1283de6c"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="360.811083"
+y="1049.717847"
+id="Protein_eb912f523b3af1df03a9b35a210dd6e4_Complex_a8d29a707573fd0639d5b84f1283de6c"
+style="fill:#BABFBA;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="378.311083"
+y="1076.574990"
+id="Protein_eb912f523b3af1df03a9b35a210dd6e4_Complex_a8d29a707573fd0639d5b84f1283de6c"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+<rect
+width="70.000000"
+height="40.000000"
+rx="4.000000"
+ry="4.000000"
+x="325.811083"
+y="1049.717847"
+id="Protein_eb912f523b3af1df03a9b35a210dd6e4_Complex_a8d29a707573fd0639d5b84f1283de6c"
+style="fill:#BABFBA;fill-opacity:0.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+<text
+x="360.811083"
+y="1076.574990"
+id="Protein_eb912f523b3af1df03a9b35a210dd6e4_Complex_a8d29a707573fd0639d5b84f1283de6c"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+PLAUR</text>
+
+
+
+<rect
+width="70.000000"
+height="40.000000"
+rx="4.000000"
+ry="4.000000"
+x="1334.324446"
+y="933.220645"
+id="Protein_81f456e0f658f853a418a70ab87f72ec"
+style="fill:white;fill-opacity:1.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+<text
+x="1369.324446"
+y="960.077788"
+id="Protein_81f456e0f658f853a418a70ab87f72ec"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+MMP-9</text>
+
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="236.325931"
+y="853.993039"
+id="Protein_dc516f2058879385595b82e6450c6f98_Complex_f5e909308c0a7c7b8fffea01934be1b4"
+style="fill:#C5A9A9;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="253.825931"
+y="880.850182"
+id="Protein_dc516f2058879385595b82e6450c6f98_Complex_f5e909308c0a7c7b8fffea01934be1b4"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="271.325931"
+y="853.993039"
+id="Protein_dc516f2058879385595b82e6450c6f98_Complex_f5e909308c0a7c7b8fffea01934be1b4"
+style="fill:#C5A9A9;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="288.825931"
+y="880.850182"
+id="Protein_dc516f2058879385595b82e6450c6f98_Complex_f5e909308c0a7c7b8fffea01934be1b4"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+<rect
+width="70.000000"
+height="40.000000"
+rx="4.000000"
+ry="4.000000"
+x="236.325931"
+y="853.993039"
+id="Protein_dc516f2058879385595b82e6450c6f98_Complex_f5e909308c0a7c7b8fffea01934be1b4"
+style="fill:#C5A9A9;fill-opacity:0.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+<text
+x="271.325931"
+y="880.850182"
+id="Protein_dc516f2058879385595b82e6450c6f98_Complex_f5e909308c0a7c7b8fffea01934be1b4"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+PAI-1</text>
+
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="236.325931"
+y="902.743039"
+id="Protein_8fc2e90ad04e5aff26dc6cb54c92f3b6_Complex_f5e909308c0a7c7b8fffea01934be1b4"
+style="fill:#E94040;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="253.825931"
+y="929.600182"
+id="Protein_8fc2e90ad04e5aff26dc6cb54c92f3b6_Complex_f5e909308c0a7c7b8fffea01934be1b4"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="271.325931"
+y="902.743039"
+id="Protein_8fc2e90ad04e5aff26dc6cb54c92f3b6_Complex_f5e909308c0a7c7b8fffea01934be1b4"
+style="fill:#E94040;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="288.825931"
+y="929.600182"
+id="Protein_8fc2e90ad04e5aff26dc6cb54c92f3b6_Complex_f5e909308c0a7c7b8fffea01934be1b4"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+<rect
+width="70.000000"
+height="40.000000"
+rx="4.000000"
+ry="4.000000"
+x="236.325931"
+y="902.743039"
+id="Protein_8fc2e90ad04e5aff26dc6cb54c92f3b6_Complex_f5e909308c0a7c7b8fffea01934be1b4"
+style="fill:#E94040;fill-opacity:0.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+<text
+x="271.325931"
+y="929.600182"
+id="Protein_8fc2e90ad04e5aff26dc6cb54c92f3b6_Complex_f5e909308c0a7c7b8fffea01934be1b4"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+PLAT</text>
+
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="660.546271"
+y="344.792060"
+id="Protein_3bb99cd678291ee344c07f002f0e010c_Complex_8bc5c271607ec51667c96d5016b53b1e"
+style="fill:#BABFBA;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="678.046271"
+y="371.649203"
+id="Protein_3bb99cd678291ee344c07f002f0e010c_Complex_8bc5c271607ec51667c96d5016b53b1e"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="695.546271"
+y="344.792060"
+id="Protein_3bb99cd678291ee344c07f002f0e010c_Complex_8bc5c271607ec51667c96d5016b53b1e"
+style="fill:#BABFBA;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="713.046271"
+y="371.649203"
+id="Protein_3bb99cd678291ee344c07f002f0e010c_Complex_8bc5c271607ec51667c96d5016b53b1e"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+<rect
+width="70.000000"
+height="40.000000"
+rx="4.000000"
+ry="4.000000"
+x="660.546271"
+y="344.792060"
+id="Protein_3bb99cd678291ee344c07f002f0e010c_Complex_8bc5c271607ec51667c96d5016b53b1e"
+style="fill:#BABFBA;fill-opacity:0.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+<text
+x="695.546271"
+y="371.649203"
+id="Protein_3bb99cd678291ee344c07f002f0e010c_Complex_8bc5c271607ec51667c96d5016b53b1e"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+PLAUR</text>
+
+
+
+<ellipse
+rx="20.000000"
+ry="20.000000"
+cx="601.796271"
+cy="364.792060"
+id="SmallMolecule_207eeb197747567ca4e5e0ee9ebde030_Complex_8bc5c271607ec51667c96d5016b53b1e"
+style="fill:white;fill-opacity:0.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+
+<text
+x="601.796271"
+y="361.363489"
+id="SmallMolecule_207eeb197747567ca4e5e0ee9ebde030_Complex_8bc5c271607ec51667c96d5016b53b1e"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+GPI </text>
+
+
+<text
+x="601.796271"
+y="381.934917"
+id="SmallMolecule_207eeb197747567ca4e5e0ee9ebde030_Complex_8bc5c271607ec51667c96d5016b53b1e"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+linker</text>
+
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="660.546271"
+y="393.542060"
+id="Protein_141638a9294311a205032dbefa625e6d_Complex_8bc5c271607ec51667c96d5016b53b1e"
+style="fill:#D08B8B;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="678.046271"
+y="420.399203"
+id="Protein_141638a9294311a205032dbefa625e6d_Complex_8bc5c271607ec51667c96d5016b53b1e"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="695.546271"
+y="393.542060"
+id="Protein_141638a9294311a205032dbefa625e6d_Complex_8bc5c271607ec51667c96d5016b53b1e"
+style="fill:#D08B8B;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="713.046271"
+y="420.399203"
+id="Protein_141638a9294311a205032dbefa625e6d_Complex_8bc5c271607ec51667c96d5016b53b1e"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+<rect
+width="70.000000"
+height="40.000000"
+rx="4.000000"
+ry="4.000000"
+x="660.546271"
+y="393.542060"
+id="Protein_141638a9294311a205032dbefa625e6d_Complex_8bc5c271607ec51667c96d5016b53b1e"
+style="fill:#D08B8B;fill-opacity:0.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+<text
+x="695.546271"
+y="420.399203"
+id="Protein_141638a9294311a205032dbefa625e6d_Complex_8bc5c271607ec51667c96d5016b53b1e"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+PLAU</text>
+
+
+
+<rect
+width="70.000000"
+height="40.000000"
+rx="4.000000"
+ry="4.000000"
+x="581.796271"
+y="393.542060"
+id="Protein_f2f65409335e2f83d9d3bf77411961ce_Complex_8bc5c271607ec51667c96d5016b53b1e"
+style="fill:white;fill-opacity:1.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+<text
+x="616.796271"
+y="420.399203"
+id="Protein_f2f65409335e2f83d9d3bf77411961ce_Complex_8bc5c271607ec51667c96d5016b53b1e"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+SERPINB2</text>
+
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="528.573237"
+y="869.306602"
+id="Protein_cad24d57581b554ab2bb173d2f68950b"
+style="fill:#C5A9A9;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="546.073237"
+y="896.163745"
+id="Protein_cad24d57581b554ab2bb173d2f68950b"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="563.573237"
+y="869.306602"
+id="Protein_cad24d57581b554ab2bb173d2f68950b"
+style="fill:#C5A9A9;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="581.073237"
+y="896.163745"
+id="Protein_cad24d57581b554ab2bb173d2f68950b"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+<rect
+width="70.000000"
+height="40.000000"
+rx="4.000000"
+ry="4.000000"
+x="528.573237"
+y="869.306602"
+id="Protein_cad24d57581b554ab2bb173d2f68950b"
+style="fill:#C5A9A9;fill-opacity:0.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+<text
+x="563.573237"
+y="896.163745"
+id="Protein_cad24d57581b554ab2bb173d2f68950b"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+PAI-1</text>
+
+
+
+<ellipse
+rx="20.000000"
+ry="20.000000"
+cx="702.554254"
+cy="730.984849"
+id="SmallMolecule_18d1b620ae1a996ef43c31e27864be32_Complex_a03f754e8298980dc29b09736c23ff5f"
+style="fill:white;fill-opacity:0.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+
+<text
+x="702.554254"
+y="727.556277"
+id="SmallMolecule_18d1b620ae1a996ef43c31e27864be32_Complex_a03f754e8298980dc29b09736c23ff5f"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+GPI </text>
+
+
+<text
+x="702.554254"
+y="748.127706"
+id="SmallMolecule_18d1b620ae1a996ef43c31e27864be32_Complex_a03f754e8298980dc29b09736c23ff5f"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+linker</text>
+
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="682.554254"
+y="759.734849"
+id="Protein_3190997c83460f6f1db9386bd5515e09_Complex_a03f754e8298980dc29b09736c23ff5f"
+style="fill:#BABFBA;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="700.054254"
+y="786.591991"
+id="Protein_3190997c83460f6f1db9386bd5515e09_Complex_a03f754e8298980dc29b09736c23ff5f"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="717.554254"
+y="759.734849"
+id="Protein_3190997c83460f6f1db9386bd5515e09_Complex_a03f754e8298980dc29b09736c23ff5f"
+style="fill:#BABFBA;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="735.054254"
+y="786.591991"
+id="Protein_3190997c83460f6f1db9386bd5515e09_Complex_a03f754e8298980dc29b09736c23ff5f"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+<rect
+width="70.000000"
+height="40.000000"
+rx="4.000000"
+ry="4.000000"
+x="682.554254"
+y="759.734849"
+id="Protein_3190997c83460f6f1db9386bd5515e09_Complex_a03f754e8298980dc29b09736c23ff5f"
+style="fill:#BABFBA;fill-opacity:0.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+<text
+x="717.554254"
+y="786.591991"
+id="Protein_3190997c83460f6f1db9386bd5515e09_Complex_a03f754e8298980dc29b09736c23ff5f"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+PLAUR</text>
+
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="682.554254"
+y="808.484849"
+id="Protein_73266807bb545839d3db2361120adbc2_Complex_a03f754e8298980dc29b09736c23ff5f"
+style="fill:#D08B8B;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="700.054254"
+y="835.341991"
+id="Protein_73266807bb545839d3db2361120adbc2_Complex_a03f754e8298980dc29b09736c23ff5f"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="717.554254"
+y="808.484849"
+id="Protein_73266807bb545839d3db2361120adbc2_Complex_a03f754e8298980dc29b09736c23ff5f"
+style="fill:#D08B8B;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="735.054254"
+y="835.341991"
+id="Protein_73266807bb545839d3db2361120adbc2_Complex_a03f754e8298980dc29b09736c23ff5f"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+<rect
+width="70.000000"
+height="40.000000"
+rx="4.000000"
+ry="4.000000"
+x="682.554254"
+y="808.484849"
+id="Protein_73266807bb545839d3db2361120adbc2_Complex_a03f754e8298980dc29b09736c23ff5f"
+style="fill:#D08B8B;fill-opacity:0.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+<text
+x="717.554254"
+y="835.341991"
+id="Protein_73266807bb545839d3db2361120adbc2_Complex_a03f754e8298980dc29b09736c23ff5f"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+PLAU</text>
+
+
+<rect
+width="26.666667"
+height="26.666667"
+rx="0.000000"
+ry="0.000000"
+x="845.628716"
+y="887.152646"
+id="BiochemicalReaction_f58be1515c21f9ec1bd1f66b09f60d7b_LEFT_TO_RIGHT"
+style="fill:white;fill-opacity:0.600000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+
+<text
+x="858.962049"
+y="901.485979"
+id="BiochemicalReaction_f58be1515c21f9ec1bd1f66b09f60d7b_LEFT_TO_RIGHT"
+style="font-size:3.000000px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+</text>
+
+
+<rect
+width="26.666667"
+height="26.666667"
+rx="0.000000"
+ry="0.000000"
+x="683.269965"
+y="1171.865929"
+id="BiochemicalReaction_49cd759d0933348b73fee9705bcfb612_LEFT_TO_RIGHT"
+style="fill:white;fill-opacity:0.600000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+
+<text
+x="696.603299"
+y="1186.199262"
+id="BiochemicalReaction_49cd759d0933348b73fee9705bcfb612_LEFT_TO_RIGHT"
+style="font-size:3.000000px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+</text>
+
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="375.965251"
+y="515.329969"
+id="Protein_ca5a15f8ac2559544b17a97ccfdda35e"
+style="fill:#E94040;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="393.465251"
+y="542.187111"
+id="Protein_ca5a15f8ac2559544b17a97ccfdda35e"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="410.965251"
+y="515.329969"
+id="Protein_ca5a15f8ac2559544b17a97ccfdda35e"
+style="fill:#E94040;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="428.465251"
+y="542.187111"
+id="Protein_ca5a15f8ac2559544b17a97ccfdda35e"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+<rect
+width="70.000000"
+height="40.000000"
+rx="4.000000"
+ry="4.000000"
+x="375.965251"
+y="515.329969"
+id="Protein_ca5a15f8ac2559544b17a97ccfdda35e"
+style="fill:#E94040;fill-opacity:0.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+<text
+x="410.965251"
+y="542.187111"
+id="Protein_ca5a15f8ac2559544b17a97ccfdda35e"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+PLAT</text>
+
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="200.698339"
+y="296.559808"
+id="Protein_26a326cf9ebc6feee1df845c1369dbcb"
+style="fill:#E94040;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="218.198339"
+y="323.416950"
+id="Protein_26a326cf9ebc6feee1df845c1369dbcb"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+
+<rect
+width="35.000000"
+height="40.000000"
+rx="3.500000"
+ry="3.500000"
+x="235.698339"
+y="296.559808"
+id="Protein_26a326cf9ebc6feee1df845c1369dbcb"
+style="fill:#E94040;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.500000" />
+
+
+<text
+x="253.198339"
+y="323.416950"
+id="Protein_26a326cf9ebc6feee1df845c1369dbcb"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+ </text>
+
+
+<rect
+width="70.000000"
+height="40.000000"
+rx="4.000000"
+ry="4.000000"
+x="200.698339"
+y="296.559808"
+id="Protein_26a326cf9ebc6feee1df845c1369dbcb"
+style="fill:#E94040;fill-opacity:0.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+<text
+x="235.698339"
+y="323.416950"
+id="Protein_26a326cf9ebc6feee1df845c1369dbcb"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+PLAT</text>
+
+
+
+<rect
+width="70.000000"
+height="40.000000"
+rx="4.000000"
+ry="4.000000"
+x="111.000000"
+y="433.737732"
+id="Protein_352fe45ab4c1add49794c632ff5a6550"
+style="fill:white;fill-opacity:1.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+<text
+x="146.000000"
+y="460.594875"
+id="Protein_352fe45ab4c1add49794c632ff5a6550"
+style="font-size:20.571429px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+?</text>
+
+
+<rect
+width="26.666667"
+height="26.666667"
+rx="0.000000"
+ry="0.000000"
+x="250.988011"
+y="433.734825"
+id="BiochemicalReaction_e8e15ce984a660b3a0c0976768feb387_LEFT_TO_RIGHT"
+style="fill:white;fill-opacity:0.600000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+
+<text
+x="264.321344"
+y="448.068158"
+id="BiochemicalReaction_e8e15ce984a660b3a0c0976768feb387_LEFT_TO_RIGHT"
+style="font-size:3.000000px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+</text>
+
+
+<rect
+width="26.666667"
+height="26.666667"
+rx="0.000000"
+ry="0.000000"
+x="503.930627"
+y="609.073907"
+id="TransportWithBiochemicalReaction_f89161facfeb9efdf96ca61189e40ec9_LEFT_TO_RIGHT"
+style="fill:white;fill-opacity:0.600000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+
+<text
+x="517.263960"
+y="623.407240"
+id="TransportWithBiochemicalReaction_f89161facfeb9efdf96ca61189e40ec9_LEFT_TO_RIGHT"
+style="font-size:3.000000px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+</text>
+
+
+
+<rect
+width="321.655930"
+height="35.739548"
+rx="3.573955"
+ry="3.573955"
+x="20.000000"
+y="1596.629150"
+id="stamp"
+style="fill:white;fill-opacity:1.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+<text
+x="180.827965"
+y="1621.646834"
+id="stamp"
+style="font-size:21.443729px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+SBGNhub Pathway Collection</text>
+
+
+
+
+<line
+x1="1214" y1="462.73184276075" x2="1232" y2="441.73184276075"
+id="Complex_8a6dbdf718a6f79ded3f367e85ae7dbd--to--ComplexAssembly_04fb3b51b052e794ab8da936024bee00_LEFT_TO_RIGHT:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M1232.000000 441.73184276075 C 1214.000000 462.73184276075, 1194.000000 486.73184276075,1182.000000 501.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="1194" y1="486.73184276075" x2="1182" y2="501.73184276075"
+id="Complex_8a6dbdf718a6f79ded3f367e85ae7dbd--to--ComplexAssembly_04fb3b51b052e794ab8da936024bee00_LEFT_TO_RIGHT:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+
+<line
+x1="1030" y1="1496.73184276075" x2="1038" y2="1525.73184276075"
+id="Protein_711dda0be38f315f722c20dd461876cd--to--TransportWithBiochemicalReaction_8135510299e449f34bd3ce53835db675_LEFT_TO_RIGHT:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M1011.000000 1419.73184276075 C 1017.000000 1444.73184276075, 1030.000000 1496.73184276075,1038.000000 1525.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="1017" y1="1444.73184276075" x2="1011" y2="1419.73184276075"
+id="Protein_711dda0be38f315f722c20dd461876cd--to--TransportWithBiochemicalReaction_8135510299e449f34bd3ce53835db675_LEFT_TO_RIGHT:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+
+<line
+x1="1000" y1="1198.73184276075" x2="1001" y2="1236.73184276075"
+id="Protein_9b5fd63f1c2b5f66f63097c6b0832b7e--to--BiochemicalReaction_9d4e97689f147d8cca65c9d68d5d8c63_LEFT_TO_RIGHT:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M1001.000000 1236.73184276075 C 1000.000000 1198.73184276075, 998.000000 1118.73184276075,997.000000 1086.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="998" y1="1118.73184276075" x2="997" y2="1086.73184276075"
+id="Protein_9b5fd63f1c2b5f66f63097c6b0832b7e--to--BiochemicalReaction_9d4e97689f147d8cca65c9d68d5d8c63_LEFT_TO_RIGHT:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+
+<line
+x1="767" y1="1099.73184276075" x2="789" y2="1071.73184276075"
+id="Protein_dae0ca7fc13673fee059200699ebf552--to--BiochemicalReaction_49cd759d0933348b73fee9705bcfb612_LEFT_TO_RIGHT:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M789.000000 1071.73184276075 C 767.000000 1099.73184276075, 727.000000 1147.73184276075,708.000000 1170.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="727" y1="1147.73184276075" x2="708" y2="1170.73184276075"
+id="Protein_dae0ca7fc13673fee059200699ebf552--to--BiochemicalReaction_49cd759d0933348b73fee9705bcfb612_LEFT_TO_RIGHT:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+
+<line
+x1="1171" y1="923.73184276075" x2="1153" y2="917.73184276075"
+id="BiochemicalReaction_54f9e3e75f83fc4faa5b7413aa01fa61_LEFT_TO_RIGHT--to--Protein_81f456e0f658f853a418a70ab87f72ec:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M1153.000000 917.73184276075 C 1171.000000 923.73184276075, 1204.000000 933.73184276075,1233.000000 939.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+<path d="M1233.000000 939.73184276075 C 1267.000000 945.73184276075, 1306.000000 949.73184276075,1334.000000 950.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="1306" y1="949.73184276075" x2="1334" y2="950.73184276075"
+id="BiochemicalReaction_54f9e3e75f83fc4faa5b7413aa01fa61_LEFT_TO_RIGHT--to--Protein_81f456e0f658f853a418a70ab87f72ec:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+<polygon
+points = "1334,950.73184276075 1322,944.73184276075 1322,956.73184276075"
+id="line"
+style="fill:black; stroke:black; stroke-opacity:1; stroke-width:1.000000"
+transform = "rotate(2.045408 1334.000000 950.731843)"
+/>
+
+
+
+<line
+x1="1056" y1="993.73184276075" x2="1045" y2="972.73184276075"
+id="Protein_5bd032f3350fbdb3cf7e757ff28f0bfd--to--ComplexAssembly_e052d1fa72439238b141482514da3382_LEFT_TO_RIGHT:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M1045.000000 972.73184276075 C 1056.000000 993.73184276075, 1074.000000 1026.73184276075,1083.000000 1044.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="1074" y1="1026.73184276075" x2="1083" y2="1044.73184276075"
+id="Protein_5bd032f3350fbdb3cf7e757ff28f0bfd--to--ComplexAssembly_e052d1fa72439238b141482514da3382_LEFT_TO_RIGHT:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+
+<line
+x1="988" y1="738.73184276075" x2="997" y2="711.73184276075"
+id="Complex_a7be542427beccd11754a2824656a71a--to--BiochemicalReaction_f988bac0a7eb6b3461a8b5e67c85bb8c_LEFT_TO_RIGHT:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M974.000000 782.73184276075 C 979.000000 766.73184276075, 988.000000 738.73184276075,997.000000 711.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="979" y1="766.73184276075" x2="974" y2="782.73184276075"
+id="Complex_a7be542427beccd11754a2824656a71a--to--BiochemicalReaction_f988bac0a7eb6b3461a8b5e67c85bb8c_LEFT_TO_RIGHT:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+
+<line
+x1="234" y1="448.73184276075" x2="250" y2="447.73184276075"
+id="BiochemicalReaction_e8e15ce984a660b3a0c0976768feb387_LEFT_TO_RIGHT--to--Protein_352fe45ab4c1add49794c632ff5a6550:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M181.000000 451.73184276075 C 204.000000 449.73184276075, 234.000000 448.73184276075,250.000000 447.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="204" y1="449.73184276075" x2="181" y2="451.73184276075"
+id="BiochemicalReaction_e8e15ce984a660b3a0c0976768feb387_LEFT_TO_RIGHT--to--Protein_352fe45ab4c1add49794c632ff5a6550:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+<polygon
+points = "181,451.73184276075 169,445.73184276075 169,457.73184276075"
+id="line"
+style="fill:black; stroke:black; stroke-opacity:1; stroke-width:1.000000"
+transform = "rotate(175.030259 181.000000 451.731843)"
+/>
+
+
+
+<line
+x1="456" y1="572.73184276075" x2="435" y2="554.73184276075"
+id="Protein_ca5a15f8ac2559544b17a97ccfdda35e--to--TransportWithBiochemicalReaction_f89161facfeb9efdf96ca61189e40ec9_LEFT_TO_RIGHT:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M435.000000 554.73184276075 C 456.000000 572.73184276075, 486.000000 596.73184276075,503.000000 610.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="486" y1="596.73184276075" x2="503" y2="610.73184276075"
+id="Protein_ca5a15f8ac2559544b17a97ccfdda35e--to--TransportWithBiochemicalReaction_f89161facfeb9efdf96ca61189e40ec9_LEFT_TO_RIGHT:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+
+<line
+x1="1257" y1="853.73184276075" x2="1301" y2="830.73184276075"
+id="Protein_56e5330c188f306002fe7fcc83bbb212--to--BiochemicalReaction_54f9e3e75f83fc4faa5b7413aa01fa61_LEFT_TO_RIGHT:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M1301.000000 830.73184276075 C 1257.000000 853.73184276075, 1184.000000 890.73184276075,1153.000000 906.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="1184" y1="890.73184276075" x2="1153" y2="906.73184276075"
+id="Protein_56e5330c188f306002fe7fcc83bbb212--to--BiochemicalReaction_54f9e3e75f83fc4faa5b7413aa01fa61_LEFT_TO_RIGHT:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+
+<line
+x1="566" y1="793.73184276075" x2="567" y2="784.73184276075"
+id="Protein_47f715a7885c5afcd43c193c5fc08646--to--ComplexAssembly_f68c6c732e522e41949b34ae1e5b24f7_LEFT_TO_RIGHT:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M563.000000 811.73184276075 C 564.000000 803.73184276075, 566.000000 793.73184276075,567.000000 784.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="564" y1="803.73184276075" x2="563" y2="811.73184276075"
+id="Protein_47f715a7885c5afcd43c193c5fc08646--to--ComplexAssembly_f68c6c732e522e41949b34ae1e5b24f7_LEFT_TO_RIGHT:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+
+<line
+x1="1115" y1="1097.73184276075" x2="1122" y2="1109.73184276075"
+id="Protein_d4f2351c2f3c542d904d1a329ca18b56--to--ComplexAssembly_e052d1fa72439238b141482514da3382_LEFT_TO_RIGHT:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M1122.000000 1109.73184276075 C 1115.000000 1097.73184276075, 1106.000000 1082.73184276075,1099.000000 1071.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="1106" y1="1082.73184276075" x2="1099" y2="1071.73184276075"
+id="Protein_d4f2351c2f3c542d904d1a329ca18b56--to--ComplexAssembly_e052d1fa72439238b141482514da3382_LEFT_TO_RIGHT:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+
+<line
+x1="985" y1="990.73184276075" x2="1009" y2="972.73184276075"
+id="Protein_5bd032f3350fbdb3cf7e757ff28f0bfd--to--BiochemicalReaction_3caebe40c1322cf4db92eb6f9794710b_LEFT_TO_RIGHT:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M932.000000 1032.73184276075 C 951.000000 1017.73184276075, 985.000000 990.73184276075,1009.000000 972.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="951" y1="1017.73184276075" x2="932" y2="1032.73184276075"
+id="Protein_5bd032f3350fbdb3cf7e757ff28f0bfd--to--BiochemicalReaction_3caebe40c1322cf4db92eb6f9794710b_LEFT_TO_RIGHT:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+<ellipse
+rx="6.000000"
+ry="6.000000"
+cx="936.709297"
+cy="1029.013977"
+id="Protein_5bd032f3350fbdb3cf7e757ff28f0bfd--to--BiochemicalReaction_3caebe40c1322cf4db92eb6f9794710b_LEFT_TO_RIGHT:target.arc"
+style="fill:white;fill-opacity:1.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+
+<line
+x1="1433" y1="882.73184276075" x2="1455" y2="897.73184276075"
+id="TransportWithBiochemicalReaction_754aff44869483de45727d5b9632e1af_LEFT_TO_RIGHT--to--Protein_56e5330c188f306002fe7fcc83bbb212:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M1364.000000 833.73184276075 C 1392.000000 852.73184276075, 1433.000000 882.73184276075,1455.000000 897.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="1392" y1="852.73184276075" x2="1364" y2="833.73184276075"
+id="TransportWithBiochemicalReaction_754aff44869483de45727d5b9632e1af_LEFT_TO_RIGHT--to--Protein_56e5330c188f306002fe7fcc83bbb212:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+<polygon
+points = "1364,833.73184276075 1352,827.73184276075 1352,839.73184276075"
+id="line"
+style="fill:black; stroke:black; stroke-opacity:1; stroke-width:1.000000"
+transform = "rotate(214.159695 1364.000000 833.731843)"
+/>
+
+
+
+<line
+x1="1061" y1="910.73184276075" x2="1047" y2="931.73184276075"
+id="Protein_5bd032f3350fbdb3cf7e757ff28f0bfd--to--BiochemicalReaction_92f9a82a4bc538a710c322154ad248fa_LEFT_TO_RIGHT:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M1095.000000 857.73184276075 C 1083.000000 876.73184276075, 1061.000000 910.73184276075,1047.000000 931.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="1083" y1="876.73184276075" x2="1095" y2="857.73184276075"
+id="Protein_5bd032f3350fbdb3cf7e757ff28f0bfd--to--BiochemicalReaction_92f9a82a4bc538a710c322154ad248fa_LEFT_TO_RIGHT:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+<ellipse
+rx="6.000000"
+ry="6.000000"
+cx="1091.796042"
+cy="862.804776"
+id="Protein_5bd032f3350fbdb3cf7e757ff28f0bfd--to--BiochemicalReaction_92f9a82a4bc538a710c322154ad248fa_LEFT_TO_RIGHT:target.arc"
+style="fill:white;fill-opacity:1.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+
+<line
+x1="919" y1="792.73184276075" x2="956" y2="795.73184276075"
+id="BiochemicalReaction_f988bac0a7eb6b3461a8b5e67c85bb8c_LEFT_TO_RIGHT--to--Complex_a03f754e8298980dc29b09736c23ff5f:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M956.000000 795.73184276075 C 919.000000 792.73184276075, 815.000000 785.73184276075,757.000000 781.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="815" y1="785.73184276075" x2="757" y2="781.73184276075"
+id="BiochemicalReaction_f988bac0a7eb6b3461a8b5e67c85bb8c_LEFT_TO_RIGHT--to--Complex_a03f754e8298980dc29b09736c23ff5f:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+<polygon
+points = "757,781.73184276075 745,775.73184276075 745,787.73184276075"
+id="line"
+style="fill:black; stroke:black; stroke-opacity:1; stroke-width:1.000000"
+transform = "rotate(183.945186 757.000000 781.731843)"
+/>
+
+
+
+<line
+x1="831" y1="933.73184276075" x2="823" y2="943.73184276075"
+id="Protein_5ddcf7825d407a621924d2e728040c58--to--BiochemicalReaction_f58be1515c21f9ec1bd1f66b09f60d7b_LEFT_TO_RIGHT:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M823.000000 943.73184276075 C 831.000000 933.73184276075, 840.000000 921.73184276075,847.000000 913.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="840" y1="921.73184276075" x2="847" y2="913.73184276075"
+id="Protein_5ddcf7825d407a621924d2e728040c58--to--BiochemicalReaction_f58be1515c21f9ec1bd1f66b09f60d7b_LEFT_TO_RIGHT:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+
+<line
+x1="701" y1="1289.73184276075" x2="702" y2="1322.73184276075"
+id="Protein_915f90d248cccbcf9a58a716865e1ec3--to--BiochemicalReaction_49cd759d0933348b73fee9705bcfb612_LEFT_TO_RIGHT:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M702.000000 1322.73184276075 C 701.000000 1289.73184276075, 698.000000 1226.73184276075,697.000000 1198.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<path
+d="M 698 1198.73184276075 702 1198.73184276075"
+id="Protein_915f90d248cccbcf9a58a716865e1ec3--to--BiochemicalReaction_49cd759d0933348b73fee9705bcfb612_LEFT_TO_RIGHT:target.arc"
+style="fill:black;fill-opacity:1.000000;stroke-width:1.000000;stroke:black;stroke-opacity:1.000000"
+transform = "rotate(87.954592 697.000000 1198.731843)"
+/>
+
+
+<path
+d="M 702 1189.73184276075 702 1207.73184276075"
+id="Protein_915f90d248cccbcf9a58a716865e1ec3--to--BiochemicalReaction_49cd759d0933348b73fee9705bcfb612_LEFT_TO_RIGHT:target.arc"
+style="fill:black;fill-opacity:1.000000;stroke-width:1.000000;stroke:black;stroke-opacity:1.000000"
+transform = "rotate(87.954592 697.000000 1198.731843)"
+/>
+
+
+
+<line
+x1="246" y1="362.73184276075" x2="240" y2="335.73184276075"
+id="Protein_26a326cf9ebc6feee1df845c1369dbcb--to--BiochemicalReaction_e8e15ce984a660b3a0c0976768feb387_LEFT_TO_RIGHT:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M240.000000 335.73184276075 C 246.000000 362.73184276075, 256.000000 409.73184276075,261.000000 432.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="256" y1="409.73184276075" x2="261" y2="432.73184276075"
+id="Protein_26a326cf9ebc6feee1df845c1369dbcb--to--BiochemicalReaction_e8e15ce984a660b3a0c0976768feb387_LEFT_TO_RIGHT:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+
+<line
+x1="1079" y1="980.73184276075" x2="1066" y2="972.73184276075"
+id="Protein_5bd032f3350fbdb3cf7e757ff28f0bfd--to--BiochemicalReaction_6a5c5ff0a66879d6d6fd6a4b38d03761_LEFT_TO_RIGHT:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M1066.000000 972.73184276075 C 1079.000000 980.73184276075, 1093.000000 989.73184276075,1103.000000 996.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="1093" y1="989.73184276075" x2="1103" y2="996.73184276075"
+id="Protein_5bd032f3350fbdb3cf7e757ff28f0bfd--to--BiochemicalReaction_6a5c5ff0a66879d6d6fd6a4b38d03761_LEFT_TO_RIGHT:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+<ellipse
+rx="6.000000"
+ry="6.000000"
+cx="1098.084608"
+cy="993.291069"
+id="Protein_5bd032f3350fbdb3cf7e757ff28f0bfd--to--BiochemicalReaction_6a5c5ff0a66879d6d6fd6a4b38d03761_LEFT_TO_RIGHT:target.arc"
+style="fill:white;fill-opacity:1.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+
+<line
+x1="1193" y1="1114.73184276075" x2="1216" y2="1148.73184276075"
+id="Protein_6a887dffef95a46421e8210bd2a55e6b--to--BiochemicalReaction_6a5c5ff0a66879d6d6fd6a4b38d03761_LEFT_TO_RIGHT:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M1216.000000 1148.73184276075 C 1193.000000 1114.73184276075, 1146.000000 1047.73184276075,1126.000000 1018.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="1146" y1="1047.73184276075" x2="1126" y2="1018.73184276075"
+id="Protein_6a887dffef95a46421e8210bd2a55e6b--to--BiochemicalReaction_6a5c5ff0a66879d6d6fd6a4b38d03761_LEFT_TO_RIGHT:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+
+<line
+x1="757" y1="673.73184276075" x2="745" y2="704.73184276075"
+id="Complex_a03f754e8298980dc29b09736c23ff5f--to--ComplexAssembly_b2c97f54c92e22cde5145ef87a2bd854_LEFT_TO_RIGHT:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M776.000000 622.73184276075 C 769.000000 640.73184276075, 757.000000 673.73184276075,745.000000 704.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="769" y1="640.73184276075" x2="776" y2="622.73184276075"
+id="Complex_a03f754e8298980dc29b09736c23ff5f--to--ComplexAssembly_b2c97f54c92e22cde5145ef87a2bd854_LEFT_TO_RIGHT:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+
+<line
+x1="829" y1="1019.73184276075" x2="821" y2="1031.73184276075"
+id="Protein_dae0ca7fc13673fee059200699ebf552--to--BiochemicalReaction_f58be1515c21f9ec1bd1f66b09f60d7b_LEFT_TO_RIGHT:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M821.000000 1031.73184276075 C 829.000000 1019.73184276075, 839.000000 1002.73184276075,845.000000 986.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+<path d="M845.000000 986.73184276075 C 854.000000 961.73184276075, 857.000000 930.73184276075,858.000000 913.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="857" y1="930.73184276075" x2="858" y2="913.73184276075"
+id="Protein_dae0ca7fc13673fee059200699ebf552--to--BiochemicalReaction_f58be1515c21f9ec1bd1f66b09f60d7b_LEFT_TO_RIGHT:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+
+<line
+x1="1155" y1="1009.73184276075" x2="1130" y2="1006.73184276075"
+id="BiochemicalReaction_6a5c5ff0a66879d6d6fd6a4b38d03761_LEFT_TO_RIGHT--to--Protein_097cf95cb8db1ff2be09fa9e20df605a:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M1245.000000 1021.73184276075 C 1209.000000 1016.73184276075, 1155.000000 1009.73184276075,1130.000000 1006.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="1209" y1="1016.73184276075" x2="1245" y2="1021.73184276075"
+id="BiochemicalReaction_6a5c5ff0a66879d6d6fd6a4b38d03761_LEFT_TO_RIGHT--to--Protein_097cf95cb8db1ff2be09fa9e20df605a:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+<polygon
+points = "1245,1021.73184276075 1233,1015.73184276075 1233,1027.73184276075"
+id="line"
+style="fill:black; stroke:black; stroke-opacity:1; stroke-width:1.000000"
+transform = "rotate(7.907163 1245.000000 1021.731843)"
+/>
+
+
+
+<line
+x1="613" y1="964.73184276075" x2="643" y2="953.73184276075"
+id="ComplexAssembly_7773c7c205e10df7f37f9aa7fd9061e8_LEFT_TO_RIGHT--to--Complex_a8d29a707573fd0639d5b84f1283de6c:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M643.000000 953.73184276075 C 613.000000 964.73184276075, 538.000000 992.73184276075,480.000000 1014.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="538" y1="992.73184276075" x2="480" y2="1014.73184276075"
+id="ComplexAssembly_7773c7c205e10df7f37f9aa7fd9061e8_LEFT_TO_RIGHT--to--Complex_a8d29a707573fd0639d5b84f1283de6c:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+<polygon
+points = "480,1014.73184276075 468,1008.73184276075 468,1020.73184276075"
+id="line"
+style="fill:black; stroke:black; stroke-opacity:1; stroke-width:1.000000"
+transform = "rotate(159.227745 480.000000 1014.731843)"
+/>
+
+
+
+<line
+x1="1029" y1="1041.73184276075" x2="1010" y2="1059.73184276075"
+id="BiochemicalReaction_9d4e97689f147d8cca65c9d68d5d8c63_LEFT_TO_RIGHT--to--Protein_fe4f0b172e9a28e9c33bf44eedb1e9e1:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M1236.000000 927.73184276075 C 1201.000000 939.73184276075, 1144.000000 961.73184276075,1100.000000 988.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+<path d="M1100.000000 988.73184276075 C 1065.000000 1009.73184276075, 1029.000000 1041.73184276075,1010.000000 1059.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="1201" y1="939.73184276075" x2="1236" y2="927.73184276075"
+id="BiochemicalReaction_9d4e97689f147d8cca65c9d68d5d8c63_LEFT_TO_RIGHT--to--Protein_fe4f0b172e9a28e9c33bf44eedb1e9e1:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+<polygon
+points = "1236,927.73184276075 1224,921.73184276075 1224,933.73184276075"
+id="line"
+style="fill:black; stroke:black; stroke-opacity:1; stroke-width:1.000000"
+transform = "rotate(-18.924644 1236.000000 927.731843)"
+/>
+
+
+
+<line
+x1="912" y1="1152.73184276075" x2="910" y2="1185.73184276075"
+id="PhysicalEntity_bb50faef5a028403e1636f97ad01d449--to--BiochemicalReaction_3caebe40c1322cf4db92eb6f9794710b_LEFT_TO_RIGHT:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M910.000000 1185.73184276075 C 912.000000 1152.73184276075, 916.000000 1086.73184276075,918.000000 1057.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="916" y1="1086.73184276075" x2="918" y2="1057.73184276075"
+id="PhysicalEntity_bb50faef5a028403e1636f97ad01d449--to--BiochemicalReaction_3caebe40c1322cf4db92eb6f9794710b_LEFT_TO_RIGHT:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+
+<line
+x1="1140" y1="1081.73184276075" x2="1104" y2="1064.73184276075"
+id="ComplexAssembly_e052d1fa72439238b141482514da3382_LEFT_TO_RIGHT--to--Complex_7109c4d0e8a5a433e55812beb7c7e229:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M1104.000000 1064.73184276075 C 1140.000000 1081.73184276075, 1241.000000 1129.73184276075,1297.000000 1156.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="1241" y1="1129.73184276075" x2="1297" y2="1156.73184276075"
+id="ComplexAssembly_e052d1fa72439238b141482514da3382_LEFT_TO_RIGHT--to--Complex_7109c4d0e8a5a433e55812beb7c7e229:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+<polygon
+points = "1297,1156.73184276075 1285,1150.73184276075 1285,1162.73184276075"
+id="line"
+style="fill:black; stroke:black; stroke-opacity:1; stroke-width:1.000000"
+transform = "rotate(25.740708 1297.000000 1156.731843)"
+/>
+
+
+
+<line
+x1="1154" y1="983.73184276075" x2="1130" y2="997.73184276075"
+id="BiochemicalReaction_6a5c5ff0a66879d6d6fd6a4b38d03761_LEFT_TO_RIGHT--to--Protein_fe4f0b172e9a28e9c33bf44eedb1e9e1:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M1130.000000 997.73184276075 C 1154.000000 983.73184276075, 1203.000000 955.73184276075,1236.000000 936.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="1203" y1="955.73184276075" x2="1236" y2="936.73184276075"
+id="BiochemicalReaction_6a5c5ff0a66879d6d6fd6a4b38d03761_LEFT_TO_RIGHT--to--Protein_fe4f0b172e9a28e9c33bf44eedb1e9e1:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+<polygon
+points = "1236,936.73184276075 1224,930.73184276075 1224,942.73184276075"
+id="line"
+style="fill:black; stroke:black; stroke-opacity:1; stroke-width:1.000000"
+transform = "rotate(-29.931512 1236.000000 936.731843)"
+/>
+
+
+
+<line
+x1="1391" y1="1341.73184276075" x2="1415" y2="1364.73184276075"
+id="Protein_36f72d0287ce952e1d7ded6d590f683d--to--TransportWithBiochemicalReaction_4063428e118d1a8cc48ff0cc26357d79_LEFT_TO_RIGHT:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M1415.000000 1364.73184276075 C 1391.000000 1341.73184276075, 1352.000000 1305.73184276075,1332.000000 1286.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="1352" y1="1305.73184276075" x2="1332" y2="1286.73184276075"
+id="Protein_36f72d0287ce952e1d7ded6d590f683d--to--TransportWithBiochemicalReaction_4063428e118d1a8cc48ff0cc26357d79_LEFT_TO_RIGHT:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+
+<line
+x1="1292" y1="1242.73184276075" x2="1307" y2="1260.73184276075"
+id="TransportWithBiochemicalReaction_4063428e118d1a8cc48ff0cc26357d79_LEFT_TO_RIGHT--to--Protein_6a887dffef95a46421e8210bd2a55e6b:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M1247.000000 1188.73184276075 C 1265.000000 1209.73184276075, 1292.000000 1242.73184276075,1307.000000 1260.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="1265" y1="1209.73184276075" x2="1247" y2="1188.73184276075"
+id="TransportWithBiochemicalReaction_4063428e118d1a8cc48ff0cc26357d79_LEFT_TO_RIGHT--to--Protein_6a887dffef95a46421e8210bd2a55e6b:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+<polygon
+points = "1247,1188.73184276075 1235,1182.73184276075 1235,1194.73184276075"
+id="line"
+style="fill:black; stroke:black; stroke-opacity:1; stroke-width:1.000000"
+transform = "rotate(229.398705 1247.000000 1188.731843)"
+/>
+
+
+
+<line
+x1="1034" y1="1110.73184276075" x2="1010" y2="1086.73184276075"
+id="BiochemicalReaction_9d4e97689f147d8cca65c9d68d5d8c63_LEFT_TO_RIGHT--to--Protein_6f5867345982383fc8781d6868732f5b:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M1112.000000 1189.73184276075 C 1084.000000 1161.73184276075, 1034.000000 1110.73184276075,1010.000000 1086.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="1084" y1="1161.73184276075" x2="1112" y2="1189.73184276075"
+id="BiochemicalReaction_9d4e97689f147d8cca65c9d68d5d8c63_LEFT_TO_RIGHT--to--Protein_6f5867345982383fc8781d6868732f5b:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+<polygon
+points = "1112,1189.73184276075 1100,1183.73184276075 1100,1195.73184276075"
+id="line"
+style="fill:black; stroke:black; stroke-opacity:1; stroke-width:1.000000"
+transform = "rotate(45.000000 1112.000000 1189.731843)"
+/>
+
+
+
+<line
+x1="1012" y1="899.73184276075" x2="1026" y2="931.73184276075"
+id="Protein_5bd032f3350fbdb3cf7e757ff28f0bfd--to--BiochemicalReaction_f988bac0a7eb6b3461a8b5e67c85bb8c_LEFT_TO_RIGHT:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M975.000000 809.73184276075 C 986.000000 837.73184276075, 1012.000000 899.73184276075,1026.000000 931.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="986" y1="837.73184276075" x2="975" y2="809.73184276075"
+id="Protein_5bd032f3350fbdb3cf7e757ff28f0bfd--to--BiochemicalReaction_f988bac0a7eb6b3461a8b5e67c85bb8c_LEFT_TO_RIGHT:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+<ellipse
+rx="6.000000"
+ry="6.000000"
+cx="977.193914"
+cy="815.316352"
+id="Protein_5bd032f3350fbdb3cf7e757ff28f0bfd--to--BiochemicalReaction_f988bac0a7eb6b3461a8b5e67c85bb8c_LEFT_TO_RIGHT:target.arc"
+style="fill:white;fill-opacity:1.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+
+<line
+x1="1128" y1="799.73184276075" x2="1112" y2="829.73184276075"
+id="BiochemicalReaction_92f9a82a4bc538a710c322154ad248fa_LEFT_TO_RIGHT--to--Protein_0087a9853f946ac4fd0b3668b54cd772:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M1112.000000 829.73184276075 C 1128.000000 799.73184276075, 1168.000000 725.73184276075,1187.000000 690.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="1168" y1="725.73184276075" x2="1187" y2="690.73184276075"
+id="BiochemicalReaction_92f9a82a4bc538a710c322154ad248fa_LEFT_TO_RIGHT--to--Protein_0087a9853f946ac4fd0b3668b54cd772:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+<polygon
+points = "1187,690.73184276075 1175,684.73184276075 1175,696.73184276075"
+id="line"
+style="fill:black; stroke:black; stroke-opacity:1; stroke-width:1.000000"
+transform = "rotate(-61.504361 1187.000000 690.731843)"
+/>
+
+
+
+<line
+x1="1485" y1="684.73184276075" x2="1518" y2="674.73184276075"
+id="Protein_d64a8bf8553a8e46e0cd35fd64e9b998--to--TransportWithBiochemicalReaction_8688b7a61f4f4cc4f9b3a0d5f5034cb4_LEFT_TO_RIGHT:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M1416.000000 704.73184276075 C 1438.000000 697.73184276075, 1485.000000 684.73184276075,1518.000000 674.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="1438" y1="697.73184276075" x2="1416" y2="704.73184276075"
+id="Protein_d64a8bf8553a8e46e0cd35fd64e9b998--to--TransportWithBiochemicalReaction_8688b7a61f4f4cc4f9b3a0d5f5034cb4_LEFT_TO_RIGHT:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+
+<line
+x1="1358" y1="726.73184276075" x2="1388" y2="714.73184276075"
+id="TransportWithBiochemicalReaction_8688b7a61f4f4cc4f9b3a0d5f5034cb4_LEFT_TO_RIGHT--to--Protein_d708005ba372947d89754ec377ad207b:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M1388.000000 714.73184276075 C 1358.000000 726.73184276075, 1284.000000 756.73184276075,1240.000000 774.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="1284" y1="756.73184276075" x2="1240" y2="774.73184276075"
+id="TransportWithBiochemicalReaction_8688b7a61f4f4cc4f9b3a0d5f5034cb4_LEFT_TO_RIGHT--to--Protein_d708005ba372947d89754ec377ad207b:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+<polygon
+points = "1240,774.73184276075 1228,768.73184276075 1228,780.73184276075"
+id="line"
+style="fill:black; stroke:black; stroke-opacity:1; stroke-width:1.000000"
+transform = "rotate(157.750976 1240.000000 774.731843)"
+/>
+
+
+
+<line
+x1="1152" y1="817.73184276075" x2="1170" y2="807.73184276075"
+id="Protein_d708005ba372947d89754ec377ad207b--to--BiochemicalReaction_92f9a82a4bc538a710c322154ad248fa_LEFT_TO_RIGHT:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M1118.000000 836.73184276075 C 1131.000000 828.73184276075, 1152.000000 817.73184276075,1170.000000 807.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="1131" y1="828.73184276075" x2="1118" y2="836.73184276075"
+id="Protein_d708005ba372947d89754ec377ad207b--to--BiochemicalReaction_92f9a82a4bc538a710c322154ad248fa_LEFT_TO_RIGHT:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+
+<line
+x1="606" y1="805.73184276075" x2="587" y2="784.73184276075"
+id="Protein_47f715a7885c5afcd43c193c5fc08646--to--BiochemicalReaction_f58be1515c21f9ec1bd1f66b09f60d7b_LEFT_TO_RIGHT:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M587.000000 784.73184276075 C 606.000000 805.73184276075, 638.000000 838.73184276075,673.000000 856.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+<path d="M673.000000 856.73184276075 C 732.000000 887.73184276075, 814.000000 896.73184276075,845.000000 898.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="814" y1="896.73184276075" x2="845" y2="898.73184276075"
+id="Protein_47f715a7885c5afcd43c193c5fc08646--to--BiochemicalReaction_f58be1515c21f9ec1bd1f66b09f60d7b_LEFT_TO_RIGHT:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+<ellipse
+rx="6.000000"
+ry="6.000000"
+cx="839.012448"
+cy="898.345549"
+id="Protein_47f715a7885c5afcd43c193c5fc08646--to--BiochemicalReaction_f58be1515c21f9ec1bd1f66b09f60d7b_LEFT_TO_RIGHT:target.arc"
+style="fill:white;fill-opacity:1.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+
+<line
+x1="755" y1="564.73184276075" x2="773" y2="595.73184276075"
+id="ComplexAssembly_b2c97f54c92e22cde5145ef87a2bd854_LEFT_TO_RIGHT--to--Complex_8bc5c271607ec51667c96d5016b53b1e:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M773.000000 595.73184276075 C 755.000000 564.73184276075, 713.000000 489.73184276075,684.000000 438.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="713" y1="489.73184276075" x2="684" y2="438.73184276075"
+id="ComplexAssembly_b2c97f54c92e22cde5145ef87a2bd854_LEFT_TO_RIGHT--to--Complex_8bc5c271607ec51667c96d5016b53b1e:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+<polygon
+points = "684,438.73184276075 672,432.73184276075 672,444.73184276075"
+id="line"
+style="fill:black; stroke:black; stroke-opacity:1; stroke-width:1.000000"
+transform = "rotate(240.376251 684.000000 438.731843)"
+/>
+
+
+
+<line
+x1="505" y1="838.73184276075" x2="547" y2="828.73184276075"
+id="ComplexAssembly_f68c6c732e522e41949b34ae1e5b24f7_LEFT_TO_RIGHT--to--Complex_f5e909308c0a7c7b8fffea01934be1b4:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M547.000000 828.73184276075 C 505.000000 838.73184276075, 378.000000 870.73184276075,312.000000 887.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="378" y1="870.73184276075" x2="312" y2="887.73184276075"
+id="ComplexAssembly_f68c6c732e522e41949b34ae1e5b24f7_LEFT_TO_RIGHT--to--Complex_f5e909308c0a7c7b8fffea01934be1b4:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+<polygon
+points = "312,887.73184276075 300,881.73184276075 300,893.73184276075"
+id="line"
+style="fill:black; stroke:black; stroke-opacity:1; stroke-width:1.000000"
+transform = "rotate(165.555964 312.000000 887.731843)"
+/>
+
+
+
+<line
+x1="1136" y1="543.73184276075" x2="1157" y2="525.73184276075"
+id="ComplexAssembly_04fb3b51b052e794ab8da936024bee00_LEFT_TO_RIGHT--to--Complex_a7be542427beccd11754a2824656a71a:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M1062.000000 603.73184276075 C 1094.000000 577.73184276075, 1136.000000 543.73184276075,1157.000000 525.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="1094" y1="577.73184276075" x2="1062" y2="603.73184276075"
+id="ComplexAssembly_04fb3b51b052e794ab8da936024bee00_LEFT_TO_RIGHT--to--Complex_a7be542427beccd11754a2824656a71a:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+<polygon
+points = "1062,603.73184276075 1050,597.73184276075 1050,609.73184276075"
+id="line"
+style="fill:black; stroke:black; stroke-opacity:1; stroke-width:1.000000"
+transform = "rotate(140.906141 1062.000000 603.731843)"
+/>
+
+
+
+<line
+x1="1006" y1="1365.73184276075" x2="1007" y2="1392.73184276075"
+id="TransportWithBiochemicalReaction_8135510299e449f34bd3ce53835db675_LEFT_TO_RIGHT--to--Protein_9b5fd63f1c2b5f66f63097c6b0832b7e:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M1007.000000 1392.73184276075 C 1006.000000 1365.73184276075, 1004.000000 1307.73184276075,1002.000000 1276.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="1004" y1="1307.73184276075" x2="1002" y2="1276.73184276075"
+id="TransportWithBiochemicalReaction_8135510299e449f34bd3ce53835db675_LEFT_TO_RIGHT--to--Protein_9b5fd63f1c2b5f66f63097c6b0832b7e:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+<polygon
+points = "1002,1276.73184276075 990,1270.73184276075 990,1282.73184276075"
+id="line"
+style="fill:black; stroke:black; stroke-opacity:1; stroke-width:1.000000"
+transform = "rotate(266.308614 1002.000000 1276.731843)"
+/>
+
+
+
+<line
+x1="680" y1="884.73184276075" x2="691" y2="853.73184276075"
+id="Complex_a03f754e8298980dc29b09736c23ff5f--to--ComplexAssembly_7773c7c205e10df7f37f9aa7fd9061e8_LEFT_TO_RIGHT:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M662.000000 934.73184276075 C 668.000000 916.73184276075, 680.000000 884.73184276075,691.000000 853.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="668" y1="916.73184276075" x2="662" y2="934.73184276075"
+id="Complex_a03f754e8298980dc29b09736c23ff5f--to--ComplexAssembly_7773c7c205e10df7f37f9aa7fd9061e8_LEFT_TO_RIGHT:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+
+<line
+x1="1129" y1="429.73184276075" x2="1116" y2="401.73184276075"
+id="Protein_e7d16d8f65540c96514c9cadf797f4eb--to--ComplexAssembly_04fb3b51b052e794ab8da936024bee00_LEFT_TO_RIGHT:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M1116.000000 401.73184276075 C 1129.000000 429.73184276075, 1153.000000 477.73184276075,1164.000000 501.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="1153" y1="477.73184276075" x2="1164" y2="501.73184276075"
+id="Protein_e7d16d8f65540c96514c9cadf797f4eb--to--ComplexAssembly_04fb3b51b052e794ab8da936024bee00_LEFT_TO_RIGHT:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+
+<line
+x1="899" y1="911.73184276075" x2="872" y2="903.73184276075"
+id="BiochemicalReaction_f58be1515c21f9ec1bd1f66b09f60d7b_LEFT_TO_RIGHT--to--Protein_5bd032f3350fbdb3cf7e757ff28f0bfd:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M999.000000 941.73184276075 C 960.000000 929.73184276075, 899.000000 911.73184276075,872.000000 903.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="960" y1="929.73184276075" x2="999" y2="941.73184276075"
+id="BiochemicalReaction_f58be1515c21f9ec1bd1f66b09f60d7b_LEFT_TO_RIGHT--to--Protein_5bd032f3350fbdb3cf7e757ff28f0bfd:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+<polygon
+points = "999,941.73184276075 987,935.73184276075 987,947.73184276075"
+id="line"
+style="fill:black; stroke:black; stroke-opacity:1; stroke-width:1.000000"
+transform = "rotate(17.102729 999.000000 941.731843)"
+/>
+
+
+
+<line
+x1="611" y1="919.73184276075" x2="595" y2="908.73184276075"
+id="Protein_cad24d57581b554ab2bb173d2f68950b--to--ComplexAssembly_7773c7c205e10df7f37f9aa7fd9061e8_LEFT_TO_RIGHT:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M644.000000 939.73184276075 C 631.000000 931.73184276075, 611.000000 919.73184276075,595.000000 908.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="631" y1="931.73184276075" x2="644" y2="939.73184276075"
+id="Protein_cad24d57581b554ab2bb173d2f68950b--to--ComplexAssembly_7773c7c205e10df7f37f9aa7fd9061e8_LEFT_TO_RIGHT:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+
+<line
+x1="914" y1="895.73184276075" x2="872" y2="898.73184276075"
+id="BiochemicalReaction_f58be1515c21f9ec1bd1f66b09f60d7b_LEFT_TO_RIGHT--to--Protein_fe4f0b172e9a28e9c33bf44eedb1e9e1:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M1236.000000 908.73184276075 C 1214.000000 904.73184276075, 1183.000000 898.73184276075,1156.000000 896.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+<path d="M1156.000000 896.73184276075 C 1047.000000 887.73184276075, 914.000000 895.73184276075,872.000000 898.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="1214" y1="904.73184276075" x2="1236" y2="908.73184276075"
+id="BiochemicalReaction_f58be1515c21f9ec1bd1f66b09f60d7b_LEFT_TO_RIGHT--to--Protein_fe4f0b172e9a28e9c33bf44eedb1e9e1:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+<polygon
+points = "1236,908.73184276075 1224,902.73184276075 1224,914.73184276075"
+id="line"
+style="fill:black; stroke:black; stroke-opacity:1; stroke-width:1.000000"
+transform = "rotate(10.304846 1236.000000 908.731843)"
+/>
+
+
+
+<line
+x1="787" y1="838.73184276075" x2="758" y2="813.73184276075"
+id="Complex_a03f754e8298980dc29b09736c23ff5f--to--BiochemicalReaction_f58be1515c21f9ec1bd1f66b09f60d7b_LEFT_TO_RIGHT:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M758.000000 813.73184276075 C 787.000000 838.73184276075, 825.000000 871.73184276075,845.000000 888.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="825" y1="871.73184276075" x2="845" y2="888.73184276075"
+id="Complex_a03f754e8298980dc29b09736c23ff5f--to--BiochemicalReaction_f58be1515c21f9ec1bd1f66b09f60d7b_LEFT_TO_RIGHT:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+<ellipse
+rx="6.000000"
+ry="6.000000"
+cx="840.428364"
+cy="884.845952"
+id="Complex_a03f754e8298980dc29b09736c23ff5f--to--BiochemicalReaction_f58be1515c21f9ec1bd1f66b09f60d7b_LEFT_TO_RIGHT:target.arc"
+style="fill:white;fill-opacity:1.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+
+<line
+x1="670" y1="1216.73184276075" x2="685" y2="1198.73184276075"
+id="BiochemicalReaction_49cd759d0933348b73fee9705bcfb612_LEFT_TO_RIGHT--to--Protein_2172e3ab76985abf78c06f04fe718590:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M627.000000 1270.73184276075 C 644.000000 1248.73184276075, 670.000000 1216.73184276075,685.000000 1198.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="644" y1="1248.73184276075" x2="627" y2="1270.73184276075"
+id="BiochemicalReaction_49cd759d0933348b73fee9705bcfb612_LEFT_TO_RIGHT--to--Protein_2172e3ab76985abf78c06f04fe718590:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+<polygon
+points = "627,1270.73184276075 615,1264.73184276075 615,1276.73184276075"
+id="line"
+style="fill:black; stroke:black; stroke-opacity:1; stroke-width:1.000000"
+transform = "rotate(127.694240 627.000000 1270.731843)"
+/>
+
+
+
+<line
+x1="1173" y1="913.73184276075" x2="1153" y2="913.73184276075"
+id="BiochemicalReaction_54f9e3e75f83fc4faa5b7413aa01fa61_LEFT_TO_RIGHT--to--Protein_fe4f0b172e9a28e9c33bf44eedb1e9e1:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M1153.000000 913.73184276075 C 1173.000000 913.73184276075, 1209.000000 914.73184276075,1237.000000 915.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="1209" y1="914.73184276075" x2="1237" y2="915.73184276075"
+id="BiochemicalReaction_54f9e3e75f83fc4faa5b7413aa01fa61_LEFT_TO_RIGHT--to--Protein_fe4f0b172e9a28e9c33bf44eedb1e9e1:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+<polygon
+points = "1237,915.73184276075 1225,909.73184276075 1225,921.73184276075"
+id="line"
+style="fill:black; stroke:black; stroke-opacity:1; stroke-width:1.000000"
+transform = "rotate(2.045408 1237.000000 915.731843)"
+/>
+
+
+
+<line
+x1="562" y1="858.73184276075" x2="562" y2="868.73184276075"
+id="Protein_cad24d57581b554ab2bb173d2f68950b--to--ComplexAssembly_f68c6c732e522e41949b34ae1e5b24f7_LEFT_TO_RIGHT:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M561.000000 838.73184276075 C 561.000000 847.73184276075, 562.000000 858.73184276075,562.000000 868.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="561" y1="847.73184276075" x2="561" y2="838.73184276075"
+id="Protein_cad24d57581b554ab2bb173d2f68950b--to--ComplexAssembly_f68c6c732e522e41949b34ae1e5b24f7_LEFT_TO_RIGHT:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+
+<line
+x1="1143" y1="860.73184276075" x2="1118" y2="849.73184276075"
+id="BiochemicalReaction_92f9a82a4bc538a710c322154ad248fa_LEFT_TO_RIGHT--to--Protein_fe4f0b172e9a28e9c33bf44eedb1e9e1:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M1118.000000 849.73184276075 C 1143.000000 860.73184276075, 1200.000000 884.73184276075,1236.000000 900.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="1200" y1="884.73184276075" x2="1236" y2="900.73184276075"
+id="BiochemicalReaction_92f9a82a4bc538a710c322154ad248fa_LEFT_TO_RIGHT--to--Protein_fe4f0b172e9a28e9c33bf44eedb1e9e1:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+<polygon
+points = "1236,900.73184276075 1224,894.73184276075 1224,906.73184276075"
+id="line"
+style="fill:black; stroke:black; stroke-opacity:1; stroke-width:1.000000"
+transform = "rotate(23.962489 1236.000000 900.731843)"
+/>
+
+
+
+<line
+x1="1561" y1="915.73184276075" x2="1597" y2="919.73184276075"
+id="Protein_26614d92c4d60aeb847d031e941d3ad9--to--TransportWithBiochemicalReaction_754aff44869483de45727d5b9632e1af_LEFT_TO_RIGHT:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M1597.000000 919.73184276075 C 1561.000000 915.73184276075, 1507.000000 910.73184276075,1482.000000 908.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="1507" y1="910.73184276075" x2="1482" y2="908.73184276075"
+id="Protein_26614d92c4d60aeb847d031e941d3ad9--to--TransportWithBiochemicalReaction_754aff44869483de45727d5b9632e1af_LEFT_TO_RIGHT:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+
+<line
+x1="300" y1="468.73184276075" x2="278" y2="454.73184276075"
+id="BiochemicalReaction_e8e15ce984a660b3a0c0976768feb387_LEFT_TO_RIGHT--to--Protein_ca5a15f8ac2559544b17a97ccfdda35e:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M377.000000 514.73184276075 C 346.000000 495.73184276075, 300.000000 468.73184276075,278.000000 454.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="346" y1="495.73184276075" x2="377" y2="514.73184276075"
+id="BiochemicalReaction_e8e15ce984a660b3a0c0976768feb387_LEFT_TO_RIGHT--to--Protein_ca5a15f8ac2559544b17a97ccfdda35e:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+<polygon
+points = "377,514.73184276075 365,508.73184276075 365,520.73184276075"
+id="line"
+style="fill:black; stroke:black; stroke-opacity:1; stroke-width:1.000000"
+transform = "rotate(31.504267 377.000000 514.731843)"
+/>
+
+
+
+<line
+x1="823" y1="545.73184276075" x2="837" y2="524.73184276075"
+id="Protein_50c1e9aecfa6b89bb6d758dc3c619d9b--to--ComplexAssembly_b2c97f54c92e22cde5145ef87a2bd854_LEFT_TO_RIGHT:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M837.000000 524.73184276075 C 823.000000 545.73184276075, 802.000000 577.73184276075,790.000000 595.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="802" y1="577.73184276075" x2="790" y2="595.73184276075"
+id="Protein_50c1e9aecfa6b89bb6d758dc3c619d9b--to--ComplexAssembly_b2c97f54c92e22cde5145ef87a2bd854_LEFT_TO_RIGHT:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+
+<line
+x1="531" y1="660.73184276075" x2="522" y2="635.73184276075"
+id="TransportWithBiochemicalReaction_f89161facfeb9efdf96ca61189e40ec9_LEFT_TO_RIGHT--to--Protein_47f715a7885c5afcd43c193c5fc08646:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M563.000000 744.73184276075 C 552.000000 714.73184276075, 531.000000 660.73184276075,522.000000 635.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="552" y1="714.73184276075" x2="563" y2="744.73184276075"
+id="TransportWithBiochemicalReaction_f89161facfeb9efdf96ca61189e40ec9_LEFT_TO_RIGHT--to--Protein_47f715a7885c5afcd43c193c5fc08646:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+<polygon
+points = "563,744.73184276075 551,738.73184276075 551,750.73184276075"
+id="line"
+style="fill:black; stroke:black; stroke-opacity:1; stroke-width:1.000000"
+transform = "rotate(69.863697 563.000000 744.731843)"
+/>
+
+
+
+<line
+x1="1020" y1="997.73184276075" x2="1028" y2="972.73184276075"
+id="Protein_5bd032f3350fbdb3cf7e757ff28f0bfd--to--BiochemicalReaction_9d4e97689f147d8cca65c9d68d5d8c63_LEFT_TO_RIGHT:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M1028.000000 972.73184276075 C 1020.000000 997.73184276075, 1007.000000 1038.73184276075,1000.000000 1059.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="1007" y1="1038.73184276075" x2="1000" y2="1059.73184276075"
+id="Protein_5bd032f3350fbdb3cf7e757ff28f0bfd--to--BiochemicalReaction_9d4e97689f147d8cca65c9d68d5d8c63_LEFT_TO_RIGHT:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+<ellipse
+rx="6.000000"
+ry="6.000000"
+cx="1001.897367"
+cy="1054.039743"
+id="Protein_5bd032f3350fbdb3cf7e757ff28f0bfd--to--BiochemicalReaction_9d4e97689f147d8cca65c9d68d5d8c63_LEFT_TO_RIGHT:target.arc"
+style="fill:white;fill-opacity:1.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+
+<line
+x1="890" y1="1045.73184276075" x2="905" y2="1044.73184276075"
+id="BiochemicalReaction_3caebe40c1322cf4db92eb6f9794710b_LEFT_TO_RIGHT--to--Protein_dae0ca7fc13673fee059200699ebf552:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M841.000000 1049.73184276075 C 863.000000 1047.73184276075, 890.000000 1045.73184276075,905.000000 1044.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="863" y1="1047.73184276075" x2="841" y2="1049.73184276075"
+id="BiochemicalReaction_3caebe40c1322cf4db92eb6f9794710b_LEFT_TO_RIGHT--to--Protein_dae0ca7fc13673fee059200699ebf552:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+<polygon
+points = "841,1049.73184276075 829,1043.73184276075 829,1055.73184276075"
+id="line"
+style="fill:black; stroke:black; stroke-opacity:1; stroke-width:1.000000"
+transform = "rotate(174.805571 841.000000 1049.731843)"
+/>
+
+
+
+<line
+x1="1089" y1="931.73184276075" x2="1069" y2="939.73184276075"
+id="Protein_5bd032f3350fbdb3cf7e757ff28f0bfd--to--BiochemicalReaction_54f9e3e75f83fc4faa5b7413aa01fa61_LEFT_TO_RIGHT:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M1069.000000 939.73184276075 C 1089.000000 931.73184276075, 1112.000000 923.73184276075,1126.000000 918.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="1112" y1="923.73184276075" x2="1126" y2="918.73184276075"
+id="Protein_5bd032f3350fbdb3cf7e757ff28f0bfd--to--BiochemicalReaction_54f9e3e75f83fc4faa5b7413aa01fa61_LEFT_TO_RIGHT:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+<ellipse
+rx="6.000000"
+ry="6.000000"
+cx="1120.349549"
+cy="920.749861"
+id="Protein_5bd032f3350fbdb3cf7e757ff28f0bfd--to--BiochemicalReaction_54f9e3e75f83fc4faa5b7413aa01fa61_LEFT_TO_RIGHT:target.arc"
+style="fill:white;fill-opacity:1.000000;stroke:black;stroke-width:1.000000;stroke-opacity:1.000000" />
+
+
+
+<line
+x1="1004" y1="817.73184276075" x2="983" y2="804.73184276075"
+id="BiochemicalReaction_f988bac0a7eb6b3461a8b5e67c85bb8c_LEFT_TO_RIGHT--to--Protein_fe4f0b172e9a28e9c33bf44eedb1e9e1:source.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+<path d="M983.000000 804.73184276075 C 1004.000000 817.73184276075, 1048.000000 843.73184276075,1088.000000 860.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+<path d="M1088.000000 860.73184276075 C 1138.000000 881.73184276075, 1199.000000 898.73184276075,1236.000000 907.73184276075" stroke="black" stroke-opacity="1" stroke-width="2" fill-opacity="0" fill="transparent"/>
+
+<line
+x1="1199" y1="898.73184276075" x2="1236" y2="907.73184276075"
+id="BiochemicalReaction_f988bac0a7eb6b3461a8b5e67c85bb8c_LEFT_TO_RIGHT--to--Protein_fe4f0b172e9a28e9c33bf44eedb1e9e1:target.arc"
+style="stroke:black;stroke-width:4.000000;stroke-opacity:0.000000" />
+
+
+<polygon
+points = "1236,907.73184276075 1224,901.73184276075 1224,913.73184276075"
+id="line"
+style="fill:black; stroke:black; stroke-opacity:1; stroke-width:1.000000"
+transform = "rotate(13.671307 1236.000000 907.731843)"
+/>
+
+
+
+
+
+<rect
+width="10.327821"
+height="26.650918"
+rx="0.000000"
+ry="0.000000"
+x="1658.951827"
+y="87.731843"
+id="col.pan"
+style="fill:#FF0000;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.000000" />
+
+
+<rect
+width="10.327821"
+height="26.650918"
+rx="0.000000"
+ry="0.000000"
+x="1649.624006"
+y="87.731843"
+id="col.pan"
+style="fill:#F91313;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.000000" />
+
+
+<rect
+width="10.327821"
+height="26.650918"
+rx="0.000000"
+ry="0.000000"
+x="1640.296185"
+y="87.731843"
+id="col.pan"
+style="fill:#F22626;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.000000" />
+
+
+<rect
+width="10.327821"
+height="26.650918"
+rx="0.000000"
+ry="0.000000"
+x="1630.968364"
+y="87.731843"
+id="col.pan"
+style="fill:#EC3939;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.000000" />
+
+
+<rect
+width="10.327821"
+height="26.650918"
+rx="0.000000"
+ry="0.000000"
+x="1621.640543"
+y="87.731843"
+id="col.pan"
+style="fill:#E54C4C;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.000000" />
+
+
+<rect
+width="10.327821"
+height="26.650918"
+rx="0.000000"
+ry="0.000000"
+x="1612.312721"
+y="87.731843"
+id="col.pan"
+style="fill:#DF5F5F;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.000000" />
+
+
+<rect
+width="10.327821"
+height="26.650918"
+rx="0.000000"
+ry="0.000000"
+x="1602.984900"
+y="87.731843"
+id="col.pan"
+style="fill:#D87272;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.000000" />
+
+
+<rect
+width="10.327821"
+height="26.650918"
+rx="0.000000"
+ry="0.000000"
+x="1593.657079"
+y="87.731843"
+id="col.pan"
+style="fill:#D28585;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.000000" />
+
+
+<rect
+width="10.327821"
+height="26.650918"
+rx="0.000000"
+ry="0.000000"
+x="1584.329258"
+y="87.731843"
+id="col.pan"
+style="fill:#CB9898;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.000000" />
+
+
+<rect
+width="10.327821"
+height="26.650918"
+rx="0.000000"
+ry="0.000000"
+x="1575.001437"
+y="87.731843"
+id="col.pan"
+style="fill:#C5ABAB;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.000000" />
+
+
+<rect
+width="10.327821"
+height="26.650918"
+rx="0.000000"
+ry="0.000000"
+x="1565.673616"
+y="87.731843"
+id="col.pan"
+style="fill:#BEBEBE;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.000000" />
+
+
+<rect
+width="10.327821"
+height="26.650918"
+rx="0.000000"
+ry="0.000000"
+x="1556.345795"
+y="87.731843"
+id="col.pan"
+style="fill:#ABC5AB;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.000000" />
+
+
+<rect
+width="10.327821"
+height="26.650918"
+rx="0.000000"
+ry="0.000000"
+x="1547.017974"
+y="87.731843"
+id="col.pan"
+style="fill:#98CB98;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.000000" />
+
+
+<rect
+width="10.327821"
+height="26.650918"
+rx="0.000000"
+ry="0.000000"
+x="1537.690152"
+y="87.731843"
+id="col.pan"
+style="fill:#85D285;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.000000" />
+
+
+<rect
+width="10.327821"
+height="26.650918"
+rx="0.000000"
+ry="0.000000"
+x="1528.362331"
+y="87.731843"
+id="col.pan"
+style="fill:#72D872;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.000000" />
+
+
+<rect
+width="10.327821"
+height="26.650918"
+rx="0.000000"
+ry="0.000000"
+x="1519.034510"
+y="87.731843"
+id="col.pan"
+style="fill:#5FDF5F;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.000000" />
+
+
+<rect
+width="10.327821"
+height="26.650918"
+rx="0.000000"
+ry="0.000000"
+x="1509.706689"
+y="87.731843"
+id="col.pan"
+style="fill:#4CE54C;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.000000" />
+
+
+<rect
+width="10.327821"
+height="26.650918"
+rx="0.000000"
+ry="0.000000"
+x="1500.378868"
+y="87.731843"
+id="col.pan"
+style="fill:#39EC39;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.000000" />
+
+
+<rect
+width="10.327821"
+height="26.650918"
+rx="0.000000"
+ry="0.000000"
+x="1491.051047"
+y="87.731843"
+id="col.pan"
+style="fill:#26F226;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.000000" />
+
+
+<rect
+width="10.327821"
+height="26.650918"
+rx="0.000000"
+ry="0.000000"
+x="1481.723226"
+y="87.731843"
+id="col.pan"
+style="fill:#13F913;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.000000" />
+
+
+<rect
+width="10.327821"
+height="26.650918"
+rx="0.000000"
+ry="0.000000"
+x="1472.395404"
+y="87.731843"
+id="col.pan"
+style="fill:#00FF00;fill-opacity:1.000000;stroke:black;stroke-width:0.000000;stroke-opacity:0.000000" />
+
+
+<line
+x1="1472.39540449667" y1="87.7318427607501" x2="1472.39540449667" y2="121.045489658214"
+id="tick"
+style="stroke:black;stroke-width:3.731128;stroke-opacity:1.000000" />
+
+
+<line
+x1="1491.98382887238" y1="87.7318427607501" x2="1491.98382887238" y2="121.045489658214"
+id="tick"
+style="stroke:black;stroke-width:3.731128;stroke-opacity:1.000000" />
+
+
+<line
+x1="1511.57225324809" y1="87.7318427607501" x2="1511.57225324809" y2="121.045489658214"
+id="tick"
+style="stroke:black;stroke-width:3.731128;stroke-opacity:1.000000" />
+
+
+<line
+x1="1531.1606776238" y1="87.7318427607501" x2="1531.1606776238" y2="121.045489658214"
+id="tick"
+style="stroke:black;stroke-width:3.731128;stroke-opacity:1.000000" />
+
+
+<line
+x1="1550.74910199951" y1="87.7318427607501" x2="1550.74910199951" y2="121.045489658214"
+id="tick"
+style="stroke:black;stroke-width:3.731128;stroke-opacity:1.000000" />
+
+
+<line
+x1="1570.33752637521" y1="87.7318427607501" x2="1570.33752637521" y2="121.045489658214"
+id="tick"
+style="stroke:black;stroke-width:3.731128;stroke-opacity:1.000000" />
+
+
+<line
+x1="1589.92595075092" y1="87.7318427607501" x2="1589.92595075092" y2="121.045489658214"
+id="tick"
+style="stroke:black;stroke-width:3.731128;stroke-opacity:1.000000" />
+
+
+<line
+x1="1609.51437512663" y1="87.7318427607501" x2="1609.51437512663" y2="121.045489658214"
+id="tick"
+style="stroke:black;stroke-width:3.731128;stroke-opacity:1.000000" />
+
+
+<line
+x1="1629.10279950234" y1="87.7318427607501" x2="1629.10279950234" y2="121.045489658214"
+id="tick"
+style="stroke:black;stroke-width:3.731128;stroke-opacity:1.000000" />
+
+
+<line
+x1="1648.69122387805" y1="87.7318427607501" x2="1648.69122387805" y2="121.045489658214"
+id="tick"
+style="stroke:black;stroke-width:3.731128;stroke-opacity:1.000000" />
+
+
+<line
+x1="1668.27964825376" y1="87.7318427607501" x2="1668.27964825376" y2="121.045489658214"
+id="tick"
+style="stroke:black;stroke-width:3.731128;stroke-opacity:1.000000" />
+
+
+<text
+x="1668.279648"
+y="149.917317"
+id="color.panel.max.value"
+style="font-size:26.650918px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+1</text>
+
+
+<text
+x="1472.395404"
+y="149.917317"
+id="color.panel.low.value"
+style="font-size:26.650918px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+-1</text>
+
+
+<text
+x="1570.337526"
+y="149.917317"
+id="color.panel.mid.value"
+style="font-size:26.650918px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+0</text>
+
+<a xlink:href="https://cdn.rawgit.com/sbgn/process-descriptions/b2904462d11bd8d65e9c7a1318d95d468048cb50/templates/PD_L1V1.3.svg">
+
+<text
+x="1570.337526"
+y="181.898418"
+id="Link to SBGN notation"
+style="font-size:26.650918px;text-anchor:middle;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="blue"
+>
+Link to SBGN notation</text>
+
+</a>
+
+
+<text x="30.000000" y="87.731843" id="pathway.name"
+style="font-size:26.650918px;text-anchor:left;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black">
+<tspan x="30.000000">Plasminogen activating cascade</tspan>
+<tspan x="30.000000" dy="23.325459">(panther.pathway::P00050)</tspan>
+</text>
+
+
+<text
+x="20.000000"
+y="1669.441579"
+id="stamp"
+style="font-size:22.000000px;text-anchor:left;font-family:Arial,Helvetica;alignment-baseline:baseline;stroke.opacity:1;dominant-baseline:baseline"
+fill="black"
+>
+Rendered by SBGNview</text>
+
+
+</svg>

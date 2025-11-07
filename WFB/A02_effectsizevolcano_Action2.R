@@ -66,7 +66,7 @@ pvalues <- dbGetQuery(con, 'SELECT biomolecule_id, analysis_group, test, compari
                             FROM pvalues')
 biomolecules <- dbGetQuery(con, 'SELECT *
                                  FROM biomolecules')
-metadata <- dbGetQuery(con, 'SELECT sample_id, Cohort, Age, Sex, BMI, `SF.36.QOL.Score`, PASC_Cohort, unique_patient_id, Collection_date, PG_change_collection_cutoff
+metadata <- dbGetQuery(con, 'SELECT sample_id, Cohort, Age, Sex, BMI, `SF.36.QOL.Score`, PASC_Cohort, unique_patient_id, Collection_date, PG_change_collection_cutoff, delta_time_infection_enrollment
                              FROM patient_metadata')
 formulas <- dbGetQuery(con, 'SELECT *
                              FROM formula_table')
@@ -517,11 +517,11 @@ writeLines(as.character(common_df$biomolecule_id), "data/processed/AnalysisGroup
 
 ## Overlapping feature single protein boxplots ----
 con <- dbConnect(RSQLite::SQLite(), dbname = 'P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Database/Long Covid Study DB.sqlite')
-proteomics <- dbGetQuery(con, 'SELECT biomolecule_id, standardized_name, rawfile_id, raw_abundance, normalized_abundance
+proteomics <- dbGetQuery(con, 'SELECT *
                                FROM proteomics_measurement')
-lipidomics <- dbGetQuery(con, 'SELECT biomolecule_id, standardized_name, rawfile_id, raw_abundance, normalized_abundance
+lipidomics <- dbGetQuery(con, 'SELECT *
                               FROM lipidomics_measurements')
-transcriptomics <- dbGetQuery(con, "SELECT biomolecule_id, standardized_name, sample_id, Counts, normalized_counts
+transcriptomics <- dbGetQuery(con, "SELECT *
                                     FROM rnaseq_measurements")
 rawfiles <- dbGetQuery(con, 'SELECT rawfile_id, rawfile_name, Sample, sample_id, run_type, ome_id, keep
                              FROM rawfiles_all')
@@ -1574,3 +1574,209 @@ ggsave(paste0('reports/figures/PASCnoPASC_Transcript_ImmuneCellTypes.pdf'),
 
 
 
+
+
+
+
+## PANTHER protein levels ----
+# find a comparison like pasc vs nopasc and take all proteins and go to effect size
+pathway_data <- volc_plot %>%
+  select(standardized_name, effect_size, diffexp, ome) %>%
+  filter(ome == "transcript") %>%
+  #filter(ome == "protein") %>%
+  separate_rows(standardized_name, sep = ";")
+
+
+## * make the pathway plot for the pathways ----
+library(SBGNview)
+data("sbgn.xmls")
+
+data("pathways.info")
+pathways <- findPathways(c("complex"))
+head(pathways)
+pathway <- pathways$pathway.id[37]
+
+# translate uniprot to other id and take effect size of proteins for your pathway
+nodes <- pathway_data %>%
+  select(standardized_name, effect_size) %>%
+  column_to_rownames(var = "standardized_name") 
+
+
+# for protein!!
+gene.data.pc <- changeDataId(
+  data.input.id = nodes,
+  input.type = "UNIPROT",
+  output.type = "entrez",
+  mol.type = "gene"
+)
+
+
+
+
+SBGNview.obj <- SBGNview(
+  gene.data = nodes, 
+  gene.id.type = "entrez",
+  input.sbgn = pathway,
+  output.file = "reactome_complex1biogenesis_TRANSCRIPTS", 
+  output.formats = c("png")
+) 
+
+print(SBGNview.obj)
+
+
+
+## Export to Reactome for Pathway Analysis ----
+## Choose only significant proteins from pasc vs no pasc comparison and export as uniprot id list
+protein_list <- volc_plot %>%
+  select(standardized_name, effect_size, diffexp, ome) %>%
+  #filter(ome == "transcript") %>%
+  filter(ome == "protein") %>%
+  filter(diffexp == "YES") %>%
+  separate_rows(standardized_name, sep = ";") %>%
+  pull(standardized_name)
+write_lines(protein_list, "data/processed/pascnopasc_significant_proteins_forreactome.txt")
+
+# then come back and make plots of those pathways
+
+transcript_list <- volc_plot %>%
+  select(standardized_name, effect_size, diffexp, ome) %>%
+  filter(ome == "transcript") %>%
+  #filter(ome == "protein") %>%
+  filter(diffexp == "YES") %>%
+  separate_rows(standardized_name, sep = ";") %>%
+  pull(standardized_name)
+write_lines(transcript_list, "data/processed/pascnopasc_significant_transcripts_forreactome.txt")
+
+
+
+
+
+
+
+
+
+
+
+## * Incubation time effect on PASC biomolecules? ----
+# options:
+# analysis_group (1, 2, 3, 0)
+anal <- 8
+# comparison (Age, Sex, QoL, BMI)
+comp <- "Incubation_Period"
+# formula (1, 2, 3, etc.)
+form <- 61
+# ome
+omea <- "protein"
+
+
+volc_plot_incubation <- pvalues %>%
+  filter(analysis_group == anal) %>%
+  filter(comparison == comp) %>%
+  filter(formula == form) %>%
+  inner_join(biomolecules %>%
+               select(biomolecule_id, standardized_name, omics_id),
+             by = "biomolecule_id") %>%
+  mutate(neglogpvalue = -log10(p_value)) %>%
+  mutate(diffexp = case_when(
+    q_value <= 0.05 ~ "YES",
+    T ~ "NO"
+  )) %>% 
+  mutate(ome = case_when(
+    omics_id == 1 ~ "protein",
+    omics_id == 2 ~ "lipid",
+    omics_id == 3 ~ "transcript"
+  )) %>%
+  select(-omics_id)
+
+
+
+## volcano plot ----
+ggplot(volc_plot_incubation, 
+             aes(effect_size, neglogpvalue, fill = ome, size = diffexp, alpha = diffexp)) + 
+  geom_point(shape = 21,
+             color = "black",
+             stroke = 0.2) +
+  scale_fill_manual(values = pal) +
+  scale_alpha_manual(values = c(0.05, 0.2), guide = "none") +
+  scale_size_manual(values = c(0.5, 2), guide = "none") +
+  #geom_vline(xintercept = c(-0.263, 0.263), 
+  #          col = "black",
+  #           size = 0.2) +
+  #geom_hline(yintercept = -log10(0.05), 
+  #           col="black",
+  #           size = 0.2) +
+  scale_x_continuous(limits = c(-max(abs(volc_plot_incubation$effect_size)), max(abs(volc_plot_incubation$effect_size)))) +
+  #geom_text_repel(data = subset(volc_plot, diffexp != "NO"), aes(label = gene), size = 2) +
+  xlab(paste("Effect Size", comp)) +
+  ylab("-Log10 Adjusted P-Value") +
+  #xlim(-2, 2) +
+  theme_classic() +
+  theme(panel.border = element_blank(), 
+        panel.grid.major = element_blank(),
+        panel.spacing = unit(0.5, "lines"), 
+        axis.text.x = element_text(size = 5),
+        axis.text.y = element_text(size = 5),
+        axis.title = element_text(size = 5),
+        axis.line = element_line(linewidth = 0.2),
+        axis.ticks = element_line(linewidth = 0.2),
+        strip.text = element_blank(),
+        legend.position = "inside",
+        legend.margin = margin(0, 0, 0, 0),
+        legend.title = element_text(size = 5),
+        legend.text = element_text(size = 5),
+        legend.spacing.y = unit(0.1, "cm"),
+        legend.key.size = unit(0.25, "cm")) 
+
+ggsave(paste0("reports/figures/Volcano_group_", anal, "_", comp, "_formula", form, "_ALLLLGOterms_col.pdf"), 
+       width = 7, height = 2, units = "in")
+
+## scatter plots with regression lines ----
+biomol <- 18404
+
+
+regr_plot <- filtered_df_a %>%
+  filter(biomolecule_id == biomol)
+
+ggplot(regr_plot, 
+       aes(delta_time_infection_enrollment, normalized_abundance)) + 
+  geom_point(shape = 21,
+             color = "black",
+             fill = "lightgray",
+             stroke = 0.2,
+             size = 1) +
+  geom_smooth(method = "lm", 
+              se = TRUE, 
+              color = "red",
+              linewidth = 0.2) +
+  theme_classic() +
+  theme(panel.border = element_blank(), 
+        panel.grid.major = element_blank(),
+        panel.spacing = unit(0.5, "lines"), 
+        axis.text.x = element_text(size = 5),
+        axis.text.y = element_text(size = 5),
+        axis.title = element_text(size = 5),
+        axis.line = element_line(linewidth = 0.2),
+        axis.ticks = element_line(linewidth = 0.2),
+        strip.text = element_blank(),
+        legend.position = "inside",
+        legend.margin = margin(0, 0, 0, 0),
+        legend.title = element_text(size = 5),
+        legend.text = element_text(size = 5),
+        legend.spacing.y = unit(0.1, "cm"),
+        legend.key.size = unit(0.25, "cm")) 
+ggsave(paste0("reports/figures/Regression_deltatimeinfectionenrollment_bmol_", biomol, ".pdf"), 
+       width = 3, height = 2, units = "in")
+
+table(volc_plot_incubation$diffexp)
+
+table(volc_plot$diffexp)
+
+volc_plot_incubation_filt <- volc_plot_incubation %>%
+  filter(diffexp == "YES")
+table(volc_plot_incubation_filt$ome)
+
+volc_plot_incubation_filt_transcript <- volc_plot_incubation_filt %>%
+  filter(ome == "transcript") %>%
+  pull(standardized_name)
+
+write_lines(volc_plot_incubation_filt_transcript, "data/processed/transcript_list_overrepresentation_deltatimeinfectionenrollment.txt")

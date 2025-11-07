@@ -62,11 +62,11 @@ pie(rep(1, length(col)), col = col , main="")
 # files #
 con <- dbConnect(RSQLite::SQLite(), dbname = 'P:/Projects/WFB_SIA_2024_Jaitovich_LongCOVID/Database/Long Covid Study DB.sqlite')
 
-proteomics <- dbGetQuery(con, 'SELECT biomolecule_id, standardized_name, rawfile_id, raw_abundance, normalized_abundance
+proteomics <- dbGetQuery(con, 'SELECT biomolecule_id, rawfile_id, raw_abundance, normalized_abundance
                                FROM proteomics_measurement')
-lipidomics <- dbGetQuery(con, 'SELECT biomolecule_id, standardized_name, rawfile_id, raw_abundance, normalized_abundance
+lipidomics <- dbGetQuery(con, 'SELECT biomolecule_id, rawfile_id, raw_abundance, normalized_abundance
                               FROM lipidomics_measurements')
-transcriptomics <- dbGetQuery(con, "SELECT biomolecule_id, standardized_name, sample_id, Counts, normalized_counts
+transcriptomics <- dbGetQuery(con, "SELECT biomolecule_id, sample_id, Counts, normalized_counts
                                     FROM rnaseq_measurements")
 biomolecules <- dbGetQuery(con, 'SELECT *
                                  FROM biomolecules')
